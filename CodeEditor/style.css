@@ -1,0 +1,8 @@
+#editor {
+    font-size: 16px;
+}
+
+#run-code:hover {
+    cursor: pointer;
+    opacity: 0.75;
+}
