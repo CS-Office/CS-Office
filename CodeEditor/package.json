@@ -1,0 +1,9 @@
+{
+  "name": "",
+  "version": "",
+  "dependencies": {
+    "acorn": "^5.5.0",
+    "escodegen": "^1.9.1",
+    "sandbox": "^0.8.6"
+  }
+}

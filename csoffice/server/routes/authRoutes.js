@@ -1,12 +1,12 @@
 const passport = require('passport');
 const path = require('path');
-//exports into index.js
-module.exports = app => {
+// exports into index.js
+module.exports = (app) => {
   app.get(
     '/auth/google',
     passport.authenticate('google', {
-      scope: ['profile', 'email']
-    })
+      scope: ['profile', 'email'],
+    }),
   );
 
   //LANDING PAGE ONCE YOU LOGIN
