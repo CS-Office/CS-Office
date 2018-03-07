@@ -1,13 +1,43 @@
-* {
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
 
 body {
-  height: 100vh;
-  padding: 0px 0px;
-  font-size: 1rem;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
-    sans-serif;
+  margin: 0;
+  padding: 30px;
+  font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
+}
+a {
+  color: #00b7ff;
+}
+
+header {
+  background-color: white;
+  height: 70px;
+  left: 0;
+  padding: 0 20px;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+header h1,
+header h2 {
+  float: left;
+  padding: 0 10px;
+  vertical-align: center;
+}
+header h1 {
+  color: FireBrick;
+}
+header h2 {
+  margin-top: 23px;
+}
+header .online {
+  float: right;
 }
 
 .indexContainer {
@@ -26,45 +56,73 @@ a {
   margin: auto;
 }
 
-.main,
-nav {
-  flex: 1;
-}
-
-.navbar-form {
-  border: none;
-}
-
-video {
+.cams {
   background-color: black;
-  width: 100%;
-  height: 100%;
-}
-
-.videos {
-  position: relative;
-  height: 100vh;
-}
-
-.remote-video {
-  height: 100%;
-  position: relative;
-}
-
-.local-video {
-  margin: 16px;
   position: absolute;
-  width: 200px;
-  height: 150px;
-  right: 0px;
-  bottom: 0px;
-  border: 1px solid #777;
+  top: 70px;
+  left: 0;
+  width: 400px;
+  bottom: 0;
+}
+.cams .remote,
+.cams .local {
+  display: block;
+  width: 400px;
 }
 
-@media (max-width: 768px) {
-  .local-video {
-    margin: 0px;
-    width: 130px;
-    height: 80px;
-  }
+.chat {
+  position: absolute;
+  left: 400px;
+  top: 70px;
+  bottom: 0;
+  right: 0;
+}
+
+.history {
+  background-color: Ivory;
+  padding: 10px;
+  height: 100%;
+  font-size: 18px;
+}
+.history * {
+  margin: 10px;
+}
+.history .remote:before {
+  content: 'Stranger Danger: ';
+  color: Tomato;
+  font-weight: bold;
+}
+.history .local:before {
+  content: 'Me: ';
+  color: RoyalBlue;
+  font-weight: bold;
+}
+.history .status {
+  font-style: italic;
+}
+
+.controls {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: white;
+  height: 75px;
+  padding: 15px;
+}
+.controls .text input,
+.controls .send,
+.controls .next {
+  height: 45px;
+  padding: 5px;
+  font-size: 18px;
+}
+.controls .text input {
+  width: 60%;
+  float: left;
+}
+.controls button {
+  width: 18.5%;
+  float: left;
+  margin-left: 1%;
 }

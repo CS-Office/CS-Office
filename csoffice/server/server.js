@@ -1,6 +1,8 @@
 //////////////////REQUIRED/////////////////
 const path = require('path');
-var os = require('os');
+const hat = require('hat');
+var ws = require('ws');
+var http = require('http');
 
 //////////////////FILES/////////////////
 require('./models/user');
@@ -49,74 +51,115 @@ require('./routes/authRoutes')(app); //require returns functions from routes fil
 const PORT = process.env.PORT || 3000;
 let server = app.listen(PORT, () => console.log('===SERVER LISTENING ON PORT 3000==='));
 
-//////////////////SOCKET.IO/////////////////
-let socket = require('socket.io');
-let io = new socket(server);
+// const server = http.createServer(app);
+// app.use(express.static(path.join(__dirname, 'client')));
+// server.listen(PORT);
 
-//////////////////SOCKET CONNECTION/////////////////
-let users = 0;
+//////////////////SOCKET/////////////////
+var wsServer = new ws.Server({ server: server });
 
-io.on('connection', function(socket) {
-  console.log('===SOCKET CONNECTED FROM SERVER.JS===');
+var peers = {};
+var waitingId = null;
+var count = 0;
 
-  socket.on('create', room => {
-    //FIRST CLIENT JOINING
-    if (!users) {
-      socket.join(room);
-      users++;
-      socket.emit('created', room);
-      console.log('room created');
+//////////////////////////////////////////////////////////////////////////////
+wsServer.on('connection', onconnection);
+
+function onconnection(peer) {
+  console.log('===SOCKET CONNECTED FROM SERVER===');
+  var send = peer.send;
+  peer.send = function() {
+    try {
+      send.apply(peer, arguments);
+    } catch (err) {}
+  };
+
+  peer.id = hat();
+  peers[peer.id] = peer;
+  peer.on('close', onclose.bind(peer));
+  peer.on('error', onclose.bind(peer));
+  peer.on('message', onmessage.bind(peer));
+  count += 1;
+  broadcast(JSON.stringify({ type: 'count', data: count }));
+}
+
+function onclose() {
+  peers[this.id] = null;
+  if (this.id === waitingId) {
+    waitingId = null;
+  }
+  if (this.peerId) {
+    var peer = peers[this.peerId];
+    peer.peerId = null;
+    peer.send(JSON.stringify({ type: 'end' }), onsend);
+  }
+  count -= 1;
+  broadcast(JSON.stringify({ type: 'count', data: count }));
+}
+
+function onmessage(data) {
+  console.log('[' + this.id + ' receive] ' + data + '\n');
+  try {
+    var message = JSON.parse(data);
+  } catch (err) {
+    console.error('Discarding non-JSON message: ' + err);
+    return;
+  }
+
+  if (message.type === 'peer') {
+    if (waitingId && waitingId !== this.id) {
+      var peer = peers[waitingId];
+
+      this.peerId = peer.id;
+      peer.peerId = this.id;
+
+      // console.log('=== peer ===', peer);
+
+      this.send(
+        JSON.stringify({
+          type: 'peer',
+          data: {
+            initiator: true
+          }
+        }),
+        onsend
+      );
+
+      peer.send(
+        JSON.stringify({
+          type: 'peer'
+        }),
+        onsend
+      );
+
+      waitingId = null;
+    } else {
+      waitingId = this.id;
     }
-  });
+  } else if (message.type === 'signal') {
+    if (!this.peerId) return console.error('unexpected `signal` message');
+    var peer = peers[this.peerId];
+    peer.send(JSON.stringify({ type: 'signal', data: message.data }));
+  } else if (message.type === 'end') {
+    if (!this.peerId) return console.error('unexpected `end` message');
+    var peer = peers[this.peerId];
+    peer.peerId = null;
+    this.peerId = null;
+    peer.send(JSON.stringify({ type: 'end' }), onsend);
+  } else {
+    console.error('unknown message `type` ' + message.type);
+  }
+}
 
-  socket.on('join', room => {
-    //REMOTE CLIENT(S) JOINING
-    if (users) {
-      socket.join(room);
-      users++;
-      socket.emit('joined', room);
-      console.log('someone wants to join - server');
+function onsend(err) {
+  if (err) console.error(err.stack || err.message || err);
+}
+
+function broadcast(message) {
+  for (var id in peers) {
+    var peer = peers[id];
+    if (peer) {
+      peer.send(message);
     }
-  });
-
-  socket.on('msg', room => {
-    //REMOTE CLIENT(S) JOINING
-    //this is still remote peer
-    socket.broadcast.emit('message', room);
-    // socket.emit('instantiate local', room);
-    console.log('need msg to go from remote to local');
-  });
-
-  // when received ice candidate, broadcast sdp to other user
-  socket.on('ice candidate', function(data) {
-    // console.log('Received ICE candidate from ' + socket.id + ' ' + data.candidate);
-    // socket.to(data.room).emit('ice candidate received', data.candidate);
-    console.log('=== received ICE candidate data === ', data.candidate);
-    socket.emit('ice candidate received', data);
-  });
-
-  //////////////////SEND SDP/////////////////
-  socket.on('sdp', function(data) {
-    // console.log('%%%%%%%%%%%% ', data);
-    // console.log('=== RECEIVED SDP FROM === ' + socket.id);
-    socket.emit('sdp received', data);
-    // socket.to(data.room).emit('sdp received', data.sdp);
-  });
-
-  socket.on('answer', function(data) {
-    console.log('===INSIDE SERVER.JS ANSWER===');
-    socket.emit('answer received', data);
-  });
-
-  //////////////////GOODBYE/////////////////
-  socket.on('goodbye', function(room) {
-    console.log('=== RECEIVED GOODBYE ===');
-  });
-
-  //////////////////MESSAGE/////////////////
-  socket.on('message', function(message) {
-    console.log('Client said: ', message);
-    // for a real app, would be room-only (not broadcast)
-    socket.broadcast.emit('message', message);
-  });
-});
+  }
+}
