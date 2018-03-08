@@ -1,13 +1,63 @@
-* {
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
 
+html {
+  margin: 0px;
+  height: 100%;
+  width: 100%;
+}
+
 body {
-  height: 100vh;
-  padding: 0px 0px;
-  font-size: 1rem;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
-    sans-serif;
+  min-height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  background-color: #ffffff;
+  font: 14px -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.csoffice {
+  color: #2d2d2d;
+  font-weight: bold;
+}
+
+li {
+  margin-right: 10px;
+}
+
+header {
+  height: 70px;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+header h1,
+header h2 {
+  float: left;
+  padding: 0 10px;
+  vertical-align: center;
+}
+header h1 {
+  color: FireBrick;
+}
+header h2 {
+  margin-top: 23px;
+}
+header .online {
+  float: right;
+}
+
+main {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
 }
 
 .indexContainer {
@@ -26,45 +76,128 @@ a {
   margin: auto;
 }
 
-.main,
-nav {
-  flex: 1;
-}
-
-.navbar-form {
-  border: none;
-}
-
-video {
-  background-color: black;
-  width: 100%;
-  height: 100%;
-}
-
-.videos {
-  position: relative;
-  height: 100vh;
-}
-
-.remote-video {
-  height: 100%;
-  position: relative;
-}
-
-.local-video {
-  margin: 16px;
-  position: absolute;
-  width: 200px;
+.cams {
   height: 150px;
-  right: 0px;
-  bottom: 0px;
-  border: 1px solid #777;
+  margin-top: 70px;
+  background-color: #ffffff;
+  /* border: 5px solid black; */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex: 5;
+  width: 50px;
+  /* position: fixed; */
+  /* left: 160px; */
+  z-index: -1;
 }
 
-@media (max-width: 768px) {
-  .local-video {
-    margin: 0px;
-    width: 130px;
-    height: 80px;
-  }
+.cams .remote,
+.cams .local {
+  display: block;
+  width: 30%;
+}
+
+.remote {
+  /* margin-left: 500px; */
+  margin-right: 5px;
+}
+
+.student-cam {
+  display: flex;
+  justify-content: flex-end;
+}
+.admin-cam {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.chat {
+  background-color: #f9f9f9;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  top: 70px;
+  bottom: 0;
+  right: 0;
+}
+
+.history {
+  margin-top: 80px;
+  background-color: #f9f9f9;
+  padding: 10px;
+  height: 700px;
+  font-size: 18px;
+  margin-right: 10px;
+  float: right;
+  flex-wrap: wrap;
+  display: flex;
+  flex-direction: column;
+  /* overflow-wrap: normal; */
+}
+
+.send {
+  visibility: hidden;
+}
+
+div.local,
+div.remote {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: -webkit-pre-wrap;
+  white-space: normal;
+}
+
+.history * {
+  margin: 10px;
+}
+.history .remote:before {
+  content: 'Stranger Danger: ';
+  color: Tomato;
+  font-weight: bold;
+}
+.history .local:before {
+  content: 'Me: ';
+  color: RoyalBlue;
+  font-weight: bold;
+}
+.history .status {
+  font-style: italic;
+}
+
+.controls {
+  /* position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0; */
+  background-color: #f9f9f9;
+  height: 75px;
+  padding: 15px;
+}
+/* .controls .text input,
+.controls .send,
+.controls .next {
+  height: 45px;
+  padding: 5px;
+  font-size: 18px;
+} */
+/* .controls .text input {
+  width: 60%;
+  float: left;
+} */
+/* .controls button {
+  width: 18.5%;
+  float: left;
+  margin-left: 1%;
+} */
+
+/* CODE EDITOR */
+#editor {
+  font-size: 16px;
+}
+
+#run-code:hover {
+  cursor: pointer;
+  opacity: 0.75;
 }

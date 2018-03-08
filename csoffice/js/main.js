@@ -1,270 +1,325 @@
-document.addEventListener('DOMContentLoaded', function() {
-  ////////////////////SOCKET CONNECTION//////////////////////////
-  let socket = io.connect('http://localhost:3000');
+var media = require('./media');
+require('./code_editor');
+var Peer = require('simple-peer');
+var Socket = require('simple-websocket');
 
-  ('use strict');
+// let socket2 = require('socket.io');
+// let socket = new socket2();
+// var io = require('socket.io');
+// var socket = io();
+// var socket = io.connect();
+// let Socket = require('socket.io');
+// var socket = io.connect();
+// var socket = Socketio connect('http://localhost:3000');
 
-  var serverIP = 'http://localhost:3000';
-  // var serverIP = 'http://45.59.229.42/';
+// let socket = io('http://localhost:3000');
+var socket = new Socket({ url: 'ws://' + window.location.host });
 
-  ////////////////////STUN & TURN SERVER//////////////////////////
-  var pcConfig = {
-    iceServers: [
-      { urls: 'stun:stun.services.mozilla.com' },
-      { urls: 'stun:stun.l.google.com:19302' },
-      {
-        urls: 'turn:numb.viagenie.ca',
-        credential: 'codesmith',
-        username: 'USER_1'
-      }
-    ]
-  };
+var $chat = document.querySelector('form.text');
+var $count = document.querySelector('.count');
+var $history = document.querySelector('.history');
+var $next = document.querySelector('.next');
+var $send = document.querySelector('.send');
+var $textInput = document.querySelector('.text input');
+var $videoLocal = document.querySelector('video.local');
+var $videoRemote = document.querySelector('video.remote');
 
-  var peerConnection;
-  var signallingServer = new SignallingServer();
+function disableUI() {
+  $textInput.disabled = true;
+  $send.disabled = true;
+  // $next.disabled = true
+}
 
-  var btnSend = document.getElementById('btn-send');
-  var btnVideoStop = document.getElementById('btn-video-stop');
-  var btnVideoStart = document.getElementById('btn-video-start');
-  var btnVideoJoin = document.getElementById('btn-video-join');
-  var localVideo = document.getElementById('local-video');
-  var remoteVideo = document.getElementById('remote-video');
-  var inputRoomName = document.getElementById('room-name');
-  var localStream;
-  var localIsCaller = false;
-  var remoteJoiner = false;
-  let remoteStream;
-  let roomReady = false;
-  let roomStarted = false;
+function enableUI() {
+  $textInput.disabled = false;
+  $send.disabled = false;
+  $next.disabled = false;
+  $textInput.focus();
+}
 
-  //BUTTON EVENT HANDLERS
-  //STOP
-  btnVideoStop.onclick = function(e) {
-    e.preventDefault();
+disableUI();
 
-    //KILL ALL CONNECTIONS
-    if (peerConnection != null) {
-      peerConnection.removeStream(localStream);
-      peerConnection.close();
-      signallingServer.close();
-      localVideo.src = '';
-      remoteVideo.src = '';
+function addChat(text, className) {
+  var node = document.createElement('div');
+  node.textContent = text;
+  node.className = className;
+  $history.appendChild(node);
+}
+
+function clearChat() {
+  $history.innerHTML = '';
+}
+
+var peer, stream;
+
+socket.on('error', function(err) {
+  console.error('[socket error]', err.stack || err.message || err);
+});
+
+socket.on('connect', function() {
+  addChat('Please grant access to your webcam. Remember to smile!', 'status');
+  media.getUserMedia(function(err, s) {
+    if (err) {
+      window.alert('You must share your webcam to use this app!');
+    } else {
+      stream = s;
+      media.showStream($videoLocal, stream);
+      next();
     }
+  });
+});
 
-    btnVideoStart.disabled = false;
-    btnVideoJoin.disabled = false;
-    btnVideoStop.disabled = true;
-  };
-
-  //START
-  btnVideoStart.onclick = function(e) {
-    e.preventDefault();
-    initConnection();
-  };
-
-  //JOIN
-  btnVideoJoin.onclick = function(e) {
-    e.preventDefault();
-    joinConnection();
-  };
-
-  //LOCAL'S CALL TO COMMUNICATE TO SOCKET TO CREATE ROOM
-  function initConnection() {
-    var room = inputRoomName.value;
-    if (room == undefined || room.length <= 0) {
-      alert('Please enter room name');
-      return;
-    }
-    //BUTTON SETTINGS
-    btnVideoStart.disabled = true;
-    btnVideoJoin.disabled = true;
-    btnVideoStop.disabled = false;
-    //COMMUNICATE TO SIGNALING SERVER TO CREATE ROOM
-    socket.emit('create', room);
-    console.log('client side');
+function next(event) {
+  if (event && event.preventDefault) {
+    event.preventDefault();
   }
+  // if (peer) {
+  //   socket.send(JSON.stringify({ type: 'end' }));
+  //   peer.close();
+  // }
+  socket.send(JSON.stringify({ type: 'peer' }));
 
-  //REMOTE'S CALL TO COMMUNICATE TO SOCKET TO JOIN ROOM
-  function joinConnection() {
-    var room = inputRoomName.value;
-    if (room == undefined || room.length <= 0) {
-      alert('Please enter room name');
-      return;
+  disableUI();
+  clearChat();
+  addChat('Finding a peer...', 'status');
+}
+
+$next.addEventListener('click', next);
+
+function handlePeer(data) {
+  data = data || {};
+
+  peer = new Peer({
+    initiator: !!data.initiator,
+    stream: stream,
+    config: {
+      iceServers: [
+        { urls: 'stun:stun.services.mozilla.com' },
+        { urls: 'stun:stun.l.google.com:19302' },
+        {
+          urls: 'turn:numb.viagenie.ca',
+          credential: 'codesmith',
+          username: 'USER_1'
+        }
+      ]
     }
-    btnVideoStart.disabled = true;
-    btnVideoJoin.disabled = true;
-    btnVideoStop.disabled = false;
-    socket.emit('join', room);
-    console.log('join request on client side');
-  }
-
-  // SIGNALING SERVER HAS COME BACK AND CREATED ROOM
-  socket.on('created', room => {
-    console.log('created room; confirmed on client side');
-    localIsCaller = true;
-    start(room);
   });
 
-  // SIGNALING SERVER HAS COME BACK TO NOTIFY LOCAL THAT SOMEONE WANTS TO JOIN
-  socket.on('joined', room => {
-    console.log('someone wanna join - client side. this peer instantiates the room');
-    remoteJoiner = true;
-    // if(localIsCaller !== true)
-    start(room);
+  peer.on('error', function(err) {
+    console.error('peer error', err.stack || err.message || err);
   });
 
-  // SEND MSG TO SIGNAL SERVER TO SEND MSG TO REMOTE PEER
-  socket.on('instantiate local', room => {
-    console.log('we instantiated local', room);
-    checkAndStart();
+  peer.on('connect', function() {
+    clearChat();
+    addChat('Connected, say hello!', 'status');
+    enableUI();
   });
 
-  //SDP CONSTRAINTS
-  var sdpConstraints = {
-    optional: [],
-    mandatory: {
-      OfferToReceiveVideo: true
-    }
-  };
-
-  //CREATE THE LOCAL PEER
-  function start(room) {
-    // console.log('=======localIsCaller if local clicks then true=======', localIsCaller);
-    // console.log('=======remoteJoiner if remote clicks then true=======', remoteJoiner);
-
-    peerConnection = new RTCPeerConnection(pcConfig);
-
-    // if (localIsCaller) {
-    peerConnection.onnegotiationneeded = function() {
-      peerConnection
-        .createOffer()
-        .then(function(offer) {
-          return peerConnection.setLocalDescription(offer);
-        })
-        .then(function() {
-          signallingServer.sendSDP(
-            JSON.stringify({ desc: peerConnection.localDescription })
-          );
-          console.log('===== LOCAL CREATED OFFER AND SENT TO SIGNALING SERVER =====');
-        });
-    };
-    // }
-
-    peerConnection.onicecandidate = function(event) {
-      if (event.candidate) {
-        signallingServer.sendICECandidate(JSON.stringify({ candidate: event.candidate }));
-        console.log('===== LOCAL SENT CANDIDATES TO SIGNALING SERVER =====');
-      } else {
-        console.log('===== LOCAL CANDIDATES ALREADY SENT TO SIGNALING SERVER =====');
-      }
-    };
-
-    peerConnection.ontrack = function(evt) {
-      if (!remoteVideo.srcObject) {
-        remoteVideo.srcObject = evt.streams[0];
-      }
-    };
-    // }
-
-    //OBTAIN USER MEDIA CONTENT
-    navigator.mediaDevices
-      .getUserMedia({
-        video: true,
-        audio: true
-      })
-      .then(function(stream) {
-        localVideo.srcObject = stream;
-        peerConnection.addTrack(stream.getAudioTracks()[0], stream);
-        peerConnection.addTrack(stream.getVideoTracks()[0], stream);
-        // peerConnection.addStream(stream);
-        localStream = stream;
-      });
-    // .then(() => {
-    //   // remoteVideo.srcObject = localStream;
-    // });
-
-    socket.emit('message', room);
-  }
-
-  socket.on('message', room => {
-    // roomReady = true;
-    // console.log(localIsCaller); //THIS NEEDS TO BE TRUE
-    // if (roomReady && localIsCaller)
-    establishRTCConnection(room);
+  peer.on('signal', function(data) {
+    socket.send(JSON.stringify({ type: 'signal', data: data }));
   });
 
-  //////////////////ESTABLISH RTC CONNECTION AND CREATE SDP//////////////////////////
-  function establishRTCConnection(room) {
-    // signallingServer = new SignallingServer(room, serverIP);
-    // console.log('=======remoteJoiner if remote clicks then true=======', remoteJoiner);
+  peer.on('stream', function(stream) {
+    media.showStream($videoRemote, stream);
+  });
 
-    //////////got sdp from remote/////////
+  peer.on('data', function(message) {
+    addChat(message, 'remote');
+  });
 
-    signallingServer.onReceiveSdp = function(sdp) {
-      let sdpObject = JSON.parse(sdp.sdp);
-      let description = sdpObject.desc;
+  // Takes ~3 seconds before this event fires when peerconnection is dead (timeout)
+  peer.on('close', next);
+}
 
-      console.log('========= peer connection ========', peerConnection);
+function handleSignal(data) {
+  peer.signal(data);
+}
 
-      if (description.type === 'offer') {
-        console.log('===== OFFER =====', description);
-        peerConnection
-          .setRemoteDescription(new RTCSessionDescription(description))
-          .then(() => {
-            console.log('===== REMOTE RECEIVED LOCAL"S SDP =====');
-            peerConnection.createAnswer().then(function(answer) {
-              peerConnection.setLocalDescription(answer).then(function() {
-                signallingServer.sendANSWER(JSON.stringify({ desc: answer }));
-                console.log(
-                  '===== REMOTE CREATED ANSWER, SET, AND SENT TO SIGNALING SERVER ====='
-                );
-              });
-            });
-          });
-      }
-    };
+function handleCount(data) {
+  $count.textContent = data;
+}
 
-    signallingServer.onReceiveICECandidate = function(candidate) {
-      let candidateObject = JSON.parse(candidate.candidate);
-      let receiveCandidate = candidateObject.candidate;
-
-      // peerConnection.addIceCandidate(new RTCIceCandidate(receiveCandidate)).then(() => {
-      //   console.log('=== HEREEEEE ===');
-      // });
-
-      peerConnection.addIceCandidate(new RTCIceCandidate(receiveCandidate)).then(() => {
-        console.log('=== REMOTE GOT CANDIDATES COMPLETE ===');
-        peerConnection.addIceCandidate(new RTCIceCandidate(receiveCandidate)).then(() => {
-          // console.log('**** IM NOT BROKEN ****');
-          console.log('=== LOCAL GOT CANDIDATES COMPLETE ===');
-        });
-      });
-    };
-
-    signallingServer.onReceiveAnswer = function(sdp) {
-      let sdpObject = JSON.parse(sdp.sdp);
-      let description = sdpObject.desc;
-
-      if (description.type === 'answer') {
-        console.log('===== ANSWER =====', description);
-        peerConnection.setRemoteDescription(description); //RTCSessionDescription
-        console.log('===== LOCAL RECEIVED REMOTE"S SDP =====');
-        console.log('===== THE END =====');
-      }
-    };
-
-    ////////////////////ALERT USER WHEN ROOM IS FULL//////////////////////////
-    signallingServer.onRoomFull = function(room) {
-      window.alert('Room "' + room + '"" is full! Please join or create another room');
-    };
+socket.on('data', function(message) {
+  console.log('got socket message: ' + message);
+  try {
+    message = JSON.parse(message);
+  } catch (err) {
+    console.error('[socket error]', err.stack || err.message || err);
   }
 
-  function errorHandler(error) {
-    console.error('Something went wrong!');
-    console.error(error);
-  }
-
-  function trace(text) {
-    console.info(text);
+  if (message.type === 'signal') {
+    handleSignal(message.data);
+  } else if (message.type === 'count') {
+    handleCount(message.data);
+  } else if (message.type === 'end') {
+    next();
+  } else if (message.type === 'peer') {
+    handlePeer(message.data);
+  } else if (message.type === 'send code change') {
+    updateEditor(message.data);
   }
 });
+
+$chat.addEventListener('submit', send);
+$send.addEventListener('click', send);
+
+function send(event) {
+  event.preventDefault();
+  var text = $textInput.value;
+  addChat(text, 'local');
+  peer.send(text);
+  $textInput.value = '';
+}
+
+//////////////////////////////////////////////
+
+console.log('========= IM INSIDE CODE_EDITOR.JS ===========', socket);
+// helper function for xmlHttpRequest();
+function getURL(url, c) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('get', url, true);
+  xhr.send();
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState != 4) return;
+    if (xhr.status < 400) return c(null, xhr.responseText);
+    var e = new Error(xhr.responseText || 'No response');
+    e.status = xhr.status;
+    c(e);
+  };
+}
+
+// tern - addon that brings autocomplete functionality
+getURL('http://ternjs.net/defs/ecmascript.json', function(err, code) {
+  if (err) throw new Error('Request for ecmascript.json: ' + err);
+  server = new CodeMirror.TernServer({ defs: [JSON.parse(code)] });
+  editor.setOption('extraKeys', {
+    'Ctrl-Space': function(cm) {
+      server.complete(cm);
+    },
+    'Cmd-Space': function(cm) {
+      server.complete(cm);
+    },
+    'Ctrl-I': function(cm) {
+      server.showType(cm);
+    },
+    'Ctrl-O': function(cm) {
+      server.showDocs(cm);
+    },
+    'Alt-.': function(cm) {
+      server.jumpToDef(cm);
+    },
+    'Alt-,': function(cm) {
+      server.jumpBack(cm);
+    },
+    'Ctrl-Q': function(cm) {
+      server.rename(cm);
+    },
+    'Ctrl-.': function(cm) {
+      server.selectName(cm);
+    }
+  });
+  editor.on('cursorActivity', function(cm) {
+    server.updateArgHints(cm);
+  });
+});
+
+// CodeMirror
+let editor = CodeMirror(document.querySelector('#editor'), {
+  value:
+    '// Type JavaScript here and click "Run Code" \n \nconsole.log("Hello, world!");',
+  mode: 'javascript',
+  lineNumbers: true,
+  indentWithTabs: true,
+  indentUnit: 4,
+  matchBrackets: true,
+  autoCloseBrackets: true,
+  foldGutter: true,
+  gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter', 'CodeMirror-lint-markers'],
+  lint: {
+    esversion: 6
+  },
+  styleActiveLine: true
+});
+
+// Event Handler for editor changes
+editor.on('change', cMirror => {
+  const code = cMirror.getValue();
+  console.log(code);
+
+  socket.send(JSON.stringify({ type: 'send code change', data: code }));
+
+  // socket.send('send code change', code);
+  console.log('changed changed changed');
+});
+
+//   socket.onmessage = function(msg) {
+//     console.log('WE RECEIVED A MESSAGE === ', msg);
+//   };
+
+socket.on('send code change', updateEditor);
+
+function updateEditor(data) {
+  console.log('HERE HERE HERE');
+  const code = editor.getValue();
+  if (code !== data) {
+    editor.getDoc().setValue(data);
+  }
+}
+
+// Event Handler for "Run Code"
+document.querySelector('#run-code').addEventListener('click', e => {
+  const con = `const console = { log: function (callback) { if (typeof callback === 'function') callback = callback.toString(); return postMessage(callback);}};`;
+  const code = editor.getValue();
+
+  const s = `onmessage = (e) => {
+          try {
+              eval(e.data);
+          }
+          catch (error) {
+             let errorName = '';
+             const regExp = /\\d+:\\d+/gi;
+             const errorLine = error.stack.match(regExp)[1];
+             const lineNum = parseInt(errorLine);
+             if (error instanceof ReferenceError) {
+               errorName = 'ReferenceError';
+               postMessage(errorName + ' on line ' + lineNum + ': ' + error.message); 
+             } 
+             else if (error instanceof SyntaxError) {
+               errorName = 'SyntaxError';
+              postMessage(errorName + ': ' + error.message); 
+             }
+             else if (error instanceof TypeError) {
+               errorName = 'TypeError';
+               postMessage(errorName + ' on line ' + lineNum + ': ' + error.message); 
+             }
+          }
+  };`;
+
+  const newBlob = new Blob([s], { type: 'text/javascript' });
+  const blobURL = URL.createObjectURL(newBlob);
+  const worker = new Worker(blobURL);
+
+  worker.onmessage = function(e) {
+    const li = document.createElement('li');
+
+    if (typeof e.data === 'string') {
+      li.textContent = `'${e.data}'`;
+    } else if (Array.isArray(e.data)) {
+      li.textContent = JSON.stringify(e.data, null, ' ');
+    } else if (typeof e.data === 'object') {
+      const text = JSON.stringify(e.data, null, ' ').replace(/\"(\w+)\":/g, '$1:');
+      li.textContent = text;
+    } else {
+      li.textContent = `${e.data}`;
+    }
+    document.querySelector('#results').appendChild(li);
+    this.terminate();
+  };
+
+  worker.postMessage(`${con}${code}`);
+});
+
+window.onbeforeunload = function() {
+  socket.onclose = function() {};
+  socket.close();
+};

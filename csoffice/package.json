@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "browserify js/main.js > js/bundle.js",
+    "install": "npm run build",
     "start": "nodemon server/server.js",
+    "watch": "watchify js/main.js -o js/bundle.js -dv & nodemon server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -14,15 +17,29 @@
     "body-parser": "^1.18.2",
     "cookie-parser": "^1.4.3",
     "cookie-session": "^2.0.0-beta.3",
+    "custom-error": "^0.2.1",
+    "escodegen": "^1.9.1",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
+    "hat": "0.0.3",
     "mongoose": "^5.0.7",
-    "nodemon": "^1.17.1",
     "passport": "^0.4.0",
     "passport-amazon": "^1.0.0",
     "passport-cookie": "^1.0.4",
     "passport-google-oauth20": "^1.0.0",
     "request": "^2.83.0",
-    "socket.io": "^2.0.4"
+    "sandbox": "^0.8.6",
+    "simple-peer": "^9.0.0",
+    "simple-websocket": "^7.0.2",
+    "socket.io": "^2.0.4",
+    "ws": "^5.0.0"
+  },
+  "devDependencies": {
+    "browserify": "^16.1.1",
+    "nodemon": "^1.17.1",
+    "standard": "^10.0.2",
+    "watchify": "^3.11.0",
+    "utf-8-validate": "^4.0.0",
+    "bufferutil": "^3.0.3"
   }
 }

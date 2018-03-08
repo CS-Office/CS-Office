@@ -1,60 +1,118 @@
 <!DOCTYPE html>
 <html/>
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"> -->
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="/css/style.css">
 
 <head>
-  <script src="/js/main.js"></script>
-  <script src="/js/signaling_server.js"></script>
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"></script>
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script> -->
+  <meta charset="utf-8">
+
+  <!-- ///MATERIALIZE & CSS/// -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+  <link rel="stylesheet" href="/public/lib/codemirror.css">
+  <link rel="stylesheet" href="/public/addon/fold/foldgutter.css">
+  <link rel="stylesheet" href="/public/addon/lint/lint.css">
+  <link rel="stylesheet" href="/public/addon/dialog/dialog.css">
+  <link rel="stylesheet" href="/public/addon/hint/show-hint.css">
+  <link rel="stylesheet" href="/public/addon/tern/tern.css">
+
+  <!-- ///MATERIALIZE & CSS/// -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/6.1.1/adapter.js"></script>
 
+  <!-- ///ADD-ONS FOR CODE EDITOR/// -->
+  <script src="/public/lib/codemirror.js"></script>
+  <script src="/public/addon/fold/foldcode.js"></script>
+  <script src="/public/addon/fold/foldgutter.js"></script>
+  <script src="/public/addon/fold/brace-fold.js"></script>
+  <script src="/public/addon/edit/matchbrackets.js"></script>
+  <script src="/public/addon/edit/closebrackets.js"></script>
+  <script src="/public/addon/selection/active-line.js"></script>
+  <script src="/public/mode/javascript/javascript.js"></script>
+  <script src="/public/addon/lint/lint.js"></script>
+  <script src="/public/addon/hint/jshint.min.js"></script>
+  <script src="/public/addon/lint/javascript-lint.js"></script>
+  <script src="/public/addon/dialog/dialog.js"></script>
+  <script src="/public/addon/hint/show-hint.js"></script>
+  <script src="/public/addon/tern/tern.js"></script>
+  <script src="http://ternjs.net/node_modules/acorn/dist/acorn.js"></script>
+  <script src="http://ternjs.net/node_modules/acorn/dist/acorn_loose.js"></script>
+  <script src="http://ternjs.net/node_modules/acorn/dist/walk.js"></script>
+  <script src="http://ternjs.net/doc/demo/polyfill.js"></script>
+  <script src="http://ternjs.net/lib/signal.js"></script>
+  <script src="http://ternjs.net/lib/tern.js"></script>
+  <script src="http://ternjs.net/lib/def.js"></script>
+  <script src="http://ternjs.net/lib/comment.js"></script>
+  <script src="http://ternjs.net/lib/infer.js"></script>
+  <script src="http://ternjs.net/plugin/doc_comment.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
 
 
 </head>
 
 <body>
-  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container">
 
-      <div id="navbar" class="navbar-collapse collapse">
-        <!-- chatroom name form -->
-        <form class="navbar-form navbar-right form-inline">
-          <div class="form-group">
-            <input class="form-control" type="text" id="room-name" placeholder="Room name" />
+  <header>
+
+    <!-- ///NAVBAR/// -->
+    <nav class='z-depth-0'>
+      <div class="nav-wrapper grey lighten-5">
+        <a href="#" class="brand-logo center csoffice">
+          <span class='csoffice'>CS Office</span>
+        </a>
+        <ul class="right hide-on-small-and-down csoffice">
+          <li>
+            <div class="online">
+              <span class="count"></span>
+              people online!
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+  </header>
+
+  <main>
+
+    <!-- ///CONTAINER/// -->
+    <div>
+      <!-- ///VIDEO/// -->
+      <div class="cams">
+        <div class='student-cam'>
+          <video class="remote"></video>
+        </div>
+        <div class='admin-cam'>
+          <video class="local" muted></video>
+        </div>
+      </div>
+
+      <!-- ///CODE EDITOR/// -->
+      <div id="editor"></div>
+      <button id="run-code" type="button">Run Code</button>
+      <ul id="results"></ul>
+    </div>
+
+    <!-- ///CHAT/// -->
+    <div class="chat">
+      <div class="history"></div>
+      <div class="controls">
+        <form class="text">
+          <!-- <input type="text"> -->
+          <button class="btn waves-effect waves-light send" type="submit" name="action">Send Message
+          </button>
+          <div class="ui input">
+            <input type="text" placeholder="Message">
+            <i class="circular search link icon"></i>
           </div>
-          <button class="btn btn-primary" id="btn-video-start">Start</button>
-          <button class="btn btn-default" id="btn-video-join">Join</button>
-          <button class="btn btn-default" disabled id="btn-video-stop">Stop</button>
         </form>
-      </div>
-
-      <!--/.navbar-collapse -->
-    </div>
-
-  </nav>
-
-  <div class="container main">
-    <div class="row videos">
-      <div class="remote-video">
-        <p>I'M REMOTE</p>
-        <video width="280" height="250" autoplay="true" id="remote-video"></video>
-      </div>
-      <div class="local-video">
-        <p>I'M LOCAL</p>
-        <video width="280" height="250" autoplay="true" id="local-video" muted></video>
+        <button class="next"></button>
       </div>
     </div>
-  </div>
 
-  <!-- <div id="videos">
-    <video id="localVideo" autoplay muted></video>
-    <video id="remoteVideo" autoplay></video>
-  </div> -->
+  </main>
+  <script src="/js/bundle.js"></script>
+  <!-- <script src="/js/code_editor.js"></script> -->
 
 </body>
 
