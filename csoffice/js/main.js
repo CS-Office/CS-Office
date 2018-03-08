@@ -293,7 +293,7 @@ document.querySelector('#run-code').addEventListener('click', e => {
                postMessage(errorName + ' on line ' + lineNum + ': ' + error.message); 
              }
           }
-      };`;
+  };`;
 
   const newBlob = new Blob([s], { type: 'text/javascript' });
   const blobURL = URL.createObjectURL(newBlob);
