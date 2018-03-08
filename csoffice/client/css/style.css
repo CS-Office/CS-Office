@@ -85,7 +85,6 @@ a {
   flex-direction: row;
   justify-content: center;
   flex: 5;
-  width: 50px;
   /* position: fixed; */
   /* left: 160px; */
   z-index: -1;
@@ -197,7 +196,20 @@ div.remote {
   font-size: 16px;
 }
 
+#run-code {
+  margin-left: 10px !important;
+  padding: 0 !important;
+  text-align: center;
+  color: white;
+  font-size: 14px;
+  width: 150px;
+  height: 50px;
+  border-radius: 10px;
+}
+
 #run-code:hover {
+  margin: 0 !important;
+  padding: 0 !important;
   cursor: pointer;
-  opacity: 0.75;
+  /* opacity: 0.75; */
 }
