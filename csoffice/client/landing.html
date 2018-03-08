@@ -5,8 +5,9 @@
   <meta charset="utf-8">
 
   <!-- ///MATERIALIZE & CSS/// -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
   <link rel="stylesheet" type="text/css" href="/css/style.css">
 
   <link rel="stylesheet" href="/public/lib/codemirror.css">
@@ -17,6 +18,8 @@
   <link rel="stylesheet" href="/public/addon/tern/tern.css">
 
   <!-- ///MATERIALIZE & CSS/// -->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="js/materialize.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/6.1.1/adapter.js"></script>
 
@@ -46,6 +49,7 @@
   <script src="http://ternjs.net/lib/infer.js"></script>
   <script src="http://ternjs.net/plugin/doc_comment.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 
 </head>
@@ -76,7 +80,7 @@
   <main>
 
     <!-- ///CONTAINER/// -->
-    <div>
+    <div class='container'>
       <!-- ///VIDEO/// -->
       <div class="cams">
         <div class='student-cam'>
@@ -89,7 +93,12 @@
 
       <!-- ///CODE EDITOR/// -->
       <div id="editor"></div>
-      <button id="run-code" type="button">Run Code</button>
+
+      <a id='run-code' class="waves-effect waves-light blue-grey darken-3 btn-large">Run Code</a>
+
+
+
+      <!-- <button id="run-code" type="button">Run Code</button> -->
       <ul id="results"></ul>
     </div>
 
