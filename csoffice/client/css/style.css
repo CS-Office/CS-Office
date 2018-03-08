@@ -7,16 +7,23 @@
 }
 
 body {
+  display: flex;
+  flex-direction: column;
   margin: 0;
   padding: 30px;
   font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
 }
+
 a {
   color: #00b7ff;
 }
 
+li {
+  margin-right: 10px;
+}
+
 header {
-  background-color: white;
+  background-color: orange;
   height: 70px;
   left: 0;
   padding: 0 20px;
@@ -40,6 +47,12 @@ header .online {
   float: right;
 }
 
+main {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
 .indexContainer {
   width: 100%;
   text-align: center;
@@ -57,12 +70,17 @@ a {
 }
 
 .cams {
-  background-color: black;
-  position: absolute;
+  background-color: brown;
+  border: 5px solid black;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex: 5;
+  /* position: absolute;
   top: 70px;
-  left: 0;
-  width: 400px;
-  bottom: 0;
+  left: 0; */
+  width: 70%;
+  /* bottom: 0; */
 }
 .cams .remote,
 .cams .local {
@@ -71,19 +89,40 @@ a {
 }
 
 .chat {
-  position: absolute;
-  left: 400px;
+  background-color: pink;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  /* position: absolute; */
   top: 70px;
   bottom: 0;
   right: 0;
 }
 
 .history {
-  background-color: Ivory;
+  background-color: yellow;
   padding: 10px;
   height: 100%;
   font-size: 18px;
+  margin-right: 10px;
+  float: right;
+
+  flex-wrap: wrap;
+  display: flex;
+  flex-direction: column;
+  /* overflow-wrap: normal; */
 }
+
+div.local,
+div.remote {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: -webkit-pre-wrap;
+  white-space: normal;
+}
+
 .history * {
   margin: 10px;
 }

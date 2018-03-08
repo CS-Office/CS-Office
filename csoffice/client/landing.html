@@ -17,28 +17,56 @@
 <body>
 
   <header>
-    <h1> chat</h1>
+    <!-- <h1> chat</h1>
     <h2>hello!</h2>
-    <h2 class="online">
+    <h4 class="online">
       <span class="count"></span>
       people online!
-    </h2>
+    </h4> -->
+
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo">CSOFFICE</a>
+        <ul class="right hide-on-med-and-down">
+          <li>welcome</li>
+          <li>hello</li>
+          <li>yo</li>
+          <li>
+            <div class="online">
+              <span class="count"></span>
+              people online!
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
   </header>
+
   <main>
+
     <div class="cams">
+      <!-- <div class='student-cam'> -->
       <video class="remote"></video>
+      <!-- </div> -->
+      <!-- <div class='admin-cam'> -->
       <video class="local" muted></video>
+      <!-- </div> -->
     </div>
+
     <div class="chat">
       <div class="history"></div>
       <div class="controls">
         <form class="text">
           <input type="text">
-          <button class="send">Send</button>
+          <button class="btn waves-effect waves-light send" type="submit" name="action">Send Message
+            <i class="material-icons right">send</i>
+          </button>
         </form>
-        <button class="next">Next</button>
+        <button class="next"></button>
       </div>
     </div>
+
   </main>
   <script src="/js/bundle.js"></script>
 </body>
