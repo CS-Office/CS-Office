@@ -45,6 +45,7 @@ app.use(
 //////////////////PATH FOR STATIC FILES/////////////////
 app.use('/css', express.static(path.join(__dirname, './../client/css')));
 app.use('/js', express.static(path.join(__dirname, './../js')));
+app.use('/public', express.static(path.join(__dirname, '../client/public')));
 
 require('./routes/authRoutes')(app); //require returns functions from routes file and then immediately invokes the function with the app object
 
@@ -61,7 +62,17 @@ var count = 0;
 //////////////////////////////////////////////////////////////////////////////
 wsServer.on('connection', onconnection);
 
+/////////////CODE EDITOR////////////////
+// wsServer.on('send code change', broadcastCodeChange);
+// function broadcastCodeChange(data) {
+//   console.log(
+//     '=== CODE EDITOR CODE EDITOR CODE EDITOR CODE EDITOR CODE EDITOR CODE EDITOR CODE EDITOR ==='
+//   );
+//   wsServer.broadcast.emit('send code change', data);
+// }
+
 function onconnection(peer) {
+  /////////////VIDEO-CHAT////////////////
   console.log('===SOCKET CONNECTED FROM SERVER===');
   var send = peer.send;
   peer.send = function() {
@@ -142,7 +153,19 @@ function onmessage(data) {
     peer.peerId = null;
     this.peerId = null;
     peer.send(JSON.stringify({ type: 'end' }), onsend);
+  } else if (message.type === 'send code change') {
+    console.log('=== ON CODE CHANGE MESSAGE SERVER.JS=== ', message);
+
+    wsServer.clients.forEach(function each(client) {
+      if (client !== peer) {
+        client.send(JSON.stringify({ type: 'send code change', data: message.data }));
+      }
+    });
+
+    // var codePeer = peers[this.peerId];
+    // codePeer.send(JSON.stringify({ type: 'send code change', data: message.data }));
   } else {
+    peer.send(message, onsend);
     console.error('unknown message `type` ' + message.type);
   }
 }

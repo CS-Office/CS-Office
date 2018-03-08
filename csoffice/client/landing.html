@@ -1,30 +1,60 @@
 <!DOCTYPE html>
 <html/>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-<link rel="stylesheet" type="text/css" href="/css/style.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/6.1.1/adapter.js"></script>
-
 <head>
-  <!-- <script src="/js/main.js"></script> -->
-  <!-- <script src="/js/media.js"></script> -->
-  <!-- <script src="/socket.io/socket.io.js"></script> -->
-  <title></title>
+  <meta charset="utf-8">
+
+  <!-- ///MATERIALIZE & CSS/// -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+  <link rel="stylesheet" href="/public/lib/codemirror.css">
+  <link rel="stylesheet" href="/public/addon/fold/foldgutter.css">
+  <link rel="stylesheet" href="/public/addon/lint/lint.css">
+  <link rel="stylesheet" href="/public/addon/dialog/dialog.css">
+  <link rel="stylesheet" href="/public/addon/hint/show-hint.css">
+  <link rel="stylesheet" href="/public/addon/tern/tern.css">
+
+  <!-- ///MATERIALIZE & CSS/// -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/6.1.1/adapter.js"></script>
+
+  <!-- ///ADD-ONS FOR CODE EDITOR/// -->
+  <script src="/public/lib/codemirror.js"></script>
+  <script src="/public/addon/fold/foldcode.js"></script>
+  <script src="/public/addon/fold/foldgutter.js"></script>
+  <script src="/public/addon/fold/brace-fold.js"></script>
+  <script src="/public/addon/edit/matchbrackets.js"></script>
+  <script src="/public/addon/edit/closebrackets.js"></script>
+  <script src="/public/addon/selection/active-line.js"></script>
+  <script src="/public/mode/javascript/javascript.js"></script>
+  <script src="/public/addon/lint/lint.js"></script>
+  <script src="/public/addon/hint/jshint.min.js"></script>
+  <script src="/public/addon/lint/javascript-lint.js"></script>
+  <script src="/public/addon/dialog/dialog.js"></script>
+  <script src="/public/addon/hint/show-hint.js"></script>
+  <script src="/public/addon/tern/tern.js"></script>
+  <script src="http://ternjs.net/node_modules/acorn/dist/acorn.js"></script>
+  <script src="http://ternjs.net/node_modules/acorn/dist/acorn_loose.js"></script>
+  <script src="http://ternjs.net/node_modules/acorn/dist/walk.js"></script>
+  <script src="http://ternjs.net/doc/demo/polyfill.js"></script>
+  <script src="http://ternjs.net/lib/signal.js"></script>
+  <script src="http://ternjs.net/lib/tern.js"></script>
+  <script src="http://ternjs.net/lib/def.js"></script>
+  <script src="http://ternjs.net/lib/comment.js"></script>
+  <script src="http://ternjs.net/lib/infer.js"></script>
+  <script src="http://ternjs.net/plugin/doc_comment.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+
+
 </head>
 
 <body>
 
   <header>
-    <!-- <h1> chat</h1>
-    <h2>hello!</h2>
-    <h4 class="online">
-      <span class="count"></span>
-      people online!
-    </h4> -->
 
+    <!-- ///NAVBAR/// -->
     <nav class='z-depth-0'>
       <div class="nav-wrapper grey lighten-5">
         <a href="#" class="brand-logo center csoffice">
@@ -45,33 +75,36 @@
 
   <main>
 
-    <div class="cams">
-      <div class='student-cam'>
-        <video class="remote"></video>
+    <!-- ///CONTAINER/// -->
+    <div>
+      <!-- ///VIDEO/// -->
+      <div class="cams">
+        <div class='student-cam'>
+          <video class="remote"></video>
+        </div>
+        <div class='admin-cam'>
+          <video class="local" muted></video>
+        </div>
       </div>
-      <div class='admin-cam'>
-        <video class="local" muted></video>
-      </div>
+
+      <!-- ///CODE EDITOR/// -->
+      <div id="editor"></div>
+      <button id="run-code" type="button">Run Code</button>
+      <ul id="results"></ul>
     </div>
 
+    <!-- ///CHAT/// -->
     <div class="chat">
       <div class="history"></div>
       <div class="controls">
         <form class="text">
           <!-- <input type="text"> -->
-
-
           <button class="btn waves-effect waves-light send" type="submit" name="action">Send Message
           </button>
-
           <div class="ui input">
             <input type="text" placeholder="Message">
             <i class="circular search link icon"></i>
           </div>
-
-
-
-
         </form>
         <button class="next"></button>
       </div>
@@ -79,6 +112,8 @@
 
   </main>
   <script src="/js/bundle.js"></script>
+  <!-- <script src="/js/code_editor.js"></script> -->
+
 </body>
 
 
