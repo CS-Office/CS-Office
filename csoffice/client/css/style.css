@@ -6,16 +6,25 @@
   box-sizing: border-box;
 }
 
+html {
+  margin: 0px;
+  height: 100%;
+  width: 100%;
+}
+
 body {
+  min-height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   margin: 0;
-  padding: 30px;
-  font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
+  background-color: #ffffff;
+  font: 14px -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-a {
-  color: #00b7ff;
+.csoffice {
+  color: #2d2d2d;
+  font-weight: bold;
 }
 
 li {
@@ -23,10 +32,8 @@ li {
 }
 
 header {
-  background-color: orange;
   height: 70px;
   left: 0;
-  padding: 0 20px;
   position: absolute;
   right: 0;
   top: 0;
@@ -70,48 +77,67 @@ a {
 }
 
 .cams {
-  background-color: brown;
-  border: 5px solid black;
+  height: 150px;
+  margin-top: 70px;
+  background-color: #ffffff;
+  /* border: 5px solid black; */
   display: flex;
   flex-direction: row;
   justify-content: center;
   flex: 5;
-  /* position: absolute;
-  top: 70px;
-  left: 0; */
-  width: 70%;
-  /* bottom: 0; */
+  width: 50px;
+  /* position: fixed; */
+  /* left: 160px; */
+  z-index: -1;
 }
+
 .cams .remote,
 .cams .local {
   display: block;
-  width: 400px;
+  width: 30%;
+}
+
+.remote {
+  /* margin-left: 500px; */
+  margin-right: 5px;
+}
+
+.student-cam {
+  display: flex;
+  justify-content: flex-end;
+}
+.admin-cam {
+  display: flex;
+  justify-content: flex-start;
 }
 
 .chat {
-  background-color: pink;
+  background-color: #f9f9f9;
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  /* position: absolute; */
   top: 70px;
   bottom: 0;
   right: 0;
 }
 
 .history {
-  background-color: yellow;
+  margin-top: 80px;
+  background-color: #f9f9f9;
   padding: 10px;
-  height: 100%;
+  height: 700px;
   font-size: 18px;
   margin-right: 10px;
   float: right;
-
   flex-wrap: wrap;
   display: flex;
   flex-direction: column;
   /* overflow-wrap: normal; */
+}
+
+.send {
+  visibility: hidden;
 }
 
 div.local,
@@ -141,27 +167,27 @@ div.remote {
 }
 
 .controls {
-  position: absolute;
+  /* position: absolute;
   left: 0;
   bottom: 0;
-  right: 0;
-  background-color: white;
+  right: 0; */
+  background-color: #f9f9f9;
   height: 75px;
   padding: 15px;
 }
-.controls .text input,
+/* .controls .text input,
 .controls .send,
 .controls .next {
   height: 45px;
   padding: 5px;
   font-size: 18px;
-}
-.controls .text input {
+} */
+/* .controls .text input {
   width: 60%;
   float: left;
-}
-.controls button {
+} */
+/* .controls button {
   width: 18.5%;
   float: left;
   margin-left: 1%;
-}
+} */

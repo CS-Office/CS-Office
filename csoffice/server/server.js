@@ -51,10 +51,6 @@ require('./routes/authRoutes')(app); //require returns functions from routes fil
 const PORT = process.env.PORT || 3000;
 let server = app.listen(PORT, () => console.log('===SERVER LISTENING ON PORT 3000==='));
 
-// const server = http.createServer(app);
-// app.use(express.static(path.join(__dirname, 'client')));
-// server.listen(PORT);
-
 //////////////////SOCKET/////////////////
 var wsServer = new ws.Server({ server: server });
 

@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 <link rel="stylesheet" type="text/css" href="/css/style.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/6.1.1/adapter.js"></script>
 
@@ -24,13 +25,12 @@
       people online!
     </h4> -->
 
-    <nav>
-      <div class="nav-wrapper">
-        <a href="#" class="brand-logo">CSOFFICE</a>
-        <ul class="right hide-on-med-and-down">
-          <li>welcome</li>
-          <li>hello</li>
-          <li>yo</li>
+    <nav class='z-depth-0'>
+      <div class="nav-wrapper grey lighten-5">
+        <a href="#" class="brand-logo center csoffice">
+          <span class='csoffice'>CS Office</span>
+        </a>
+        <ul class="right hide-on-small-and-down csoffice">
           <li>
             <div class="online">
               <span class="count"></span>
@@ -46,22 +46,32 @@
   <main>
 
     <div class="cams">
-      <!-- <div class='student-cam'> -->
-      <video class="remote"></video>
-      <!-- </div> -->
-      <!-- <div class='admin-cam'> -->
-      <video class="local" muted></video>
-      <!-- </div> -->
+      <div class='student-cam'>
+        <video class="remote"></video>
+      </div>
+      <div class='admin-cam'>
+        <video class="local" muted></video>
+      </div>
     </div>
 
     <div class="chat">
       <div class="history"></div>
       <div class="controls">
         <form class="text">
-          <input type="text">
+          <!-- <input type="text"> -->
+
+
           <button class="btn waves-effect waves-light send" type="submit" name="action">Send Message
-            <i class="material-icons right">send</i>
           </button>
+
+          <div class="ui input">
+            <input type="text" placeholder="Message">
+            <i class="circular search link icon"></i>
+          </div>
+
+
+
+
         </form>
         <button class="next"></button>
       </div>
