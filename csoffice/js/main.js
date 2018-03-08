@@ -293,7 +293,7 @@ document.querySelector('#run-code').addEventListener('click', e => {
                postMessage(errorName + ' on line ' + lineNum + ': ' + error.message); 
              }
           }
-      };`;
+  };`;
 
   const newBlob = new Blob([s], { type: 'text/javascript' });
   const blobURL = URL.createObjectURL(newBlob);
@@ -313,7 +313,7 @@ document.querySelector('#run-code').addEventListener('click', e => {
       li.textContent = `${e.data}`;
     }
     document.querySelector('#results').appendChild(li);
-    this.terminate();
+    // this.terminate();
   };
 
   worker.postMessage(`${con}${code}`);
