@@ -313,7 +313,7 @@ document.querySelector('#run-code').addEventListener('click', e => {
       li.textContent = `${e.data}`;
     }
     document.querySelector('#results').appendChild(li);
-    // this.terminate();
+    this.terminate();
   };
 
   worker.postMessage(`${con}${code}`);
