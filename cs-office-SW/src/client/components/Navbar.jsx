@@ -1,11 +1,11 @@
 import React, { Compenent } from 'react';
-
+import Logo from './Logo.jsx';
 
 
 const Navbar = () => {
   return (
     <div>
-     I am the Navbar
+     <Logo />
     </div>
   )
 };
