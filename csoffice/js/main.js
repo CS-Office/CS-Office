@@ -2,18 +2,9 @@ var media = require('./media');
 require('./code_editor');
 var Peer = require('simple-peer');
 var Socket = require('simple-websocket');
-
-// let socket2 = require('socket.io');
-// let socket = new socket2();
-// var io = require('socket.io');
-// var socket = io();
-// var socket = io.connect();
-// let Socket = require('socket.io');
-// var socket = io.connect();
-// var socket = Socketio connect('http://localhost:3000');
-
-// let socket = io('http://localhost:3000');
 var socket = new Socket({ url: 'ws://' + window.location.host });
+
+/////////////////////VIDEO AND CHAT/////////////////////////
 
 var $chat = document.querySelector('form.text');
 var $count = document.querySelector('.count');
@@ -24,35 +15,21 @@ var $textInput = document.querySelector('.text input');
 var $videoLocal = document.querySelector('video.local');
 var $videoRemote = document.querySelector('video.remote');
 let worker;
-
 var $controls = document.querySelector('controls');
 
 function disableUI() {
   $textInput.disabled = true;
   $send.disabled = true;
-  // $next.disabled = true
 }
 
 function enableUI() {
   $textInput.disabled = false;
   $send.disabled = false;
-  $next.disabled = false;
   $textInput.focus();
 }
 
 disableUI();
 const messages = document.getElementById('history');
-
-function addChat(text, className) {
-  var node = document.createElement('div');
-  node.textContent = text;
-  node.className = className;
-  $history.prepend(node);
-}
-
-function clearChat() {
-  $history.innerHTML = '';
-}
 
 var peer, stream;
 
@@ -60,6 +37,7 @@ socket.on('error', function(err) {
   console.error('[socket error]', err.stack || err.message || err);
 });
 
+//INITIATE LOCAL VIDEO WITH MEDIA STREAM
 socket.on('connect', function() {
   addChat('Please grant access to your webcam. Remember to smile!', 'status');
   media.getUserMedia(function(err, s) {
@@ -73,14 +51,16 @@ socket.on('connect', function() {
   });
 });
 
+//IF PEER EXISTS ALREADY THEN CLOSE, OTHERWISE SEND TYPE 'PEER' TO SIGNALING SERVER
 function next(event) {
   if (event && event.preventDefault) {
     event.preventDefault();
   }
-  // if (peer) {
-  //   socket.send(JSON.stringify({ type: 'end' }));
-  //   peer.close();
-  // }
+  //IF PEER ALREADY EXISTS
+  if (peer) {
+    socket.send(JSON.stringify({ type: 'end' }));
+    peer.close();
+  }
   socket.send(JSON.stringify({ type: 'peer' }));
 
   disableUI();
@@ -88,11 +68,11 @@ function next(event) {
   addChat('Finding a peer...', 'status');
 }
 
-$next.addEventListener('click', next);
-
+//PEER HANDLER
 function handlePeer(data) {
   data = data || {};
 
+  //CREATE A NEW WEBRTC PEER CONNECTION AND ASSIGN DATA CHANNEL
   peer = new Peer({
     initiator: !!data.initiator,
     stream: stream,
@@ -113,16 +93,19 @@ function handlePeer(data) {
     console.error('peer error', err.stack || err.message || err);
   });
 
+  //ONCE PEER CONNECTS, CLEAR ALL TEXT FROM CHAT, ADD MESSAGE, AND ENABLEUI (INPUT AND SEND BUTTON)
   peer.on('connect', function() {
     clearChat();
     addChat('Connected, say hello!', 'status');
     enableUI();
   });
 
+  //WHEN PEER HAS SIGNALING DATA, SEND DATA TO SIGNALING SERVER
   peer.on('signal', function(data) {
     socket.send(JSON.stringify({ type: 'signal', data: data }));
   });
 
+  //ON STREAM INITIATE THE REMOTE VIDEO WITH REMOTE'S STREAM
   peer.on('stream', function(stream) {
     media.showStream($videoRemote, stream);
   });
@@ -135,16 +118,27 @@ function handlePeer(data) {
   peer.on('close', next);
 }
 
+//CALL THIS METHOD WHENEVER THE REMOTE PEER EMITS A PEER.ON('SIGNAL') EVENT
 function handleSignal(data) {
+  //PASS THE DATA FROM 'SIGNAL' EVENTS TO THE REMOTE PEER AND CALL .SIGNAL TO GET CONNECTED
   peer.signal(data);
 }
 
+//APPEND THE NUMBER OF PEOPLE IN THE ROOM TO THE DOM
 function handleCount(data) {
   $count.textContent = data;
 }
 
+/*
+'SIGNAL' = ICE, OFFER, ANSWER
+'PEER' = LOCAL PEER / REMOTE PEER
+'SEND CODE CHANGE' = CODE EDITOR EVENT CHANGES
+'COUNT' = NUMBER OF PEOPLE
+'END'
+*/
+
+//RECEIVED A MESSAGE FROM THE REMOTE PEER VIA DATA CHANNEL. MESSAGE THAT JSON STRINGS MUST BE PARSED
 socket.on('data', function(message) {
-  console.log('got socket message: ' + message);
   try {
     message = JSON.parse(message);
   } catch (err) {
@@ -153,11 +147,13 @@ socket.on('data', function(message) {
 
   if (message.type === 'signal') {
     handleSignal(message.data);
+    console.log('GOT SOCKET "SIGNAL" MESSAGE: ', message);
   } else if (message.type === 'count') {
     handleCount(message.data);
   } else if (message.type === 'end') {
     next();
   } else if (message.type === 'peer') {
+    console.log('GOT SOCKET "PEER" MESSAGE: ', message);
     handlePeer(message.data);
   } else if (message.type === 'send code change') {
     updateEditor(message.data);
@@ -167,7 +163,7 @@ socket.on('data', function(message) {
 $chat.addEventListener('submit', send);
 $send.addEventListener('click', send);
 
-
+//GET TEXT AND CALL ADDCHAT FUNCTION AND SEND TEXT TO PEER
 function send(event) {
   event.preventDefault();
   var text = $textInput.value;
@@ -176,7 +172,20 @@ function send(event) {
   $textInput.value = '';
 }
 
-//////////////////////////////////////////////
+//APPEND TEXT MESSAGE TO HISTORY
+function addChat(text, className) {
+  var node = document.createElement('div');
+  node.textContent = text;
+  node.className = className;
+  $history.prepend(node);
+}
+
+//CLEAR ALL TEXT IN HISTORY
+function clearChat() {
+  $history.innerHTML = '';
+}
+
+/////////////////////CODE EDITOR/////////////////////////
 
 console.log('========= IM INSIDE CODE_EDITOR.JS ===========', socket);
 // helper function for xmlHttpRequest();
