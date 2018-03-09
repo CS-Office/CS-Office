@@ -23,6 +23,7 @@ var $send = document.querySelector('.send');
 var $textInput = document.querySelector('.text input');
 var $videoLocal = document.querySelector('video.local');
 var $videoRemote = document.querySelector('video.remote');
+let worker;
 
 var $controls = document.querySelector('controls');
 
@@ -297,11 +298,15 @@ document.querySelector('#run-code').addEventListener('click', e => {
                postMessage(errorName + ' on line ' + lineNum + ': ' + error.message); 
              }
           }
-      };`;
+  };`;
 
   const newBlob = new Blob([s], { type: 'text/javascript' });
   const blobURL = URL.createObjectURL(newBlob);
-  const worker = new Worker(blobURL);
+  if (worker) worker.WorkerLocation = blobURL;
+  if (!worker) worker = new Worker(blobURL);
+
+  worker.postMessage(`${con}${code}`);
+  document.querySelector('#results').innerHTML = '';
 
   worker.onmessage = function(e) {
     const li = document.createElement('li');
@@ -317,13 +322,12 @@ document.querySelector('#run-code').addEventListener('click', e => {
       li.textContent = `${e.data}`;
     }
     document.querySelector('#results').appendChild(li);
-    this.terminate();
   };
-
-  worker.postMessage(`${con}${code}`);
+  // worker.terminate();
 });
 
 window.onbeforeunload = function() {
   socket.onclose = function() {};
   socket.close();
+  worker.terminate();
 };

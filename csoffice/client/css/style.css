@@ -85,7 +85,6 @@ a {
   flex-direction: row;
   justify-content: center;
   flex: 5;
-  width: 50px;
   /* position: fixed; */
   /* left: 160px; */
   z-index: -1;
@@ -120,6 +119,8 @@ a {
   top: 70px;
   bottom: 0;
   right: 0;
+
+  /* overflow: hidden; */
 }
 
 .history {
@@ -130,12 +131,17 @@ a {
   font-size: 18px;
   margin-right: 10px;
   float: right;
-  /* flex-wrap: wrap; */
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
-  /* overflow-wrap: normal; */
+  overflow: auto;
+
+  /* direction: rtl;
+  transform: rotate180deg; */
 }
+
+/* .history div {
+  transform: rotate180deg;
+} */
 
 .send {
   visibility: hidden;
@@ -143,6 +149,9 @@ a {
 
 div.local,
 div.remote {
+  /* transform: rotate180deg;
+  direction: ltr; */
+
   overflow-wrap: break-word;
   word-wrap: break-word;
   word-break: break-all;
@@ -198,7 +207,33 @@ div.remote {
   font-size: 16px;
 }
 
+#run-code {
+  margin-left: 10px !important;
+  padding: 0 !important;
+  text-align: center;
+  color: white;
+  font-size: 14px;
+  width: 150px;
+  height: 50px;
+  border-radius: 10px;
+}
+
 #run-code:hover {
+  margin: 0 !important;
+  padding: 0 !important;
   cursor: pointer;
-  opacity: 0.75;
+  /* opacity: 0.75; */
+}
+
+.result-container {
+  height: 150px;
+  overflow: auto;
+}
+
+.result-list li {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: -webkit-pre-wrap;
+  white-space: normal;
 }
