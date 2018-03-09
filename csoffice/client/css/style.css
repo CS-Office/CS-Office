@@ -119,6 +119,8 @@ a {
   top: 70px;
   bottom: 0;
   right: 0;
+
+  /* overflow: hidden; */
 }
 
 .history {
@@ -132,9 +134,14 @@ a {
   display: flex;
   flex-direction: column;
   overflow: auto;
-  /* transform: rotate(180deg);
-  direction: rtl; */
+
+  /* direction: rtl;
+  transform: rotate180deg; */
 }
+
+/* .history div {
+  transform: rotate180deg;
+} */
 
 .send {
   visibility: hidden;
@@ -142,8 +149,9 @@ a {
 
 div.local,
 div.remote {
-  /* transform: rotate(180deg);
+  /* transform: rotate180deg;
   direction: ltr; */
+
   overflow-wrap: break-word;
   word-wrap: break-word;
   word-break: break-all;
@@ -220,13 +228,9 @@ div.remote {
 .result-container {
   height: 150px;
   overflow: auto;
-  transform: rotate(180deg);
-  direction: rtr;
 }
 
 .result-list li {
-  transform: rotate(180deg);
-  direction: ltr;
   overflow-wrap: break-word;
   word-wrap: break-word;
   word-break: break-all;

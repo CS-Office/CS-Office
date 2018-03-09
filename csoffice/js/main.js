@@ -25,7 +25,6 @@ var $videoLocal = document.querySelector('video.local');
 var $videoRemote = document.querySelector('video.remote');
 let worker;
 
-
 function disableUI() {
   $textInput.disabled = true;
   $send.disabled = true;
@@ -300,7 +299,6 @@ document.querySelector('#run-code').addEventListener('click', e => {
   const newBlob = new Blob([s], { type: 'text/javascript' });
   const blobURL = URL.createObjectURL(newBlob);
   if (worker) worker.terminate();
-  
 
   worker = new Worker(blobURL);
 
