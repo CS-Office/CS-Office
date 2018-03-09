@@ -129,10 +129,11 @@ a {
   font-size: 18px;
   margin-right: 10px;
   float: right;
-  flex-wrap: wrap;
   display: flex;
   flex-direction: column;
-  /* overflow-wrap: normal; */
+  overflow: auto;
+  /* transform: rotate(180deg);
+  direction: rtl; */
 }
 
 .send {
@@ -141,6 +142,8 @@ a {
 
 div.local,
 div.remote {
+  /* transform: rotate(180deg);
+  direction: ltr; */
   overflow-wrap: break-word;
   word-wrap: break-word;
   word-break: break-all;
@@ -212,4 +215,21 @@ div.remote {
   padding: 0 !important;
   cursor: pointer;
   /* opacity: 0.75; */
+}
+
+.result-container {
+  height: 150px;
+  overflow: auto;
+  transform: rotate(180deg);
+  direction: rtr;
+}
+
+.result-list li {
+  transform: rotate(180deg);
+  direction: ltr;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: -webkit-pre-wrap;
+  white-space: normal;
 }
