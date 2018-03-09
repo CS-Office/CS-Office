@@ -31,6 +31,19 @@ function enableUI() {
 disableUI();
 const messages = document.getElementById('history');
 
+function send(event) {
+  event.preventDefault();
+  var text = $textInput.value;
+  addChat(text, 'local');
+  peer.send(text);
+  $textInput.value = '';
+}
+
+//CLEAR ALL TEXT IN HISTORY
+function clearChat() {
+  $history.innerHTML = '';
+}
+
 var peer, stream;
 
 socket.on('error', function(err) {
@@ -164,13 +177,6 @@ $chat.addEventListener('submit', send);
 $send.addEventListener('click', send);
 
 //GET TEXT AND CALL ADDCHAT FUNCTION AND SEND TEXT TO PEER
-function send(event) {
-  event.preventDefault();
-  var text = $textInput.value;
-  addChat(text, 'local');
-  peer.send(text);
-  $textInput.value = '';
-}
 
 //APPEND TEXT MESSAGE TO HISTORY
 function addChat(text, className) {
@@ -178,11 +184,6 @@ function addChat(text, className) {
   node.textContent = text;
   node.className = className;
   $history.prepend(node);
-}
-
-//CLEAR ALL TEXT IN HISTORY
-function clearChat() {
-  $history.innerHTML = '';
 }
 
 /////////////////////CODE EDITOR/////////////////////////

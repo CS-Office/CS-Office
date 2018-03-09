@@ -108,11 +108,11 @@ function onmessage(data) {
 
   if (message.type === 'peer') {
     if (waitingId && waitingId !== this.id) {
-      //IF WAITING ID IS TRUE AND DOES NOT EQUAL PEER1'S ID THEN ASSIGN WAITINGID TO PEER2
-      var peer2 = peers[waitingId];
+      //IF WAITING ID IS TRUE AND DOES NOT EQUAL PEER1'S ID THEN ASSIGN WAITINGID TO peer
+      var peer = peers[waitingId];
 
-      this.peerId = peer2.id;
-      peer2.peerId = this.id;
+      this.peerId = peer.id;
+      peer.peerId = this.id;
 
       //send peer1 as the initiator
       this.send(
@@ -126,7 +126,7 @@ function onmessage(data) {
       );
 
       //send peer
-      peer2.send(
+      peer.send(
         JSON.stringify({
           type: 'peer'
         }),
@@ -140,15 +140,15 @@ function onmessage(data) {
   } else if (message.type === 'signal') {
     //SEND ICE CANDIDATE, OFFER, AND ANSWER (MESSAGE.DATA)
     if (!this.peerId) return console.error('unexpected `signal` message');
-    var peer2 = peers[this.peerId];
-    peer2.send(JSON.stringify({ type: 'signal', data: message.data }));
+    var peer = peers[this.peerId];
+    peer.send(JSON.stringify({ type: 'signal', data: message.data }));
     console.log('=== SENDING ICE, OFFER, OR ANSWER ===');
   } else if (message.type === 'end') {
     if (!this.peerId) return console.error('unexpected `end` message');
-    var peer2 = peers[this.peerId];
-    peer2.peerId = null;
+    var peer = peers[this.peerId];
+    peer.peerId = null;
     this.peerId = null;
-    peer2.send(JSON.stringify({ type: 'end' }), onsend);
+    peer.send(JSON.stringify({ type: 'end' }), onsend);
   } else if (message.type === 'send code change') {
     console.log('=== ON CODE CHANGE MESSAGE SERVER.JS=== ', message);
 
