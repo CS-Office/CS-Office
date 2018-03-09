@@ -23,6 +23,8 @@ var $send = document.querySelector('.send');
 var $textInput = document.querySelector('.text input');
 var $videoLocal = document.querySelector('video.local');
 var $videoRemote = document.querySelector('video.remote');
+let worker;
+
 
 function disableUI() {
   $textInput.disabled = true;
@@ -297,7 +299,12 @@ document.querySelector('#run-code').addEventListener('click', e => {
 
   const newBlob = new Blob([s], { type: 'text/javascript' });
   const blobURL = URL.createObjectURL(newBlob);
-  const worker = new Worker(blobURL);
+  if (worker) worker.terminate();
+  
+
+  worker = new Worker(blobURL);
+
+  worker.postMessage(`${con}${code}`);
 
   worker.onmessage = function(e) {
     const li = document.createElement('li');
@@ -313,10 +320,7 @@ document.querySelector('#run-code').addEventListener('click', e => {
       li.textContent = `${e.data}`;
     }
     document.querySelector('#results').appendChild(li);
-    this.terminate();
   };
-
-  worker.postMessage(`${con}${code}`);
 });
 
 window.onbeforeunload = function() {
