@@ -44,7 +44,7 @@ function addChat(text, className) {
   var node = document.createElement('div');
   node.textContent = text;
   node.className = className;
-  $history.appendChild(node);
+  $history.prepend(node);
 }
 
 function clearChat() {
