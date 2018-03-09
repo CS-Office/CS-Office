@@ -298,11 +298,11 @@ document.querySelector('#run-code').addEventListener('click', e => {
 
   const newBlob = new Blob([s], { type: 'text/javascript' });
   const blobURL = URL.createObjectURL(newBlob);
-  if (worker) worker.terminate();
-
-  worker = new Worker(blobURL);
+  if (worker) worker.WorkerLocation = blobURL;
+  if (!worker) worker = new Worker(blobURL);
 
   worker.postMessage(`${con}${code}`);
+  document.querySelector('#results').innerHTML = '';
 
   worker.onmessage = function(e) {
     const li = document.createElement('li');
@@ -319,9 +319,11 @@ document.querySelector('#run-code').addEventListener('click', e => {
     }
     document.querySelector('#results').appendChild(li);
   };
+  // worker.terminate();
 });
 
 window.onbeforeunload = function() {
   socket.onclose = function() {};
   socket.close();
+  worker.terminate();
 };
