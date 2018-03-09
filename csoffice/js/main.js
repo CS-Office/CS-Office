@@ -303,6 +303,7 @@ document.querySelector('#run-code').addEventListener('click', e => {
   if (!worker) worker = new Worker(blobURL);
 
   worker.postMessage(`${con}${code}`);
+  document.querySelector('#results').innerHTML = '';
 
   worker.onmessage = function(e) {
     const li = document.createElement('li');
