@@ -130,9 +130,10 @@ a {
   font-size: 18px;
   margin-right: 10px;
   float: right;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
   /* overflow-wrap: normal; */
 }
 

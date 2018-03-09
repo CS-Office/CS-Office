@@ -24,6 +24,8 @@ var $textInput = document.querySelector('.text input');
 var $videoLocal = document.querySelector('video.local');
 var $videoRemote = document.querySelector('video.remote');
 
+var $controls = document.querySelector('controls');
+
 function disableUI() {
   $textInput.disabled = true;
   $send.disabled = true;
@@ -38,6 +40,7 @@ function enableUI() {
 }
 
 disableUI();
+const messages = document.getElementById('history');
 
 function addChat(text, className) {
   var node = document.createElement('div');
@@ -162,6 +165,7 @@ socket.on('data', function(message) {
 
 $chat.addEventListener('submit', send);
 $send.addEventListener('click', send);
+
 
 function send(event) {
   event.preventDefault();
