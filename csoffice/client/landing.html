@@ -99,19 +99,21 @@
 
 
       <!-- <button id="run-code" type="button">Run Code</button> -->
-      <ul id="results"></ul>
+      <div class='result-container'>
+        <ul class='result-list' id="results"></ul>
+      </div>
     </div>
 
     <!-- ///CHAT/// -->
     <div class="chat">
-      <div class="history"></div>
+      <div class="history" id="history"></div>
       <div class="controls">
-        <form class="text">
+        <form class="text" onsubmit="handle">
           <!-- <input type="text"> -->
           <button class="btn waves-effect waves-light send" type="submit" name="action">Send Message
           </button>
           <div class="ui input">
-            <input type="text" placeholder="Message">
+            <input id="chatMessage" type="text" placeholder="Message" onkeypress="handle(event)"> 
             <i class="circular search link icon"></i>
           </div>
         </form>
@@ -120,8 +122,17 @@
     </div>
 
   </main>
+  <script>
+      function handle(e){
+        if(e.keyCode === 13){
+            console.log('in here again')
+            var elem = document.getElementById('history');
+            elem.scrollTop = elem.scrollHeight;
+        }
+    }
+  </script>
+
   <script src="/js/bundle.js"></script>
-  <!-- <script src="/js/code_editor.js"></script> -->
 
 </body>
 

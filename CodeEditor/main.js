@@ -1,4 +1,3 @@
-window.onload = function ()  {
     function getURL(url, c) {
         var xhr = new XMLHttpRequest();
         xhr.open("get", url, true);
@@ -93,11 +92,9 @@ window.onload = function ()  {
                 li.textContent = `${e.data}`;
             }
             document.querySelector('#results').appendChild(li);
-            this.terminate();
+            // this.terminate();
         };
         
         worker.postMessage(`${con}${code}`);
      }); 
-}
-
 

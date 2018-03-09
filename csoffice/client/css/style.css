@@ -129,10 +129,9 @@ a {
   font-size: 18px;
   margin-right: 10px;
   float: right;
-  flex-wrap: wrap;
   display: flex;
   flex-direction: column;
-  /* overflow-wrap: normal; */
+  overflow: auto;
 }
 
 .send {
@@ -211,5 +210,17 @@ div.remote {
   margin: 0 !important;
   padding: 0 !important;
   cursor: pointer;
-  /* opacity: 0.75; */
+}
+
+.result-container {
+  height: 150px;
+  overflow: auto;
+}
+
+.result-list li {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: -webkit-pre-wrap;
+  white-space: normal;
 }
