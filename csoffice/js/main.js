@@ -2,7 +2,9 @@ var media = require('./media');
 require('./code_editor');
 var Peer = require('simple-peer');
 var Socket = require('simple-websocket');
-var socket = new Socket({ url: 'ws://' + window.location.host });
+var socket = new Socket({
+  url: 'ws://' + window.location.host
+});
 
 /////////////////////VIDEO AND CHAT/////////////////////////
 
@@ -31,19 +33,6 @@ function enableUI() {
 disableUI();
 const messages = document.getElementById('history');
 
-function send(event) {
-  event.preventDefault();
-  var text = $textInput.value;
-  addChat(text, 'local');
-  peer.send(text);
-  $textInput.value = '';
-}
-
-//CLEAR ALL TEXT IN HISTORY
-function clearChat() {
-  $history.innerHTML = '';
-}
-
 var peer, stream;
 
 socket.on('error', function(err) {
@@ -71,10 +60,18 @@ function next(event) {
   }
   //IF PEER ALREADY EXISTS
   if (peer) {
-    socket.send(JSON.stringify({ type: 'end' }));
+    socket.send(
+      JSON.stringify({
+        type: 'end'
+      })
+    );
     peer.close();
   }
-  socket.send(JSON.stringify({ type: 'peer' }));
+  socket.send(
+    JSON.stringify({
+      type: 'peer'
+    })
+  );
 
   disableUI();
   clearChat();
@@ -91,8 +88,12 @@ function handlePeer(data) {
     stream: stream,
     config: {
       iceServers: [
-        { urls: 'stun:stun.services.mozilla.com' },
-        { urls: 'stun:stun.l.google.com:19302' },
+        {
+          urls: 'stun:stun.services.mozilla.com'
+        },
+        {
+          urls: 'stun:stun.l.google.com:19302'
+        },
         {
           urls: 'turn:numb.viagenie.ca',
           credential: 'codesmith',
@@ -115,7 +116,12 @@ function handlePeer(data) {
 
   //WHEN PEER HAS SIGNALING DATA, SEND DATA TO SIGNALING SERVER
   peer.on('signal', function(data) {
-    socket.send(JSON.stringify({ type: 'signal', data: data }));
+    socket.send(
+      JSON.stringify({
+        type: 'signal',
+        data: data
+      })
+    );
   });
 
   //ON STREAM INITIATE THE REMOTE VIDEO WITH REMOTE'S STREAM
@@ -183,7 +189,20 @@ function addChat(text, className) {
   var node = document.createElement('div');
   node.textContent = text;
   node.className = className;
-  $history.prepend(node);
+  $history.appendChild(node);
+}
+
+function send(event) {
+  event.preventDefault();
+  var text = $textInput.value;
+  addChat(text, 'local');
+  peer.send(text);
+  $textInput.value = '';
+}
+
+//CLEAR ALL TEXT IN HISTORY
+function clearChat() {
+  $history.innerHTML = '';
 }
 
 /////////////////////CODE EDITOR/////////////////////////
@@ -206,7 +225,9 @@ function getURL(url, c) {
 // tern - addon that brings autocomplete functionality
 getURL('http://ternjs.net/defs/ecmascript.json', function(err, code) {
   if (err) throw new Error('Request for ecmascript.json: ' + err);
-  server = new CodeMirror.TernServer({ defs: [JSON.parse(code)] });
+  server = new CodeMirror.TernServer({
+    defs: [JSON.parse(code)]
+  });
   editor.setOption('extraKeys', {
     'Ctrl-Space': function(cm) {
       server.complete(cm);
@@ -261,7 +282,12 @@ editor.on('change', cMirror => {
   const code = cMirror.getValue();
   console.log(code);
 
-  socket.send(JSON.stringify({ type: 'send code change', data: code }));
+  socket.send(
+    JSON.stringify({
+      type: 'send code change',
+      data: code
+    })
+  );
 
   // socket.send('send code change', code);
   console.log('changed changed changed');
@@ -310,7 +336,9 @@ document.querySelector('#run-code').addEventListener('click', e => {
           }
   };`;
 
-  const newBlob = new Blob([s], { type: 'text/javascript' });
+  const newBlob = new Blob([s], {
+    type: 'text/javascript'
+  });
   const blobURL = URL.createObjectURL(newBlob);
   if (worker) worker.WorkerLocation = blobURL;
   if (!worker) worker = new Worker(blobURL);
