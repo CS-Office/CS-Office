@@ -1,31 +1,26 @@
 import React, { Component } from 'react';
-import "../css/main.css";
+import ReactDOM from 'react-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 
-import LoginPage from './LoginPage.jsx';
+import Header from './Header.jsx';
+import Office from './Office.jsx';
+import Login from './Login.jsx';
 import SignUp from './SignUp.jsx';
-import Navbar from './Navbar.jsx';
-import Logo from './Logo.jsx';
-import CodeEditor from './CodeEditor.jsx';
-import SolutionBox from './SolutionBox.jsx';
-import ChatBox from './ChatBox.jsx';
-import ChatInput from './ChatInput.jsx';
-import AdminPage from './AdminPage.jsx';
-
-import Video from './Video.jsx';
 
 class App extends Component {
-  render () {
+  render() {
     return (
-      <div>
-        <LoginPage/>
-        <SignUp />
-        <Navbar />
-        <CodeEditor />
-        <Video />
-        <ChatBox />
-        <AdminPage /> 
+      <div className="container">
+        <BrowserRouter>
+          <div>
+            <Header />
+            <Route exact={true} path="/" component={Login} />
+            <Route exact={true} path="/signup" component={SignUp} />
+            {/* <Route exact={true} path="/office" component={Office} /> */}
+          </div>
+        </BrowserRouter>
       </div>
-    )
+    );
   }
 }
 
