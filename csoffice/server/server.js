@@ -142,7 +142,7 @@ function onmessage(data) {
     if (!this.peerId) return console.error('unexpected `signal` message');
     var peer = peers[this.peerId];
     peer.send(JSON.stringify({ type: 'signal', data: message.data }));
-    console.log('=== SENDING ICE, OFFER, OR ANSWER ===');
+    console.log('=== SENDING ICE, OFFER, OR ANSWER ===', message);
   } else if (message.type === 'end') {
     if (!this.peerId) return console.error('unexpected `end` message');
     var peer = peers[this.peerId];

@@ -60,6 +60,7 @@ function next(event) {
   }
   //IF PEER ALREADY EXISTS
   if (peer) {
+    console.log('=== I DONT WANT TO END ===', peer);
     socket.send(
       JSON.stringify({
         type: 'end'
@@ -130,6 +131,7 @@ function handlePeer(data) {
   });
 
   peer.on('data', function(message) {
+    console.log('=== text message ===', message);
     addChat(message, 'remote');
   });
 
