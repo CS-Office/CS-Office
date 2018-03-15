@@ -33,6 +33,7 @@
     "passport-cookie": "^1.0.4",
     "passport-google-oauth20": "^1.0.0",
     "path": "^0.12.7",
+    "prop-types": "^15.6.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-google-login": "^3.0.10",

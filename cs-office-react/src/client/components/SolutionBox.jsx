@@ -1,13 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-const SolutionBox = () => {
-  return (
-    <div>
-      this is the SolutionBox
-    </div>
-  )
-}
-
-
+const SolutionBox = () => <div>this is the SolutionBox</div>;
 
 export default SolutionBox;
