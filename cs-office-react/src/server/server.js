@@ -3,7 +3,10 @@ const path = require('path');
 const hat = require('hat');
 const ws = require('ws');
 const express = require('express');
+const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+
+const app = express();
 
 //  FILES
 const keys = require('../config/keys');
@@ -18,7 +21,6 @@ mongoose.connection.once('open', () => {
 });
 
 //  EXPRESS
-const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -34,11 +36,12 @@ app.use(passport.session());
 
 // COOKIE SESSION // ENCRYPTS COOKIE - SET NAME, AGE (24 HOURS), AND KEY
 const cookieSession = require('cookie-session');
-app.use(cookieSession({
+app.use(
+  cookieSession({
     name: 'hi im a cookie',
     maxAge: 30 * 24 * 60 * 60 * 1000,
     keys: [keys.cookieKey],
-  })
+  }),
 );
 
 //  PATH FOR STATIC FILES
