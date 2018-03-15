@@ -10002,7 +10002,7 @@ var _Login = __webpack_require__(105);
 
 var _Login2 = _interopRequireDefault(_Login);
 
-var _SignUp = __webpack_require__(106);
+var _SignUp = __webpack_require__(108);
 
 var _SignUp2 = _interopRequireDefault(_SignUp);
 
@@ -10024,31 +10024,35 @@ var App = function (_Component) {
 
     _this.state = { isAuth: false };
 
-    // this.authorize = this.authorize.bind(this);
+    _this.authorize = _this.authorize.bind(_this);
     return _this;
   }
 
-  // authorize(e) {
-  //   e.preventDefault();
-  //   const href = e.target.parentNode.href;
-  //   console.log(href);
-
-  //   axios.get('/api/current_user').then(function(user) {
-  //     if (user) {
-  //       this.setState({ isAuth: true });
-  //     } else {
-  //       console.log('SIGN IN PLEASE');
-  //     }
-  //   });
-
-  // fetch('/auth/google')
-  //   .then(this.setState({ isAuth: true }))
-  //   .catch(err => console.log(err));
-  // }
-
   _createClass(App, [{
+    key: 'authorize',
+    value: function authorize(response) {
+      //   e.preventDefault();
+      //   const href = e.target.parentNode.href;
+      // console.log(response);
+
+      //   axios.get('/api/current_user').then(function(user) {
+      //     if (user) {
+      //       this.setState({ isAuth: true });
+      //     } else {
+      //       console.log('SIGN IN PLEASE');
+      //     }
+      //   });
+
+      // fetch('/auth/google')
+      // .then(this.setState({ isAuth: true }))
+      //   .catch(err => console.log(err));
+      this.setState({ isAuth: true });
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       console.log(this.state);
       return _react2.default.createElement(
         'div',
@@ -10060,9 +10064,14 @@ var App = function (_Component) {
             'div',
             null,
             _react2.default.createElement(_Header2.default, null),
-            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _Login2.default }),
+            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', render: function render() {
+                return _this2.state.isAuth ? _react2.default.createElement(_reactRouterDom.Redirect, { to: '/office' }) : _react2.default.createElement(_Login2.default, { clickHandler: _this2.authorize });
+              } }),
+            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/login', component: _Login2.default }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/signup', component: _SignUp2.default }),
-            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/office', component: _Office2.default })
+            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/office', render: function render() {
+                return _this2.state.isAuth ? _react2.default.createElement(_Office2.default, null) : _react2.default.createElement(_Login2.default, { clickHandler: _this2.authorize });
+              } })
           )
         )
       );
@@ -15131,38 +15140,28 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactGoogleLogin = __webpack_require__(106);
+
+var _reactGoogleLogin2 = _interopRequireDefault(_reactGoogleLogin);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Login = function Login(props) {
+  var responseGoogle = function responseGoogle(response) {
+    console.log("This is the googleID", response.googleId);
+    console.log("This is the tokenID", response.tokenId);
+    props.clickHandler(response);
+  };
   return _react2.default.createElement(
     "div",
     null,
     _react2.default.createElement(
       "form",
-      null,
-      _react2.default.createElement(
-        "label",
-        { htmlFor: "email" },
-        "Email Address:"
-      ),
-      _react2.default.createElement("input", { type: "email", id: "email", name: "email" }),
-      _react2.default.createElement(
-        "label",
-        { htmlFor: "password" },
-        "Password:"
-      ),
-      _react2.default.createElement("input", { type: "password", id: "password", name: "password" }),
-      _react2.default.createElement("input", { type: "submit", value: "Login" }),
-      _react2.default.createElement("br", null),
-      _react2.default.createElement(
-        "li",
-        null,
-        _react2.default.createElement(
-          "a",
-          { href: "/auth/google" },
-          _react2.default.createElement("img", { id: "google_button", src: "../public/images/google_button.png" })
-        )
-      )
+      { "class": "login-form" },
+      _react2.default.createElement(_reactGoogleLogin2.default, { className: "oAuth-Button", clientId: "881814036265-o68utsk4u8c3drq95k0p16qe72ups74j.apps.googleusercontent.com", buttonText: "", onSuccess: responseGoogle, onFailure: responseGoogle }),
+      _react2.default.createElement("input", { type: "email", id: "email", className: "text-input", name: "email", placeholder: "Email address" }),
+      _react2.default.createElement("input", { type: "password", id: "password", name: "password", placeholder: "Password" }),
+      _react2.default.createElement("input", { type: "submit", value: "Login" })
     )
   );
 };
@@ -15171,6 +15170,273 @@ exports.default = Login;
 
 /***/ }),
 /* 106 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(module) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+!function (e, t) {
+  "object" == ( false ? "undefined" : _typeof(exports)) && "object" == ( false ? "undefined" : _typeof(module)) ? module.exports = t(__webpack_require__(0)) :  true ? !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0)], __WEBPACK_AMD_DEFINE_FACTORY__ = (t),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)) : "object" == (typeof exports === "undefined" ? "undefined" : _typeof(exports)) ? exports.GoogleLogin = t(require("react")) : e.GoogleLogin = t(e.react);
+}(undefined, function (e) {
+  return function (e) {
+    function t(o) {
+      if (n[o]) return n[o].exports;var r = n[o] = { i: o, l: !1, exports: {} };return e[o].call(r.exports, r, r.exports, t), r.l = !0, r.exports;
+    }var n = {};return t.m = e, t.c = n, t.d = function (e, n, o) {
+      t.o(e, n) || Object.defineProperty(e, n, { configurable: !1, enumerable: !0, get: o });
+    }, t.n = function (e) {
+      var n = e && e.__esModule ? function () {
+        return e.default;
+      } : function () {
+        return e;
+      };return t.d(n, "a", n), n;
+    }, t.o = function (e, t) {
+      return Object.prototype.hasOwnProperty.call(e, t);
+    }, t.p = "", t(t.s = 3);
+  }([function (e, t, n) {
+    "use strict";
+    function o(e, t) {
+      if (!(e instanceof t)) throw new TypeError("Cannot call a class as a function");
+    }function r(e, t) {
+      if (!e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return !t || "object" != (typeof t === "undefined" ? "undefined" : _typeof(t)) && "function" != typeof t ? e : t;
+    }function i(e, t) {
+      if ("function" != typeof t && null !== t) throw new TypeError("Super expression must either be null or a function, not " + (typeof t === "undefined" ? "undefined" : _typeof(t)));e.prototype = Object.create(t && t.prototype, { constructor: { value: e, enumerable: !1, writable: !0, configurable: !0 } }), t && (Object.setPrototypeOf ? Object.setPrototypeOf(e, t) : e.__proto__ = t);
+    }var a = n(1),
+        s = n.n(a),
+        u = n(2),
+        c = (n.n(u), function () {
+      function e(e, t) {
+        for (var n = 0; n < t.length; n++) {
+          var o = t[n];o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, o.key, o);
+        }
+      }return function (t, n, o) {
+        return n && e(t.prototype, n), o && e(t, o), t;
+      };
+    }()),
+        l = function (e) {
+      function t(e) {
+        o(this, t);var n = r(this, (t.__proto__ || Object.getPrototypeOf(t)).call(this, e));return n.signIn = n.signIn.bind(n), n.enableButton = n.enableButton.bind(n), n.state = { disabled: !0 }, n;
+      }return i(t, e), c(t, [{ key: "componentDidMount", value: function value() {
+          var e = this,
+              t = this.props,
+              n = t.clientId,
+              o = t.cookiePolicy,
+              r = t.loginHint,
+              i = t.hostedDomain,
+              a = t.autoLoad,
+              s = t.isSignedIn,
+              u = t.fetchBasicProfile,
+              c = t.redirectUri,
+              l = t.discoveryDocs,
+              p = t.onFailure,
+              f = t.uxMode,
+              d = t.scope,
+              g = t.accessType,
+              h = t.responseType,
+              b = t.jsSrc;!function (e, t, n, o) {
+            var r = e.getElementsByTagName(t)[0],
+                i = r,
+                a = r;a = e.createElement(t), a.id = "google-login", a.src = b, i && i.parentNode ? i.parentNode.insertBefore(a, i) : e.head.appendChild(a), a.onload = o;
+          }(document, "script", 0, function () {
+            var t = { client_id: n, cookie_policy: o, login_hint: r, hosted_domain: i, fetch_basic_profile: u, discoveryDocs: l, ux_mode: f, redirect_uri: c, scope: d, access_type: g };"code" === h && (t.access_type = "offline"), window.gapi.load("auth2", function () {
+              e.enableButton(), window.gapi.auth2.getAuthInstance() || window.gapi.auth2.init(t).then(function (t) {
+                s && t.isSignedIn.get() && e.handleSigninSuccess(t.currentUser.get());
+              }, function (e) {
+                return p(e);
+              }), a && e.signIn();
+            });
+          });
+        } }, { key: "componentWillUnmount", value: function value() {
+          this.enableButton = function () {};
+        } }, { key: "enableButton", value: function value() {
+          this.setState({ disabled: !1 });
+        } }, { key: "signIn", value: function value(e) {
+          var t = this;if (e && e.preventDefault(), !this.state.disabled) {
+            var n = window.gapi.auth2.getAuthInstance(),
+                o = this.props,
+                r = o.onSuccess,
+                i = o.onRequest,
+                a = o.onFailure,
+                s = o.prompt,
+                u = o.responseType,
+                c = { prompt: s };i(), "code" === u ? n.grantOfflineAccess(c).then(function (e) {
+              return r(e);
+            }, function (e) {
+              return a(e);
+            }) : n.signIn(c).then(function (e) {
+              return t.handleSigninSuccess(e);
+            }, function (e) {
+              return a(e);
+            });
+          }
+        } }, { key: "handleSigninSuccess", value: function value(e) {
+          var t = e.getBasicProfile(),
+              n = e.getAuthResponse();e.googleId = t.getId(), e.tokenObj = n, e.tokenId = n.id_token, e.accessToken = n.access_token, e.profileObj = { googleId: t.getId(), imageUrl: t.getImageUrl(), email: t.getEmail(), name: t.getName(), givenName: t.getGivenName(), familyName: t.getFamilyName() }, this.props.onSuccess(e);
+        } }, { key: "render", value: function value() {
+          var e = this.props,
+              t = e.tag,
+              n = e.type,
+              o = e.style,
+              r = e.className,
+              i = e.disabledStyle,
+              a = e.buttonText,
+              u = e.children,
+              c = this.state.disabled || this.props.disabled,
+              l = { display: "inline-block", background: "#d14836", color: "#fff", width: 190, paddingTop: 10, paddingBottom: 10, borderRadius: 2, border: "1px solid transparent", fontSize: 16, fontWeight: "bold", fontFamily: "Roboto" },
+              p = function () {
+            return o || (r && !o ? {} : l);
+          }(),
+              f = function () {
+            return c ? Object.assign({}, p, i) : p;
+          }();return s.a.createElement(t, { onClick: this.signIn, style: f, type: n, disabled: c, className: r }, u || a);
+        } }]), t;
+    }(a.Component);l.defaultProps = { type: "button", tag: "button", buttonText: "Login with Google", scope: "profile email", accessType: "online", prompt: "", cookiePolicy: "single_host_origin", fetchBasicProfile: !0, isSignedIn: !1, uxMode: "popup", disabledStyle: { opacity: .6 }, onRequest: function onRequest() {}, jsSrc: "https://apis.google.com/js/client:platform.js" }, t.a = l;
+  }, function (t, n) {
+    t.exports = e;
+  }, function (e, t, n) {
+    "function" == typeof Symbol && Symbol.iterator, e.exports = n(5)();
+  }, function (e, t, n) {
+    e.exports = n(4);
+  }, function (e, t, n) {
+    "use strict";
+    Object.defineProperty(t, "__esModule", { value: !0 });var o = n(0);n.d(t, "default", function () {
+      return o.a;
+    }), n.d(t, "GoogleLogin", function () {
+      return o.a;
+    });var r = n(9);n.d(t, "GoogleLogout", function () {
+      return r.a;
+    });
+  }, function (e, t, n) {
+    "use strict";
+    var o = n(6),
+        r = n(7),
+        i = n(8);e.exports = function () {
+      function e(e, t, n, o, a, s) {
+        s !== i && r(!1, "Calling PropTypes validators directly is not supported by the `prop-types` package. Use PropTypes.checkPropTypes() to call them. Read more at http://fb.me/use-check-prop-types");
+      }function t() {
+        return e;
+      }e.isRequired = e;var n = { array: e, bool: e, func: e, number: e, object: e, string: e, symbol: e, any: e, arrayOf: t, element: e, instanceOf: t, node: e, objectOf: t, oneOf: t, oneOfType: t, shape: t, exact: t };return n.checkPropTypes = o, n.PropTypes = n, n;
+    };
+  }, function (e, t, n) {
+    "use strict";
+    function o(e) {
+      return function () {
+        return e;
+      };
+    }var r = function r() {};r.thatReturns = o, r.thatReturnsFalse = o(!1), r.thatReturnsTrue = o(!0), r.thatReturnsNull = o(null), r.thatReturnsThis = function () {
+      return this;
+    }, r.thatReturnsArgument = function (e) {
+      return e;
+    }, e.exports = r;
+  }, function (e, t, n) {
+    "use strict";
+    function o(e, t, n, o, i, a, s, u) {
+      if (r(t), !e) {
+        var c;if (void 0 === t) c = new Error("Minified exception occurred; use the non-minified dev environment for the full error message and additional helpful warnings.");else {
+          var l = [n, o, i, a, s, u],
+              p = 0;c = new Error(t.replace(/%s/g, function () {
+            return l[p++];
+          })), c.name = "Invariant Violation";
+        }throw c.framesToPop = 1, c;
+      }
+    }var r = function r(e) {};e.exports = o;
+  }, function (e, t, n) {
+    "use strict";
+    e.exports = "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED";
+  }, function (e, t, n) {
+    "use strict";
+    function o(e, t) {
+      if (!(e instanceof t)) throw new TypeError("Cannot call a class as a function");
+    }function r(e, t) {
+      if (!e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return !t || "object" != (typeof t === "undefined" ? "undefined" : _typeof(t)) && "function" != typeof t ? e : t;
+    }function i(e, t) {
+      if ("function" != typeof t && null !== t) throw new TypeError("Super expression must either be null or a function, not " + (typeof t === "undefined" ? "undefined" : _typeof(t)));e.prototype = Object.create(t && t.prototype, { constructor: { value: e, enumerable: !1, writable: !0, configurable: !0 } }), t && (Object.setPrototypeOf ? Object.setPrototypeOf(e, t) : e.__proto__ = t);
+    }var a = n(1),
+        s = n.n(a),
+        u = n(2),
+        c = (n.n(u), function () {
+      function e(e, t) {
+        for (var n = 0; n < t.length; n++) {
+          var o = t[n];o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, o.key, o);
+        }
+      }return function (t, n, o) {
+        return n && e(t.prototype, n), o && e(t, o), t;
+      };
+    }()),
+        l = function (e) {
+      function t(e) {
+        o(this, t);var n = r(this, (t.__proto__ || Object.getPrototypeOf(t)).call(this, e));return n.state = { disabled: !0 }, n.signOut = n.signOut.bind(n), n;
+      }return i(t, e), c(t, [{ key: "componentDidMount", value: function value() {
+          var e = this,
+              t = this.props.jsSrc;!function (e, n, o, r) {
+            var i = e.getElementsByTagName(n)[0],
+                a = i,
+                s = i;s = e.createElement(n), s.id = "google-login", s.src = t, a && a.parentNode ? a.parentNode.insertBefore(s, a) : e.head.appendChild(s), s.onload = r;
+          }(document, "script", 0, function () {
+            window.gapi.load("auth2", function () {
+              e.setState({ disabled: !1 });
+            });
+          });
+        } }, { key: "signOut", value: function value() {
+          var e = window.gapi.auth2.getAuthInstance();null != e && e.signOut().then(this.props.onLogoutSuccess);
+        } }, { key: "render", value: function value() {
+          var e = this.props,
+              t = e.tag,
+              n = e.style,
+              o = e.className,
+              r = e.disabledStyle,
+              i = e.buttonText,
+              a = e.children,
+              u = this.state.disabled || this.props.disabled,
+              c = { display: "inline-block", background: "#d14836", color: "#fff", width: 190, paddingTop: 10, paddingBottom: 10, borderRadius: 2, border: "1px solid transparent", fontSize: 16, fontWeight: "bold", fontFamily: "Roboto" },
+              l = function () {
+            return n || (o && !n ? {} : c);
+          }(),
+              p = function () {
+            return u ? Object.assign({}, l, r) : l;
+          }();return s.a.createElement(t, { onClick: this.signOut, style: p, disabled: u, className: o }, a || i);
+        } }]), t;
+    }(a.Component);l.defaultProps = { tag: "button", buttonText: "Logout", disabledStyle: { opacity: .6 }, jsSrc: "https://apis.google.com/js/client:platform.js" }, t.a = l;
+  }]);
+});
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(107)(module)))
+
+/***/ }),
+/* 107 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function (module) {
+	if (!module.webpackPolyfill) {
+		module.deprecate = function () {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if (!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function get() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function get() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
+/***/ }),
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
