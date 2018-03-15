@@ -41,7 +41,7 @@ app.use(
     name: 'hi im a cookie',
     maxAge: 30 * 24 * 60 * 60 * 1000,
     keys: [keys.cookieKey],
-  }),
+  })
 );
 
 //  PATH FOR STATIC FILES

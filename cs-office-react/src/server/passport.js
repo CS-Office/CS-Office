@@ -16,7 +16,7 @@ passport.deserializeUser((id, done) => {
 });
 
 passport.use(
-  new GoogleStrategy( // === 'google'
+  new GoogleStrategy( // 'google'
     {
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,

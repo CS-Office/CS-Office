@@ -4,8 +4,6 @@ import PropTypes from 'prop-types'; // for validating PropTypes
 
 const Login = (props) => {
   const responseGoogle = (response) => {
-    console.log('This is the googleID', response.googleId);
-    console.log('This is the tokenID', response.tokenId);
     props.clickHandler(response);
   };
 
