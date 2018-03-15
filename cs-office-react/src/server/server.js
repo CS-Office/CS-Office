@@ -58,6 +58,7 @@ app.use(
 //  PATH FOR STATIC FILES
 //////////////////////////////////////////
 app.use(express.static(__dirname + './../../'));
+
 app.use('/css', express.static(path.join(__dirname, './../client/css')));
 // app.use('/js', express.static(path.join(__dirname, './../js')));
 app.use('/public', express.static(path.join(__dirname, './../client/public')));

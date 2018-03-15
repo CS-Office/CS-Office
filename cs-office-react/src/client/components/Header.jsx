@@ -3,27 +3,26 @@ import { Link } from 'react-router-dom';
 import Logo from './Logo.jsx';
 
 class Header extends Component {
-  renderContent() {
-    switch (this.props.auth) {
-      case null:
-        return;
-      //if there is no id
-      case false:
-        return (
-          <li>
-            <a href="/auth/google">Login with Google</a>
-          </li>
-        );
-      //there is an id
-      default:
-        return (
-          <li>
-            <a href="/api/logout">Logout</a>
-          </li>
-        );
-    }
-  }
-
+  // renderContent() {
+  //   switch (this.props.auth) {
+  //     case null:
+  //       return;
+  //     //if there is no id
+  //     case false:
+  //       return (
+  // <li>
+  //   <a href="/auth/google">Login with Google</a>
+  // </li>
+  //       );
+  //     //there is an id
+  //     default:
+  //       return (
+  //         <li>
+  //           <a href="/api/logout">Logout</a>
+  //         </li>
+  //       );
+  //   }
+  // }
   render() {
     return (
       <nav>
@@ -32,7 +31,7 @@ class Header extends Component {
             Codesmith Office
           </Link>
           <ul id="nav-mobile" className="right">
-            {this.renderContent()}
+            {/* {this.renderContent()} */}
           </ul>
         </div>
       </nav>
