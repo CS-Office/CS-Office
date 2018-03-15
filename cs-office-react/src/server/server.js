@@ -60,8 +60,8 @@ app.use(
 app.use(express.static(__dirname + './../../'));
 
 app.use('/css', express.static(path.join(__dirname, './../client/css')));
-// app.use('/js', express.static(path.join(__dirname, './../js')));
 app.use('/public', express.static(path.join(__dirname, './../client/public')));
+// app.use('/js', express.static(path.join(__dirname, './../js')));
 
 require('./routes/auth_routes')(app); //require returns functions from routes file and then immediately invokes the function with the app object
 

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 import axios from 'axios';
 
@@ -17,30 +16,25 @@ class App extends Component {
   }
 
   // authorize(e) {
-  //   // e.preventDefault();
+  //   e.preventDefault();
   //   const href = e.target.parentNode.href;
-  //   // console.log(href);
+  //   console.log(href);
 
-  //   axios
-  //     .get(href, {
-  //       headers: {
-  //         'Access-Control-Allow-Origin': '*'
-  //       }
-  //     })
-  //     .then(function(response) {
-  //       console.log(response);
+  //   axios.get('/api/current_user').then(function(user) {
+  //     if (user) {
   //       this.setState({ isAuth: true });
-  //     });
+  //     } else {
+  //       console.log('SIGN IN PLEASE');
+  //     }
+  //   });
 
-  //   // fetch('/auth/google')
-  //   //   .then(this.setState({ isAuth: true }))
-  //   //   .catch(err => console.log(err));
-
-  //   // this.setState({ isAuth: true });
+  // fetch('/auth/google')
+  //   .then(this.setState({ isAuth: true }))
+  //   .catch(err => console.log(err));
   // }
 
   render() {
-    console.log(this.state.isAuth);
+    console.log(this.state);
     return (
       <div className="container">
         <BrowserRouter>
@@ -57,9 +51,9 @@ class App extends Component {
                 )
               }
             /> */}
-            <Route exact path="/" component={Login} />
-            <Route exact path="/signup" component={SignUp} />
-            <Route exact path="/office" component={Office} />
+            <Route exact={true} path="/" component={Login} />
+            <Route exact={true} path="/signup" component={SignUp} />
+            <Route exact={true} path="/office" component={Office} />
           </div>
         </BrowserRouter>
       </div>

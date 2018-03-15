@@ -10,9 +10,11 @@ const Login = function(props) {
         <input type="password" id="password" name="password" />
         <input type="submit" value="Login" />
         <br />
-        <a onClick={props.clickHandler} href="/auth/google">
-          <img id="google_button" src="../public/images/google_button.png" />
-        </a>
+        <li>
+          <a href="/auth/google">
+            <img id="google_button" src="../public/images/google_button.png" />
+          </a>
+        </li>
       </form>
     </div>
   );

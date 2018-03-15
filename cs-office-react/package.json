@@ -3,22 +3,23 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "proxy": {
+    "/auth/google": {
+      "target": "http://localhost:3000"
+    },
+    "/api/*": {
+      "target": "http://localhost:3000"
+    }
+  },
   "scripts": {
     "start": "./node_modules/.bin/webpack -w & nodemon src/server/server.js",
+    "server": "nodemon src/server/server.js",
     "webpack": "./node_modules/.bin/webpack -w",
     "test": "mocha --compilers babel-core/register ./test/*test.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "proxy": {
-    "/auth/google": {
-      "target": "http://localhost:5000"
-    },
-    "/api/*": {
-      "target": "http://localhost:5000"
-    }
-  },
   "dependencies": {
     "axios": "^0.18.0",
     "cookie-session": "^2.0.0-beta.3",

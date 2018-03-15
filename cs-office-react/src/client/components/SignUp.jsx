@@ -4,7 +4,8 @@ class SignUp extends Component {
   render() {
     return (
       <div>
-        <form>
+        hello
+        {/* <form>
           <label htmlFor="firstName">First Name:</label>
           <input type="text" id="firstName" name="firstName" />
           <label htmlFor="lastName">Last Name:</label>
@@ -14,7 +15,7 @@ class SignUp extends Component {
           <label htmlFor="password">Password:</label>
           <input type="password" id="password" name="password" />
           <input type="submit" value="Sign Up" />
-        </form>
+        </form> */}
       </div>
     );
   }

@@ -20,7 +20,7 @@ passport.use(
     {
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
-      callbackURL: 'http://localhost:3000/auth/google/callback'
+      callbackURL: '/auth/google/callback'
       //PRODUCTION
       // callbackURL: 'https://cryptic-earth-91512.herokuapp.com/auth/google/callback'
     },
