@@ -1,11 +1,5 @@
-import React, { Compenent } from 'react';
+import React from 'react';
 
-const Logo = () => {
-  return (
-    <div>
-     I am the Logo
-    </div>
-  )
-};
+const Logo = () => <div>I am the Logo</div>;
 
 export default Logo;

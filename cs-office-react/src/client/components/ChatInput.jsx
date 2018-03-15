@@ -1,11 +1,5 @@
-import React, { Compenent } from 'react';
+import React from 'react';
 
-const ChatInput = () => {
-  return (
-    <div>
-     I am the ChatInput
-    </div>
-  )
-};
+const ChatInput = () => <div>I am the ChatInput</div>;
 
 export default ChatInput;

@@ -1,76 +1,64 @@
-//////////////////////////////////////////
 //  REQUIRED
-//////////////////////////////////////////
 const path = require('path');
 const hat = require('hat');
-var ws = require('ws');
-var http = require('http');
+const ws = require('ws');
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
-//////////////////////////////////////////
+const app = express();
+
 //  FILES
-//////////////////////////////////////////
+const keys = require('../config/keys');
 require('./models/user');
 require('./passport');
-const keys = require('../config/keys');
+require('./routes/auth_routes')(app); //require returns functions from routes file and then immediately invokes the function with the app object
 
-//////////////////////////////////////////
 //  MONGOOSE
-//////////////////////////////////////////
-const mongoose = require('mongoose');
 mongoose.connect(keys.mongoURI);
 mongoose.connection.once('open', () => {
   console.log('===CONNECTED TO DATABASE===');
 });
 
-//////////////////////////////////////////
 //  EXPRESS
-//////////////////////////////////////////
-const express = require('express');
-const app = express();
 
-const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-//////////////////////////////////////////
 //  PASSPORT
-//////////////////////////////////////////
 const passport = require('passport');
 // initialize passport library to use it (create an instance?) in our app
 app.use(passport.initialize());
 // authenticate session for passport that we have created (cookieSession in our case)
 app.use(passport.session());
 
-//////////////////////////////////////////
 //  MIDDLEWARE
-//////////////////////////////////////////
+
 // COOKIE SESSION // ENCRYPTS COOKIE - SET NAME, AGE (24 HOURS), AND KEY
 const cookieSession = require('cookie-session');
 app.use(
   cookieSession({
     name: 'hi im a cookie',
     maxAge: 30 * 24 * 60 * 60 * 1000,
-    keys: [keys.cookieKey]
-  })
+    keys: [keys.cookieKey],
+  }),
 );
 
-//////////////////////////////////////////
 //  PATH FOR STATIC FILES
-//////////////////////////////////////////
-app.use(express.static(__dirname + './../../'));
 
+app.use(express.static(__dirname + './../../'));
 app.use('/css', express.static(path.join(__dirname, './../client/css')));
 app.use('/public', express.static(path.join(__dirname, './../client/public')));
-// app.use('/js', express.static(path.join(__dirname, './../js')));
 
-require('./routes/auth_routes')(app); //require returns functions from routes file and then immediately invokes the function with the app object
+app.get('*', function(request, response) {
+  response.sendFile(path.resolve(__dirname, './../../index.html'));
+});
 
 const PORT = process.env.PORT || 3000;
 let server = app.listen(PORT, () => console.log('===SERVER LISTENING ON PORT 3000==='));
 
-//////////////////////////////////////////
 //  SOCKETS
-//////////////////////////////////////////
+
 var wsServer = new ws.Server({ server: server });
 
 var peers = {};
@@ -136,18 +124,18 @@ function onmessage(data) {
         JSON.stringify({
           type: 'peer',
           data: {
-            initiator: true
-          }
+            initiator: true,
+          },
         }),
-        onsend
+        onsend,
       );
 
       //send peer
       peer.send(
         JSON.stringify({
-          type: 'peer'
+          type: 'peer',
         }),
-        onsend
+        onsend,
       );
 
       waitingId = null;
