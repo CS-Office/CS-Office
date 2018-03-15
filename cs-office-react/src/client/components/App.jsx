@@ -12,13 +12,13 @@ class App extends Component {
     super(props);
     this.state = { isAuth: false };
 
-    // this.authorize = this.authorize.bind(this);
+    this.authorize = this.authorize.bind(this);
   }
 
-  // authorize(e) {
+  authorize(response) {
   //   e.preventDefault();
   //   const href = e.target.parentNode.href;
-  //   console.log(href);
+    // console.log(response);
 
   //   axios.get('/api/current_user').then(function(user) {
   //     if (user) {
@@ -29,35 +29,24 @@ class App extends Component {
   //   });
 
   // fetch('/auth/google')
-  //   .then(this.setState({ isAuth: true }))
+    // .then(this.setState({ isAuth: true }))
   //   .catch(err => console.log(err));
-  // }
+  this.setState({ isAuth: true });
+  }
 
   render() {
     console.log(this.state);
-    return (
-      <div className="container">
+    return <div className="container">
         <BrowserRouter>
           <div>
             <Header />
-            {/* <Route
-              exact
-              path="/"
-              render={() =>
-                this.state.isAuth ? (
-                  <Redirect to="/office" />
-                ) : (
-                  <Login clickHandler={this.authorize} />
-                )
-              }
-            /> */}
-            <Route exact={true} path="/" component={Login} />
+            <Route exact path="/" render={() => (this.state.isAuth ? <Redirect to="/office" /> : <Login clickHandler={this.authorize} />)} />
+            <Route exact={true} path="/login" component={Login} />
             <Route exact={true} path="/signup" component={SignUp} />
-            <Route exact={true} path="/office" component={Office} />
+            <Route exact={true} path="/office" render={() => (this.state.isAuth ? <Office /> : <Login clickHandler={this.authorize} />)} />
           </div>
         </BrowserRouter>
-      </div>
-    );
+      </div>;
   }
 }
 
