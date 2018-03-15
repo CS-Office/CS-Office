@@ -1,11 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-const Video = () => {
-  return(
-    <div>
-     This is the Video
-    </div>
-  )
-}
+const Video = () => <div>This is the Video</div>;
 
 export default Video;

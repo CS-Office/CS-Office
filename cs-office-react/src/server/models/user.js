@@ -1,10 +1,10 @@
-//MODEL FOR PASSPORT JS USER
+// MODEL FOR PASSPORT JS USER
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
-  googleID: String
+  googleID: String,
 });
 
 module.exports = mongoose.model('users', userSchema);

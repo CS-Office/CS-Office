@@ -1,24 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class SignUp extends Component {
-  render() {
-    return (
-      <div>
-        hello
-        {/* <form>
-          <label htmlFor="firstName">First Name:</label>
-          <input type="text" id="firstName" name="firstName" />
-          <label htmlFor="lastName">Last Name:</label>
-          <input type="text" id="lastName" name="lastName" />
-          <label htmlFor="email">Email Address:</label>
-          <input type="email" id="email" name="email" />
-          <label htmlFor="password">Password:</label>
-          <input type="password" id="password" name="password" />
-          <input type="submit" value="Sign Up" />
-        </form> */}
-      </div>
-    );
-  }
-}
+const SignUp = () => (
+  <div>
+    <form>
+      <input type="text" id="firstName" name="firstName" placeholder="First Name" />
+      <input type="text" id="lastName" name="lastName" placeholder="Last Name" />
+      <input type="email" id="email" name="email" placeholder="Email Address" />
+      <input type="password" id="password" name="password" placeholder="Password" />
+      <input type="submit" value="Sign Up" />
+    </form>
+  </div>
+);
 
 export default SignUp;
