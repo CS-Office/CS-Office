@@ -23,7 +23,7 @@ router.get('/:id', (request, response, next) => {
   });
 });
 
-// Create Post request - grab attributes from schema you want to update
+// CREATE A USER
 router.post('/', (request, response, next) => {
   const { firstName, lastName, password, email, isAdmin } = request.body;
 
@@ -32,8 +32,41 @@ router.post('/', (request, response, next) => {
     [firstName, lastName, password, email, isAdmin],
     (err, res) => {
       if (err) return next(err);
+      response.redirect('/users');
     }
   );
 });
+
+// UPDATE A USER
+router.put('/:id', (request, response, next) => {
+  const { id } = request.params;
+  const keys = ['firstName', 'lastName', 'password', 'email', 'isAdmin'];
+  const fields = [];
+
+  keys.forEach(key => {
+    if (request.body[key]) fields.push(key);
+  });
+
+  fields.forEach((field, index) => {
+    pool.query(
+      `UPDATE users SET ${field}=($1) WHERE id=($2)`, 
+      [request.body[field], id],
+      (err, res) => {
+        if (err) return next(err);  
+        if (index === fields.length - 1) response.send('updated');
+      }
+    );
+  });
+});
+
+// DELETE A USER
+router.delete('/:id', (request, response, next) => {
+  const { id } = request.params;
+
+  pool.query('DELETE FROM users WHERE id=($1)', [id], (err, res) => {
+    if (err) return next(err);
+    response.redirect('/users');
+  });
+})
 
 module.exports = router;

@@ -2,7 +2,7 @@ const express = require('express');
 const pg = require('pg');
 const path = require('path');
 const bodyParser = require('body-parser');
-const routes = require('./routes/routes.js');
+const routes = require('./routes/users.js');
 
 // pool instance for queries to db
 const pool = require('./db');
@@ -17,7 +17,6 @@ app.use('/users', routes);
 app.use((err, req, res, next) => {
   res.json(err);
 });
-
 
 module.exports = app;
 
