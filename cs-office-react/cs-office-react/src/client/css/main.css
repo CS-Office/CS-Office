@@ -1,0 +1,25 @@
+body {
+  height: 100
+  background: white;
+}
+
+.login-form {
+  max-width: 384px;
+  border-radius: 2px;
+  margin: 0px auto;
+}
+
+.text-input {
+  border-radius: 7px;
+  border: 1px solid #cacaca;
+}
+
+.oAuth-Button {
+  border: 0px;
+  border-radius: 3px;
+  background-image: url('./../public/images/oAuth_google_normal.png');
+  background-repeat: no-repeat;
+  width: 318px;
+  height: 35px;
+  background-size: 100%;
+}
