@@ -1,0 +1,9 @@
+body {
+  background: white;
+}
+
+#google_button {
+  /* background: url('./../public/images/google_button.png'); */
+  width: 200px;
+  height: 50px;
+}

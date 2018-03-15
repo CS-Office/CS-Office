@@ -59,18 +59,9 @@ var peers = {};
 var waitingId = null;
 var count = 0;
 
-//////////////////////////////////////////////////////////////////////////////
 wsServer.on('connection', onconnection);
 
-/////////////CODE EDITOR////////////////
-// wsServer.on('send code change', broadcastCodeChange);
-// function broadcastCodeChange(data) {
-//   console.log(
-//     '=== CODE EDITOR CODE EDITOR CODE EDITOR CODE EDITOR CODE EDITOR CODE EDITOR CODE EDITOR ==='
-//   );
-//   wsServer.broadcast.emit('send code change', data);
-// }
-
+//PEER IS WEBSOCKET AND WE ASSIGN IT AN ID AND PEERID
 function onconnection(peer) {
   /////////////VIDEO-CHAT////////////////
   console.log('===SOCKET CONNECTED FROM SERVER===');
@@ -81,8 +72,8 @@ function onconnection(peer) {
     } catch (err) {}
   };
 
-  peer.id = hat();
-  peers[peer.id] = peer;
+  peer.id = hat(); //CREATE UNIQUE ID 'THIS.ID'
+  peers[peer.id] = peer; //SET PEERS OBJECT WITH PEER.ID AND PEER (WEBSOCKET)
   peer.on('close', onclose.bind(peer));
   peer.on('error', onclose.bind(peer));
   peer.on('message', onmessage.bind(peer));
@@ -104,8 +95,10 @@ function onclose() {
   broadcast(JSON.stringify({ type: 'count', data: count }));
 }
 
+//DATA ENCAPSULATES WEBRTC OFFER, ANSWER, OR ICE CANDIDATE
+//'THIS' REFERS TO PEER1 (WEBSOCKET)
 function onmessage(data) {
-  console.log('[' + this.id + ' receive] ' + data + '\n');
+  // console.log('[' + this.id + ' receive] ' + data + '\n');
   try {
     var message = JSON.parse(data);
   } catch (err) {
@@ -115,13 +108,13 @@ function onmessage(data) {
 
   if (message.type === 'peer') {
     if (waitingId && waitingId !== this.id) {
+      //IF WAITING ID IS TRUE AND DOES NOT EQUAL PEER1'S ID THEN ASSIGN WAITINGID TO peer
       var peer = peers[waitingId];
 
       this.peerId = peer.id;
       peer.peerId = this.id;
 
-      // console.log('=== peer ===', peer);
-
+      //send peer1 as the initiator
       this.send(
         JSON.stringify({
           type: 'peer',
@@ -132,6 +125,7 @@ function onmessage(data) {
         onsend
       );
 
+      //send peer
       peer.send(
         JSON.stringify({
           type: 'peer'
@@ -144,9 +138,11 @@ function onmessage(data) {
       waitingId = this.id;
     }
   } else if (message.type === 'signal') {
+    //SEND ICE CANDIDATE, OFFER, AND ANSWER (MESSAGE.DATA)
     if (!this.peerId) return console.error('unexpected `signal` message');
     var peer = peers[this.peerId];
     peer.send(JSON.stringify({ type: 'signal', data: message.data }));
+    console.log('=== SENDING ICE, OFFER, OR ANSWER ===', message);
   } else if (message.type === 'end') {
     if (!this.peerId) return console.error('unexpected `end` message');
     var peer = peers[this.peerId];
@@ -161,9 +157,6 @@ function onmessage(data) {
         client.send(JSON.stringify({ type: 'send code change', data: message.data }));
       }
     });
-
-    // var codePeer = peers[this.peerId];
-    // codePeer.send(JSON.stringify({ type: 'send code change', data: message.data }));
   } else {
     peer.send(message, onsend);
     console.error('unknown message `type` ' + message.type);
