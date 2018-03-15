@@ -10,6 +10,7 @@ import SignUp from './SignUp.jsx';
 class App extends Component {
   constructor(props) {
     super(props);
+    dds
     this.state = { isAuth: false };
 
     this.authorize = this.authorize.bind(this);

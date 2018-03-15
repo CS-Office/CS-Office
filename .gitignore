@@ -1,5 +1,5 @@
 node_modules
 .DS_Store
-package-lock
+package-lock.json
 CSBin.io.js
 bundle
