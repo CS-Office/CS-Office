@@ -3,5 +3,5 @@ module.exports = {
   host: 'localhost',
   database: 'csofficedb',
   password: 'csoffice19',
-  port: 5432
-}
+  port: 5432,
+};
