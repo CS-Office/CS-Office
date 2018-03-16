@@ -1,8 +1,0 @@
-#!/usr/bin/env node
-
-const app = require('../app.js');
-const PORT = 5555;
-
-app.listen(PORT, () => {
-  console.log(`App is listening on Port ${PORT}`)
-});

@@ -21,8 +21,6 @@ passport.use(
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
       callbackURL: '/auth/google/callback'
-      //PRODUCTION
-      // callbackURL: 'https://cryptic-earth-91512.herokuapp.com/auth/google/callback'
     },
     async (accessToken, refreshToken, profile, done) => {
       const existingUser = await User.findOne({ googleID: profile.id });

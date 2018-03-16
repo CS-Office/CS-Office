@@ -36,16 +36,9 @@ app.use(passport.session());
 
 // COOKIE SESSION // ENCRYPTS COOKIE - SET NAME, AGE (24 HOURS), AND KEY
 const cookieSession = require('cookie-session');
-app.use(
-  cookieSession({
-    name: 'hi im a cookie',
-    maxAge: 30 * 24 * 60 * 60 * 1000,
-    keys: [keys.cookieKey],
-  })
-);
+app.use(cookieSession({ name: 'hi im a cookie', maxAge: 30 * 24 * 60 * 60 * 1000, keys: [keys.cookieKey]}));
 
 //  PATH FOR STATIC FILES
-
 app.use(express.static(__dirname + './../../'));
 app.use('/css', express.static(path.join(__dirname, './../client/css')));
 app.use('/public', express.static(path.join(__dirname, './../client/public')));

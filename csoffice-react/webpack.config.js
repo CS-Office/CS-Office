@@ -5,7 +5,7 @@ const APP_DIR = path.resolve(__dirname, './src/client');
 
 const config = {
   entry: {
-    main: `${APP_DIR}/index.js`,
+    main: `${APP_DIR}/index.jsx`,
   },
   output: {
     filename: 'bundle.js',

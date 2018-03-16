@@ -2,7 +2,7 @@
   "name": "cs-office-react",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.jsx",
   "proxy": {
     "/auth/google": {
       "target": "http://localhost:3000"
