@@ -26,6 +26,7 @@
     "ws": "^5.0.0"
   },
   "devDependencies": {
+    "css-loader": "^0.28.11",
     "babel": "^6.23.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
@@ -35,6 +36,7 @@
     "eslint-plugin-import": "^2.9.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
+    "style-loader": "^0.20.3",
     "nodemon": "^1.17.2",
     "webpack": "^4.1.1"
   },

@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import SendIcon from './icons/SendIcon';
-import EmojiIcon from './icons/EmojiIcon';
-import EmojiPicker from './emoji-picker/EmojiPicker';
+import SendIcon from './Icons/SendIcon.jsx';
+import EmojiIcon from './Icons/EmojiIcon.jsx';
+import EmojiPicker from './Emoji/EmojiPicker.jsx';
 
 class UserInput extends Component {
   constructor() {
