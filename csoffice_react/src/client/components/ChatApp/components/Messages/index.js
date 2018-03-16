@@ -16,7 +16,7 @@ class Message extends Component {
   render() {
     const contentClassList = [
       'sc-message--content',
-      this.props.message.author === 'me' ? 'sent' : 'received',
+      this.props.message.author === 'me' ? 'sent' : 'received'
     ];
     return (
       <div className="sc-message">
@@ -24,7 +24,7 @@ class Message extends Component {
           <div
             className="sc-message--avatar"
             style={{
-              backgroundImage: `url(${chatIconUrl})`,
+              backgroundImage: `url(${chatIconUrl})`
             }}
           />
           {this._renderMessageOfType(this.props.message.type)}
