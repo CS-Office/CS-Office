@@ -1,4 +1,4 @@
-import MESSAGE_TYPES from './../messageTypes';
+import MESSAGE_TYPES from './../MessageTypes';
 
 const CLIENT = MESSAGE_TYPES.CLIENT;
 const BROKER = MESSAGE_TYPES.BROKER;
