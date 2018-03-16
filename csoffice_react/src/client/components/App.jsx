@@ -39,7 +39,7 @@ class App extends Component {
             <Route
               path="/office"
               render={() =>
-                (this.state.isAuth ? <Office /> : <Login clickHandler={this.authorize} />)
+                (this.state.isAuth ? <Office /> : <Redirect to="/login" />)
               }
             />
           </div>

@@ -32,7 +32,7 @@ const Login = (props) => {
 };
 
 Login.propTypes = {
-  clickHandler: PropTypes.func.isRequired,
+  clickHandler: PropTypes.func,
 };
 
 export default Login;
