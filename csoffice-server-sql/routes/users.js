@@ -17,8 +17,8 @@ router.get('/:id', (request, response, next) => {
   const { id } = request.params;
 
   // id = $1, represents a one index array containing the id variables we want to be inserted into the string
-  pool.query('SELECT * FROM users WHERE id = $1', [id], (err, res ) => {
-    if (err) return next (err);
+  pool.query('SELECT * FROM users WHERE id = $1', [id], (err, res) => {
+    if (err) return next(err);
     response.json(res.rows);
   });
 });
@@ -28,12 +28,12 @@ router.post('/', (request, response, next) => {
   const { firstName, lastName, password, email, isAdmin } = request.body;
 
   pool.query(
-    'INSERT INTO users(firstName, lastName, password, email, isAdmin) VALUES($1, $2, $3, $4, $5)', 
+    'INSERT INTO users(firstName, lastName, password, email, isAdmin) VALUES($1, $2, $3, $4, $5)',
     [firstName, lastName, password, email, isAdmin],
     (err, res) => {
       if (err) return next(err);
       response.redirect('/users');
-    }
+    },
   );
 });
 
@@ -49,12 +49,12 @@ router.put('/:id', (request, response, next) => {
 
   fields.forEach((field, index) => {
     pool.query(
-      `UPDATE users SET ${field}=($1) WHERE id=($2)`, 
+      `UPDATE users SET ${field}=($1) WHERE id=($2)`,
       [request.body[field], id],
       (err, res) => {
-        if (err) return next(err);  
+        if (err) return next(err);
         if (index === fields.length - 1) response.send('updated');
-      }
+      },
     );
   });
 });
@@ -67,6 +67,6 @@ router.delete('/:id', (request, response, next) => {
     if (err) return next(err);
     response.redirect('/users');
   });
-})
+});
 
 module.exports = router;
