@@ -10,9 +10,9 @@ const app = express();
 
 //  FILES
 const keys = require('../config/keys');
-require('./models/user');
-require('./passport');
-require('./routes/auth_routes')(app); //require returns functions from routes file and then immediately invokes the function with the app object
+// require('./models/user');
+// require('./passport');
+// require('./routes/auth_routes')(app); //require returns functions from routes file and then immediately invokes the function with the app object
 
 //  MONGOOSE
 mongoose.connect(keys.mongoURI);
@@ -26,11 +26,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 //  PASSPORT
-const passport = require('passport');
-// initialize passport library to use it (create an instance?) in our app
-app.use(passport.initialize());
-// authenticate session for passport that we have created (cookieSession in our case)
-app.use(passport.session());
+// const passport = require('passport');
+// // initialize passport library to use it (create an instance?) in our app
+// app.use(passport.initialize());
+// // authenticate session for passport that we have created (cookieSession in our case)
+// app.use(passport.session());
 
 //  MIDDLEWARE
 
