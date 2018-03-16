@@ -3,10 +3,22 @@ import React, { Component } from 'react';
 import Video from './Video.jsx';
 // import { ChatApp } from './ChatApp/index.jsx';
 import CodeEditor from './CodeEditor.jsx';
+import Highlight from 'react-highlight';
 
 class Office extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      newMessageCount: 0,
+      isOpen: false
+    };
+  }
+
+  handleClick() {
+    this.setState({
+      isOpen: !this.state.isOpen,
+      newMessageCount: 0
+    });
   }
 
   render() {
@@ -14,8 +26,20 @@ class Office extends Component {
       <div>
         HELLO
         <Video />
+<<<<<<< HEAD
         {/* <ChatApp /> */}
+=======
+>>>>>>> 6429d02ac7b85427acd69c8c19e18bd0dba29a68
         <CodeEditor />
+        <ChatApp
+          agentProfile={{
+            teamName: 'react-live-chat',
+            imageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png'
+          }}
+          handleClick={this.handleClick.bind(this)}
+          isOpen={this.state.isOpen}
+          showEmoji
+        />
       </div>
     );
   }
