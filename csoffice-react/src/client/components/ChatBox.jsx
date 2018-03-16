@@ -1,11 +1,7 @@
-import React from 'react';
-import ChatInput from './ChatInput.jsx';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types'; // for validating PropTypes
+// import ChatInput from './ChatInput.jsx';
 
-const ChatBox = () => (
-  <div>
-    <ChatInput />
-      This is the ChatBox
-  </div>
-  );
+class ChatBox extends Component {}
 
 export default ChatBox;
