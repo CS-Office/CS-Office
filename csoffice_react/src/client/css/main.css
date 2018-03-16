@@ -14,12 +14,26 @@ body {
   border: 1px solid #cacaca;
 }
 
+.oAuth-wrapper {
+  width: 100%;
+}
+
+
 .oAuth-Button {
   border: 0px;
   border-radius: 3px;
-  background-image: url('./../public/images/oAuth_google_normal.png');
+  background-image: url('./../public/images/btn_google_signin_light_pressed_web.png');
   background-repeat: no-repeat;
-  width: 318px;
-  height: 35px;
-  background-size: 100%;
+  width: 250px;
+  height: 50px;
+  background-size: auto;
+  padding: 0;
+ 
+}
+
+img.google-button {
+  margin: 0;
+  max-width: 318px;
+  width: 100%;
+  height: 50px;
 }

@@ -1,7 +1,7 @@
 // THIS FILE RENDERS THE CODE EDITOR, VIDEO, AND CHAT
 import React, { Component } from 'react';
 import Video from './Video.jsx';
-import { ChatApp } from './ChatApp/index.jsx';
+// import { ChatApp } from './ChatApp/index.jsx';
 import CodeEditor from './CodeEditor.jsx';
 
 class Office extends Component {
@@ -14,7 +14,7 @@ class Office extends Component {
       <div>
         HELLO
         <Video />
-        <ChatApp />
+        {/* <ChatApp /> */}
         <CodeEditor />
       </div>
     );

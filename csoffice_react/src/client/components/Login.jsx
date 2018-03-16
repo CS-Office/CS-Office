@@ -10,13 +10,15 @@ const Login = (props) => {
   return (
     <div>
       <form className="login-form">
-        <GoogleLogin
-          className="oAuth-Button"
-          clientId="881814036265-o68utsk4u8c3drq95k0p16qe72ups74j.apps.googleusercontent.com"
-          buttonText=""
-          onSuccess={responseGoogle}
-          onFailure={responseGoogle}
-        />
+        <div className="oAuth-wrapper">
+          <GoogleLogin
+            className="oAuth-Button"
+            clientId="881814036265-o68utsk4u8c3drq95k0p16qe72ups74j.apps.googleusercontent.com"
+            buttonText=""
+            onSuccess={responseGoogle}
+            onFailure={responseGoogle}
+          />
+        </div>
         <input
           type="email"
           id="email"
