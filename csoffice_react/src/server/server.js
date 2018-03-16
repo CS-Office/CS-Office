@@ -10,9 +10,9 @@ const app = express();
 
 //  FILES
 const keys = require('../config/keys');
-// require('./models/user');
-// require('./passport');
-// require('./routes/auth_routes')(app); //require returns functions from routes file and then immediately invokes the function with the app object
+require('./models/user');
+require('./passport');
+require('./routes/auth_routes')(app); //require returns functions from routes file and then immediately invokes the function with the app object
 
 //  MONGOOSE
 mongoose.connect(keys.mongoURI);
@@ -25,24 +25,18 @@ mongoose.connection.once('open', () => {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// //  PASSPORT
-// const passport = require('passport');
-// // initialize passport library to use it (create an instance?) in our app
-// app.use(passport.initialize());
-// // authenticate session for passport that we have created (cookieSession in our case)
-// app.use(passport.session());
+//  PASSPORT
+const passport = require('passport');
+// initialize passport library to use it (create an instance?) in our app
+app.use(passport.initialize());
+// authenticate session for passport that we have created (cookieSession in our case)
+app.use(passport.session());
 
 //  MIDDLEWARE
 
 // COOKIE SESSION // ENCRYPTS COOKIE - SET NAME, AGE (24 HOURS), AND KEY
 const cookieSession = require('cookie-session');
-app.use(
-  cookieSession({
-    name: 'hi im a cookie',
-    maxAge: 30 * 24 * 60 * 60 * 1000,
-    keys: [keys.cookieKey]
-  })
-);
+app.use(cookieSession({ name: 'hi im a cookie', maxAge: 30 * 24 * 60 * 60 * 1000, keys: [keys.cookieKey]}));
 
 //  PATH FOR STATIC FILES
 app.use(express.static(__dirname + './../../'));
@@ -123,18 +117,18 @@ function onmessage(data) {
         JSON.stringify({
           type: 'peer',
           data: {
-            initiator: true
-          }
+            initiator: true,
+          },
         }),
-        onsend
+        onsend,
       );
 
       //send peer
       peer.send(
         JSON.stringify({
-          type: 'peer'
+          type: 'peer',
         }),
-        onsend
+        onsend,
       );
 
       waitingId = null;
