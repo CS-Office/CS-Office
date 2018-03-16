@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import ChatWindow from './ChatWindow';
+import ChatWindow from './ChatWindow.jsx';
 import launcherIcon from './../assets/logo-no-bg.svg';
 import launcherIconActive from './../assets/close-icon.png';
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import EmojiConvertor from 'emoji-js'; // package.json dependency
-import emojiData from './emojiData'; // list of all emoji
+import emojiData from './EmojiData'; // list of all emoji
 
 class EmojiPicker extends Component {
   constructor() {
@@ -38,15 +38,15 @@ class EmojiPicker extends Component {
                   key={emoji}
                   className="sc-emoji-picker--emoji"
                   onClick={() => {
-                        this.props.onEmojiPicked(emoji);
-                        this.domNode.blur();
-                      }}
+                    this.props.onEmojiPicked(emoji);
+                    this.domNode.blur();
+                  }}
                 >
                   {emoji}
                 </span>
-                  ))}
+              ))}
             </div>
-            ))}
+          ))}
         </div>
       </div>
     );
