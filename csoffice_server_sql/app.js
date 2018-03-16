@@ -14,8 +14,13 @@ app.use('/auth', auth);
 app.use('/signup', auth);
 
 // error handling middleware
-app.use((err, req, res) => {
-    res.json(err);
+app.use((err, req, res, next) => {
+    res.status(err.status || 500);
+    // render the error page if in production hide the stack trace
+    res.json({
+        message: err.message,
+        error: req.app.get('env') === 'development' ? err : {},
+    });
 });
 
 module.exports = app;
