@@ -34,6 +34,7 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-google-login": "^3.0.10",
+    "react-highlight": "^0.11.1",
     "react-router": "^2.0.1",
     "react-router-dom": "^4.2.2",
     "simple-peer": "^9.0.0",
@@ -53,7 +54,10 @@
     "eslint-plugin-import": "^2.9.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
+    "file-loader": "^1.1.11",
+    "image-webpack-loader": "^4.2.0",
     "nodemon": "^1.17.1",
+    "react-svg-loader": "^2.1.0",
     "style-loader": "^0.20.3",
     "webpack": "^3.10.0"
   }
