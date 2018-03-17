@@ -92,6 +92,10 @@ a:focus, a:hover {
   height: 100%;
 }
 
+.navbar {
+  height: 70px;
+}
+
 .navbar-default {
     background: #363E46;;
     border-color:transparent;
@@ -123,7 +127,7 @@ a:focus, a:hover {
 
 .navbar-brand > img {
     height: 50px;
-    margin: 10px 19px 10 0;
+    margin: 5px 25px 5px 0;
     font-size: 14px;
 }
 
@@ -216,8 +220,8 @@ a:focus, a:hover {
 }
 
 .container {
-  margin-right: auto;
-  margin-left: auto;
+  margin-right: 30px;
+  margin-left: 30px;
   padding-left: 30px;
   padding-right: 30px;
   font-family: inherit;
@@ -445,11 +449,11 @@ div.sign-in-header {
     }
 }
 
-@media (min-width: 768px) {
+/* @media (min-width: 768px) {
     .navbar {
         border-radius:4px;
     }
-}
+} */
 
 @media (min-width: 1200px) {
     .col-lg-7 {
