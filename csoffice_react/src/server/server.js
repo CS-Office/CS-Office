@@ -5,7 +5,7 @@ const ws = require('ws');
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-
+const io = require('socket.io');
 const app = express();
 
 //  FILES
@@ -36,7 +36,13 @@ app.use(bodyParser.json());
 
 // COOKIE SESSION // ENCRYPTS COOKIE - SET NAME, AGE (24 HOURS), AND KEY
 const cookieSession = require('cookie-session');
-app.use(cookieSession({ name: 'hi im a cookie', maxAge: 30 * 24 * 60 * 60 * 1000, keys: [keys.cookieKey]}));
+app.use(
+  cookieSession({
+    name: 'hi im a cookie',
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+    keys: [keys.cookieKey]
+  })
+);
 
 //  PATH FOR STATIC FILES
 app.use(express.static(__dirname + './../../'));
@@ -51,125 +57,137 @@ const PORT = process.env.PORT || 3000;
 let server = app.listen(PORT, () => console.log('===SERVER LISTENING ON PORT 3000==='));
 
 //  SOCKETS
+let socket = io(server);
 
-var wsServer = new ws.Server({ server: server });
+socket.on('connection', client => {
+  client.on('subscribeToTimer', interval => {
+    console.log('=== client is subscribing to timer with interval ===', interval);
+    setInterval(() => {
+      client.emit('timer', new Date());
+    }, interval);
+  });
+});
 
-var peers = {};
-var waitingId = null;
-var count = 0;
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+// var wsServer = new ws.Server({ server: server });
+// var peers = {};
+// var waitingId = null;
+// var count = 0;
 
-wsServer.on('connection', onconnection);
+// socket.on('connection', onconnection);
 
-//PEER IS WEBSOCKET AND WE ASSIGN IT AN ID AND PEERID
-function onconnection(peer) {
-  console.log('===SOCKET CONNECTED FROM SERVER===');
-  var send = peer.send;
-  peer.send = function() {
-    try {
-      send.apply(peer, arguments);
-    } catch (err) {}
-  };
+// //PEER IS WEBSOCKET AND WE ASSIGN IT AN ID AND PEERID
+// function onconnection(peer) {
+//   console.log('===SOCKET CONNECTED FROM SERVER===');
+//   var send = peer.send;
+//   peer.send = function() {
+//     try {
+//       send.apply(peer, arguments);
+//     } catch (err) {}
+//   };
 
-  peer.id = hat(); //CREATE UNIQUE ID 'THIS.ID'
-  peers[peer.id] = peer; //SET PEERS OBJECT WITH PEER.ID AND PEER (WEBSOCKET)
-  peer.on('close', onclose.bind(peer));
-  peer.on('error', onclose.bind(peer));
-  peer.on('message', onmessage.bind(peer));
-  count += 1;
-  broadcast(JSON.stringify({ type: 'count', data: count }));
-}
+//   peer.id = hat(); //CREATE UNIQUE ID 'THIS.ID'
+//   peers[peer.id] = peer; //SET PEERS OBJECT WITH PEER.ID AND PEER (WEBSOCKET)
+//   peer.on('close', onclose.bind(peer));
+//   peer.on('error', onclose.bind(peer));
+//   peer.on('message', onmessage.bind(peer));
+//   count += 1;
+//   broadcast(JSON.stringify({ type: 'count', data: count }));
+// }
 
-function onclose() {
-  peers[this.id] = null;
-  if (this.id === waitingId) {
-    waitingId = null;
-  }
-  if (this.peerId) {
-    var peer = peers[this.peerId];
-    peer.peerId = null;
-    peer.send(JSON.stringify({ type: 'end' }), onsend);
-  }
-  count -= 1;
-  broadcast(JSON.stringify({ type: 'count', data: count }));
-}
+// function onclose() {
+//   peers[this.id] = null;
+//   if (this.id === waitingId) {
+//     waitingId = null;
+//   }
+//   if (this.peerId) {
+//     var peer = peers[this.peerId];
+//     peer.peerId = null;
+//     peer.send(JSON.stringify({ type: 'end' }), onsend);
+//   }
+//   count -= 1;
+//   broadcast(JSON.stringify({ type: 'count', data: count }));
+// }
 
-//DATA ENCAPSULATES WEBRTC OFFER, ANSWER, OR ICE CANDIDATE
-//'THIS' REFERS TO PEER1 (WEBSOCKET)
-function onmessage(data) {
-  // console.log('[' + this.id + ' receive] ' + data + '\n');
-  try {
-    var message = JSON.parse(data);
-  } catch (err) {
-    console.error('Discarding non-JSON message: ' + err);
-    return;
-  }
+// //DATA ENCAPSULATES WEBRTC OFFER, ANSWER, OR ICE CANDIDATE
+// //'THIS' REFERS TO PEER1 (WEBSOCKET)
+// function onmessage(data) {
+//   // console.log('[' + this.id + ' receive] ' + data + '\n');
+//   try {
+//     var message = JSON.parse(data);
+//   } catch (err) {
+//     console.error('Discarding non-JSON message: ' + err);
+//     return;
+//   }
 
-  if (message.type === 'peer') {
-    if (waitingId && waitingId !== this.id) {
-      //IF WAITING ID IS TRUE AND DOES NOT EQUAL PEER1'S ID THEN ASSIGN WAITINGID TO peer
-      var peer = peers[waitingId];
+//   if (message.type === 'peer') {
+//     if (waitingId && waitingId !== this.id) {
+//       //IF WAITING ID IS TRUE AND DOES NOT EQUAL PEER1'S ID THEN ASSIGN WAITINGID TO peer
+//       var peer = peers[waitingId];
 
-      this.peerId = peer.id;
-      peer.peerId = this.id;
+//       this.peerId = peer.id;
+//       peer.peerId = this.id;
 
-      //send peer1 as the initiator
-      this.send(
-        JSON.stringify({
-          type: 'peer',
-          data: {
-            initiator: true,
-          },
-        }),
-        onsend,
-      );
+//       //send peer1 as the initiator
+//       this.send(
+//         JSON.stringify({
+//           type: 'peer',
+//           data: {
+//             initiator: true
+//           }
+//         }),
+//         onsend
+//       );
 
-      //send peer
-      peer.send(
-        JSON.stringify({
-          type: 'peer',
-        }),
-        onsend,
-      );
+//       //send peer
+//       peer.send(
+//         JSON.stringify({
+//           type: 'peer'
+//         }),
+//         onsend
+//       );
 
-      waitingId = null;
-    } else {
-      waitingId = this.id;
-    }
-  } else if (message.type === 'signal') {
-    //SEND ICE CANDIDATE, OFFER, AND ANSWER (MESSAGE.DATA)
-    if (!this.peerId) return console.error('unexpected `signal` message');
-    var peer = peers[this.peerId];
-    peer.send(JSON.stringify({ type: 'signal', data: message.data }));
-    console.log('=== SENDING ICE, OFFER, OR ANSWER ===', message);
-  } else if (message.type === 'end') {
-    if (!this.peerId) return console.error('unexpected `end` message');
-    var peer = peers[this.peerId];
-    peer.peerId = null;
-    this.peerId = null;
-    peer.send(JSON.stringify({ type: 'end' }), onsend);
-  } else if (message.type === 'send code change') {
-    console.log('=== ON CODE CHANGE MESSAGE SERVER.JS=== ', message);
+//       waitingId = null;
+//     } else {
+//       waitingId = this.id;
+//     }
+//   } else if (message.type === 'signal') {
+//     //SEND ICE CANDIDATE, OFFER, AND ANSWER (MESSAGE.DATA)
+//     if (!this.peerId) return console.error('unexpected `signal` message');
+//     var peer = peers[this.peerId];
+//     peer.send(JSON.stringify({ type: 'signal', data: message.data }));
+//     console.log('=== SENDING ICE, OFFER, OR ANSWER ===', message);
+//   } else if (message.type === 'end') {
+//     if (!this.peerId) return console.error('unexpected `end` message');
+//     var peer = peers[this.peerId];
+//     peer.peerId = null;
+//     this.peerId = null;
+//     peer.send(JSON.stringify({ type: 'end' }), onsend);
+//   } else if (message.type === 'send code change') {
+//     console.log('=== ON CODE CHANGE MESSAGE SERVER.JS=== ', message);
 
-    wsServer.clients.forEach(function each(client) {
-      if (client !== peer) {
-        client.send(JSON.stringify({ type: 'send code change', data: message.data }));
-      }
-    });
-  } else {
-    peer.send(message, onsend);
-    console.error('unknown message `type` ' + message.type);
-  }
-}
+//     wsServer.clients.forEach(function each(client) {
+//       if (client !== peer) {
+//         client.send(JSON.stringify({ type: 'send code change', data: message.data }));
+//       }
+//     });
+//   } else {
+//     peer.send(message, onsend);
+//     console.error('unknown message `type` ' + message.type);
+//   }
+// }
 
-function onsend(err) {
-  if (err) console.error(err.stack || err.message || err);
-}
+// function onsend(err) {
+//   if (err) console.error(err.stack || err.message || err);
+// }
 
-function broadcast(message) {
-  for (var id in peers) {
-    var peer = peers[id];
-    if (peer) {
-      peer.send(message);
-    }
-  }
-}
+// function broadcast(message) {
+//   for (var id in peers) {
+//     var peer = peers[id];
+//     if (peer) {
+//       peer.send(message);
+//     }
+//   }
+// }

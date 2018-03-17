@@ -6,20 +6,20 @@ class EmojiIcon extends Component {
   constructor() {
     super();
     this.state = {
-      isActive: false,
+      isActive: false
     };
   }
 
   _handlePickerBlur() {
     this.setState({
-      isActive: false,
+      isActive: false
     });
   }
 
   _openPicker(e) {
     e.preventDefault();
     this.setState({
-      isActive: !this.state.isActive,
+      isActive: !this.state.isActive
     });
   }
 
@@ -32,7 +32,9 @@ class EmojiIcon extends Component {
             onBlur={this._handlePickerBlur.bind(this)}
           />
         )}
-        <button onClick={this._openPicker.bind(this)} className="sc-user-input--emoji-icon-wrapper">
+        <button
+          onClick={this._openPicker.bind(this)}
+          className="sc-user-input--emoji-icon-wrapper">
           <svg
             className={`sc-user-input--emoji-icon ${this.props.isActive ? 'active' : ''}`}
             version="1.1"
@@ -43,8 +45,7 @@ class EmojiIcon extends Component {
             width="37.393px"
             height="37.393px"
             viewBox="0 0 37.393 37.393"
-            enableBackground="new 0 0 37.393 37.393"
-          >
+            enableBackground="new 0 0 37.393 37.393">
             <g>
               <path
                 d="M18.696,37.393C8.387,37.393,0,29.006,0,18.696C0,8.387,8.387,0,18.696,0c10.31,0,18.696,8.387,18.696,18.696

@@ -18,8 +18,8 @@ class ChatWindow extends Component {
   }
 
   render() {
-    const messageList = this.props.messageList || [];
-    const classList = ['sc-chat-window', this.props.isOpen ? 'opened' : 'closed'];
+    let messageList = this.props.messageList || [];
+    let classList = ['sc-chat-window', this.props.isOpen ? 'opened' : 'closed'];
     return (
       <div className={classList.join(' ')}>
         <Header
@@ -28,14 +28,17 @@ class ChatWindow extends Component {
           onClose={this.props.onClose}
         />
         <MessageList messages={messageList} imageUrl={this.props.agentProfile.imageUrl} />
-        <UserInput showEmoji={this.props.showEmoji} onSubmit={this.onUserInputSubmit.bind(this)} />
+        <UserInput
+          showEmoji={this.props.showEmoji}
+          onSubmit={this.onUserInputSubmit.bind(this)}
+        />
       </div>
     );
   }
 }
 
 ChatWindow.propTypes = {
-  showEmoji: PropTypes.bool,
+  showEmoji: PropTypes.bool
 };
 
 export default ChatWindow;

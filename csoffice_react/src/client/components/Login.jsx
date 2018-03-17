@@ -2,8 +2,8 @@ import React from 'react';
 import GoogleLogin from 'react-google-login';
 import PropTypes from 'prop-types'; // for validating PropTypes
 
-const Login = (props) => {
-  const responseGoogle = (response) => {
+const Login = props => {
+  const responseGoogle = response => {
     props.clickHandler(response);
   };
 
@@ -32,7 +32,7 @@ const Login = (props) => {
 };
 
 Login.propTypes = {
-  clickHandler: PropTypes.func.isRequired,
+  clickHandler: PropTypes.func.isRequired
 };
 
 export default Login;

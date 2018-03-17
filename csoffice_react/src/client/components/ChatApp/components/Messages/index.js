@@ -14,7 +14,7 @@ class Message extends Component {
   }
 
   render() {
-    const contentClassList = [
+    let contentClassList = [
       'sc-message--content',
       this.props.message.author === 'me' ? 'sent' : 'received'
     ];
