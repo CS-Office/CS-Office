@@ -45,7 +45,7 @@ const Login = (props) => {
                 clientId="881814036265-o68utsk4u8c3drq95k0p16qe72ups74j.apps.googleusercontent.com"
                 className="oAuth-button"
                 onSuccess={responseGoogle}
-                // onFailure={responseGoogle}
+                onFailure={responseGoogle}
               >
                 <div className="oauth-google-inner">
                   <img id="google-logo" src="./../public/images/GGL_logo_googleg_18.png" alt="" />

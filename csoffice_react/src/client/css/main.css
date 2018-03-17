@@ -66,9 +66,9 @@ input {
   color: #676e7b;
 }
 
-input:-webkit-autofill {
+/* input:-webkit-autofill {
     -webkit-text-fill-color: yellow !important;
-}
+} */
 
 
 p {
@@ -118,11 +118,13 @@ a:focus, a:hover {
 
 .branding {
   background: url('./../public/images/codesmith_.png') no-repeat left top;
+
 }
 
 .navbar-brand > img {
     height: 74px;
     margin: 20px 19px 0 0;
+    font-size: 14px;
 }
 
 
@@ -245,7 +247,6 @@ a:focus, a:hover {
   min-height: 12em;
   margin: 30px 0 40px;
   height: 350px;
-  cursor: pointer;
   -webkit-border-image: -webkit-gradient(
     linear,
     0 0,

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Route, Redirect } from 'react-router-dom';
-import Header from './Header';
+import { Route, Redirect, Switch } from 'react-router-dom';
+import Header from './Header.jsx';
 import Office from './Office.jsx';
 import Login from './Login.jsx';
 import SignUp from './SignUp.jsx';
@@ -8,10 +8,10 @@ import SignUp from './SignUp.jsx';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { isAuth: true };
+    this.state = { isAuth: false };
     this.authorize = this.authorize.bind(this);
   }
-  
+
   authorize() {
     this.setState({ isAuth: true });
   }
@@ -21,23 +21,25 @@ class App extends Component {
       <div className="wrapper">
         <Header />
         <main>
-          <Route
-            exact
-            path="/"
-            render={() =>
-              (this.state.isAuth ? (
-                <Redirect to="/office" />
-              ) : (
-                <Login clickHandler={this.authorize} />
-              ))
-            }
-          />
-          <Route path="/login" component={Login} />
-          <Route path="/signup" component={SignUp} />
-          <Route
-            path="/office"
-            render={() => (this.state.isAuth ? <Office /> : <Redirect to="/login" />)}
-          />
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={() =>
+                (!this.state.isAuth ? (
+                  <Login clickHandler={this.authorize} />
+                ) : (
+                  <Office />
+                ))
+              }
+            />
+            <Route path="/login" render={() => <Redirect to="/" />} />
+            <Route path="/signup" component={SignUp} />
+            <Route
+              path="/office"
+              render={() => (this.state.isAuth ? <Office /> : <Redirect to="/" />)}
+            />
+          </Switch>
         </main>
       </div>
     );
