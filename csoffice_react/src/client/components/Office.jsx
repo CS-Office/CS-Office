@@ -9,27 +9,6 @@ import Highlight from 'react-highlight';
 class Office extends Component {
   constructor() {
     super();
-    this.state = {
-      username: '',
-      message: '',
-      messages: [],
-      messageList: messageHistory,
-      newMessageCount: 0,
-      isOpen: false
-    };
-  }
-
-  onMessageWasSent(message) {
-    this.setState({
-      messageList: [...this.state.messageList, message]
-    });
-  }
-
-  handleClick() {
-    this.setState({
-      isOpen: !this.state.isOpen,
-      newMessageCount: 0
-    });
   }
 
   render() {
@@ -37,18 +16,7 @@ class Office extends Component {
       <div>
         <Video />
         <CodeEditor />
-        <ChatApp
-          agentProfile={{
-            teamName: 'Codesmith Chat',
-            imageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png'
-          }}
-          onMessageWasSent={this.onMessageWasSent.bind(this)}
-          messageList={this.state.messageList}
-          newMessageCount={this.state.newMessagesCount}
-          handleClick={this.handleClick.bind(this)}
-          isOpen={this.state.isOpen}
-          showEmoji
-        />
+        <ChatApp />
       </div>
     );
   }

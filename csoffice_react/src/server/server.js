@@ -5,7 +5,6 @@ const ws = require('ws');
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const io = require('socket.io');
 const app = express();
 
 //  FILES
@@ -57,16 +56,12 @@ const PORT = process.env.PORT || 3000;
 let server = app.listen(PORT, () => console.log('===SERVER LISTENING ON PORT 3000==='));
 
 //  SOCKETS
+const SocketManager = require('./socket_chatApp');
+const io = require('socket.io');
 let socket = io(server);
+module.exports = socket;
 
-socket.on('connection', client => {
-  client.on('subscribeToTimer', interval => {
-    console.log('=== client is subscribing to timer with interval ===', interval);
-    setInterval(() => {
-      client.emit('timer', new Date());
-    }, interval);
-  });
-});
+socket.on('connection', SocketManager);
 
 ////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////
