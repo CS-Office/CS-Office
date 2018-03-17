@@ -390,9 +390,6 @@ div.sign-in-header {
 .oauth-google-inner {
   display: block;
   position: relative;
-  /* flex-direction: row; */
-  /* align-items: center; */
-  /* /* vertical-align: middle; */ */
 }
 
 .oAuth-button {

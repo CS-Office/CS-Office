@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import Header from './Header.jsx';
+import Header from './Header';
 import Office from './Office.jsx';
 import Login from './Login.jsx';
 import SignUp from './SignUp.jsx';
