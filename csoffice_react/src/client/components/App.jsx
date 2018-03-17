@@ -3,7 +3,7 @@ import { Route, Redirect, Switch } from 'react-router-dom';
 import Header from './Header.jsx';
 import Office from './Office.jsx';
 import Login from './Login.jsx';
-import SignUp from './SignUp.jsx';
+import Signup from './SignUp.jsx';
 
 class App extends Component {
   constructor(props) {
@@ -27,14 +27,14 @@ class App extends Component {
               path="/"
               render={() =>
                 (!this.state.isAuth ? (
-                  <Login clickHandler={this.authorize} />
+                  <Login oAuthSuccess={this.authorize} />
                 ) : (
                   <Office />
                 ))
               }
             />
             <Route path="/login" render={() => <Redirect to="/" />} />
-            <Route path="/signup" component={SignUp} />
+            <Route path="/sign-up" component={Signup} />
             <Route
               path="/office"
               render={() => (this.state.isAuth ? <Office /> : <Redirect to="/" />)}
