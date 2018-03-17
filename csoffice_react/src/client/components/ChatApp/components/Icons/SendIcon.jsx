@@ -6,12 +6,11 @@ class SendIcon extends Component {
       <button
         onFocus={this.props.onFocus}
         onBlur={this.props.onBlur}
-        onClick={(e) => {
+        onClick={e => {
           e.preventDefault();
           this.props.onClick(e);
         }}
-        className="sc-user-input--send-icon-wrapper"
-      >
+        className="sc-user-input--send-icon-wrapper">
         <svg
           version="1.1"
           className="sc-user-input--send-icon"
@@ -21,8 +20,7 @@ class SendIcon extends Component {
           width="37.393px"
           height="37.393px"
           viewBox="0 0 37.393 37.393"
-          enableBackground="new 0 0 37.393 37.393"
-        >
+          enableBackground="new 0 0 37.393 37.393">
           <g id="Layer_2">
             <path
               d="M36.511,17.594L2.371,2.932c-0.374-0.161-0.81-0.079-1.1,0.21C0.982,3.43,0.896,3.865,1.055,4.241l5.613,13.263

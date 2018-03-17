@@ -59,6 +59,8 @@
     "nodemon": "^1.17.1",
     "react-svg-loader": "^2.1.0",
     "style-loader": "^0.20.3",
+    "svg-react-loader": "^0.4.5",
+    "url-loader": "^1.0.1",
     "webpack": "^3.10.0"
   }
 }

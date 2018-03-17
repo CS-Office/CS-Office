@@ -1,5 +1,4 @@
 import MESSAGE_TYPES from './../MessageTypes';
-
 const CLIENT = MESSAGE_TYPES.CLIENT;
 const BROKER = MESSAGE_TYPES.BROKER;
 const SOCKET_URL = process.env.SC_SOCKET_URL;
@@ -7,7 +6,10 @@ const io = require('socket.io-client');
 
 const messageBroker = {
   init() {
-    const socket = io(SOCKET_URL);
+    const socket = io('http://localhost:3000');
+    socket.on('timer', timestamp => cb(null, timestamp));
+    socket.emit('subscribeToTimer', 1000);
+
     this.socket = socket;
     this.messageRecievedHandlers = [];
     socket.on(BROKER.VISITOR_ID, this.setVisitorId);
@@ -54,7 +56,7 @@ const messageBroker = {
 
   setVisitorId(data) {
     localStorage.setItem('SLACKCHAT.VISITOR_ID', data.visitorId);
-  },
+  }
 };
 
 export default messageBroker;
