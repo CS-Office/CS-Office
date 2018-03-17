@@ -1,9 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Header = () => (
-  <nav>
-    <div className="nav-wrapper">Codesmith Office</div>
+  <nav className="navbar navbar-default">
+    <div className="container">
+      <Link to="/office" className="navbar-brand">
+        <img src="./../public/images/codesmith-logo-md.png" alt="Codesmith Logo" />
+      </Link>
+    </div>
   </nav>
-  );
+);
 
 export default Header;

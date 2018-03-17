@@ -26,10 +26,6 @@ class Office extends Component {
       <div>
         HELLO
         <Video />
-<<<<<<< HEAD
-        {/* <ChatApp /> */}
-=======
->>>>>>> 6429d02ac7b85427acd69c8c19e18bd0dba29a68
         <CodeEditor />
         <ChatApp
           agentProfile={{
