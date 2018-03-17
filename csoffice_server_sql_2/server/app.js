@@ -1,17 +1,23 @@
 const express = require('express');
+const path = require('path');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
-const routes = require('./routes/users.js');
-const auth = require('./auth/index.js');
 
+const PORT = 5555;
 const app = express();
 
-app.use(bodyParser.json());
+const users = require('./api/users');
 
-// middleware - get request to handlers will go to the specified route
-app.use('/users', routes);
-app.use('/auth', auth);
-app.use('/signup', auth);
+
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+
+
+app.use('/api/users', users);
 
 // error handling middleware
 app.use((err, req, res, next) => {
@@ -22,6 +28,8 @@ app.use((err, req, res, next) => {
         error: req.app.get('env') === 'development' ? err : {},
     });
 });
+app.listen(PORT, () => {
+    console.log('Server started listening on port 5555');
+});
 
 module.exports = app;
-
