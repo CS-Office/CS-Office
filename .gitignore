@@ -2,11 +2,5 @@ node_modules
 .DS_Store
 package-lock.json
 CSBin.io.js
-bundle.js
-<<<<<<< HEAD
-sercrets/
-node_modules/
-=======
-secrets/
-node_modules/
->>>>>>> 92b99937447b170a13df9146e5af6619ecc03e0a
+$GIT_DIR/csoffice_react/build/
+bundle

@@ -4,7 +4,6 @@ import Video from './Video.jsx';
 import { ChatApp } from './ChatApp/index.jsx';
 import messageHistory from './ChatApp/components/Messages/MessageHistory';
 import CodeEditor from './CodeEditor.jsx';
-import Highlight from 'react-highlight';
 
 class Office extends Component {
   constructor() {
