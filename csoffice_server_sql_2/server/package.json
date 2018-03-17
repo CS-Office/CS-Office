@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "(dropdb --if-exists test-cs_office_db && createdb test-cs_office_db) && NODE_ENV=test mocha"
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +19,9 @@
     "pg": "^7.4.1"
   },
   "devDependencies": {
-    "nodemon": "^1.17.2"
+    "chai": "^4.1.2",
+    "mocha": "^5.0.4",
+    "nodemon": "^1.17.2",
+    "supertest": "^3.0.0"
   }
 }
