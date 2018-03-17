@@ -1,10 +1,10 @@
 import React from 'react';
 import GoogleLogin from 'react-google-login';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types'; // for validating PropTypes
+// import PropTypes from 'prop-types'; // for validating PropTypes
 
-const Login = props => {
-  const responseGoogle = response => {
+const Login = (props) => {
+  const responseGoogle = (response) => {
     props.clickHandler(response);
   };
 
@@ -45,9 +45,12 @@ const Login = props => {
                 clientId="881814036265-o68utsk4u8c3drq95k0p16qe72ups74j.apps.googleusercontent.com"
                 className="oAuth-button"
                 onSuccess={responseGoogle}
-                onFailure={responseGoogle}
+                // onFailure={responseGoogle}
               >
-                <span className="oAuth-text">Sign in with Google</span>
+                <div className="oauth-google-inner">
+                  <img id="google-logo" src="./../public/images/GGL_logo_googleg_18.png" alt="" />
+                  <div className="oAuth-text">Sign in with Google</div>
+                </div>
               </GoogleLogin>
             </div>
           </div>

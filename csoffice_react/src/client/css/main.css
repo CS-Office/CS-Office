@@ -16,7 +16,9 @@ body {
   font-size: 22px;
   line-height: 1.5;
   color: #676e7b;
+  /* background: url('./../public/images/bg.png') top repeat-x #f7f7f7; */
   background-color: #f7f7f7;
+  margin: 0;
 }
 
 main {
@@ -58,9 +60,16 @@ button, input, optgroup, select, textarea {
 }
 
 input {
+  background-color: white;
   padding-left: 10px;
   font-size: 16px;
+  color: #676e7b;
 }
+
+input:-webkit-autofill {
+    -webkit-text-fill-color: yellow !important;
+}
+
 
 p {
   font-size: 14px;
@@ -186,10 +195,10 @@ a:focus, a:hover {
   float: left;
 }
 
-.row {
+/* .row {
   margin-left: -30px;
   margin-right: -30px;
-}
+} */
 
 .row::after,
 .row::before {
@@ -344,35 +353,29 @@ div.sign-in-header {
 }
 
 .horizontal-line {
-  text-align: center;
+  font-size: 12px;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  font-size: 12px;
+  text-align: center;
   margin-top: 30px;
   margin-bottom: 25px;
- }
-
-.horizontal-line:before, 
-.horizontal-line:after {
-  flex-grow: 1;
-  height: 1px;
-  content: '\a0';
-  background-color: #ddd;
-  position: relative;
-  top: 0.5em;
-  height: 100;
-  background: white;
 }
 
+.horizontal-line:before, .horizontal-line:after {
+  background-color: #ddd;
+  content: '\a0';
+  flex-grow: 1;
+  height: 1px;
+  position: relative;
+  top: 0.5em;
+}
 .horizontal-line:before {
   margin-right:10px;
 }
-
 .horizontal-line:after {
   margin-left:10px;
 }
-
 
 /* ======== MINE ======= */
 
@@ -384,13 +387,21 @@ div.sign-in-header {
 
 }
 
+.oauth-google-inner {
+  display: block;
+  position: relative;
+  /* flex-direction: row; */
+  /* align-items: center; */
+  /* /* vertical-align: middle; */ */
+}
+
 .oAuth-button {
   border: 1px solid #d1d7dd;
   border-radius: 3px;
   background-color: white;
   background-repeat: no-repeat;
-  font-size: 14px;
-  width: 250px;
+  font-size: 16px;
+  width: 225px;
   height: 50px;
   background-size: auto;
   padding: 0;
@@ -399,19 +410,20 @@ div.sign-in-header {
 .oAuth-button:hover {
   cursor: pointer;
   border-color:#1c8de9;
+  color: black;
 }
 
 .oAuth-text {
-  margin-left: 25px;
+  margin-left: 35px;
+  position: relative;
+  display: inline-block;
 }
-
 
 .google-button {
   margin: 0;
   max-width: 318px;
   width: 100%;
   height: 50px;
-
 }
 
 #root {
@@ -420,7 +432,14 @@ div.sign-in-header {
   flex-direction: column;
 }
 
-
+#google-logo {
+  display: inline-block;
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  left: 11px;
+  top: 3px;
+}
 
 @media (min-width: 1200px) {
     .container {
@@ -446,7 +465,6 @@ div.sign-in-header {
         height: 280px;
     }
 }
-
 
 @media (min-width: 768px) {
   .col-sm-10 {

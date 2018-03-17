@@ -9,11 +9,10 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = { isAuth: true };
-
     this.authorize = this.authorize.bind(this);
   }
   
-  authorize(e) {
+  authorize() {
     this.setState({ isAuth: true });
   }
 
