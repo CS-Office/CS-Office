@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, Switch } from 'react-router-dom';
 import Header from './Header.jsx';
 import Office from './Office.jsx';
 import Login from './Login.jsx';
@@ -9,7 +9,6 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = { isAuth: false };
-
     this.authorize = this.authorize.bind(this);
   }
 
@@ -19,31 +18,29 @@ class App extends Component {
 
   render() {
     return (
-      <div className="container">
-        <BrowserRouter>
-          <div>
-            <Header />
+      <div className="wrapper">
+        <Header />
+        <main>
+          <Switch>
             <Route
               exact
               path="/"
               render={() =>
-                (this.state.isAuth ? (
-                  <Redirect to="/office" />
-                ) : (
+                (!this.state.isAuth ? (
                   <Login clickHandler={this.authorize} />
+                ) : (
+                  <Office />
                 ))
               }
             />
-            <Route path="/login" component={Login} />
+            <Route path="/login" render={() => <Redirect to="/" />} />
             <Route path="/signup" component={SignUp} />
             <Route
               path="/office"
-              render={() =>
-                (this.state.isAuth ? <Office /> : <Login clickHandler={this.authorize} />)
-              }
+              render={() => (this.state.isAuth ? <Office /> : <Redirect to="/" />)}
             />
-          </div>
-        </BrowserRouter>
+          </Switch>
+        </main>
       </div>
     );
   }
