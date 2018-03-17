@@ -93,7 +93,7 @@ a:focus, a:hover {
 }
 
 .navbar-default {
-    background-color:transparent;
+    background: #363E46;;
     border-color:transparent;
 }
 
@@ -122,8 +122,8 @@ a:focus, a:hover {
 }
 
 .navbar-brand > img {
-    height: 74px;
-    margin: 20px 19px 0 0;
+    height: 50px;
+    margin: 10px 19px 10 0;
     font-size: 14px;
 }
 
