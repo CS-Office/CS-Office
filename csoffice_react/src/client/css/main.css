@@ -361,6 +361,8 @@ div.sign-in-header {
   background-color: #ddd;
   position: relative;
   top: 0.5em;
+  height: 100;
+  background: white;
 }
 
 .horizontal-line:before {

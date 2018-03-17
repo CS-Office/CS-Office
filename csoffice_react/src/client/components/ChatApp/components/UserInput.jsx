@@ -8,7 +8,7 @@ class UserInput extends Component {
   constructor() {
     super();
     this.state = {
-      inputActive: false,
+      inputActive: false
     };
   }
 
@@ -25,7 +25,7 @@ class UserInput extends Component {
       this.props.onSubmit({
         author: 'me',
         type: 'text',
-        data: { text },
+        data: { text }
       });
       this.userInput.innerHTML = '';
     }
@@ -35,7 +35,7 @@ class UserInput extends Component {
     this.props.onSubmit({
       author: 'me',
       type: 'emoji',
-      data: { emoji },
+      data: { emoji }
     });
   }
 
@@ -51,7 +51,7 @@ class UserInput extends Component {
           onBlur={() => {
             this.setState({ inputActive: false });
           }}
-          ref={(e) => {
+          ref={e => {
             this.userInput = e;
           }}
           onKeyDown={this.handleKey.bind(this)}
@@ -77,7 +77,7 @@ class UserInput extends Component {
 
 UserInput.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  showEmoji: PropTypes.bool,
+  showEmoji: PropTypes.bool
 };
 
 export default UserInput;

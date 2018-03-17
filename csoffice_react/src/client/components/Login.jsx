@@ -3,8 +3,8 @@ import GoogleLogin from 'react-google-login';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types'; // for validating PropTypes
 
-const Login = (props) => {
-  const responseGoogle = (response) => {
+const Login = props => {
+  const responseGoogle = response => {
     props.clickHandler(response);
   };
 

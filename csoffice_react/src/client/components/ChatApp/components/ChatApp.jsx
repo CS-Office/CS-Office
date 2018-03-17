@@ -5,11 +5,11 @@ import launcherIcon from './../assets/logo-no-bg.svg';
 import launcherIconActive from './../assets/close-icon.png';
 
 class ChatApp extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       launcherIcon,
-      isOpen: false,
+      isOpen: false
     };
   }
 
@@ -18,21 +18,23 @@ class ChatApp extends Component {
       this.props.handleClick();
     } else {
       this.setState({
-        isOpen: !this.state.isOpen,
+        isOpen: !this.state.isOpen
       });
     }
   }
 
   render() {
-    const isOpen = this.props.hasOwnProperty('isOpen') ? this.props.isOpen : this.state.isOpen;
+    const isOpen = this.props.hasOwnProperty('isOpen')
+      ? this.props.isOpen
+      : this.state.isOpen;
     const classList = ['sc-launcher', isOpen ? 'opened' : ''];
     return (
       <div>
         <div />
         <div className={classList.join(' ')} onClick={this.handleClick.bind(this)}>
           <MessageCount count={this.props.newMessagesCount} isOpen={isOpen} />
-          <img className="sc-open-icon" src={launcherIconActive} />
-          <img className="sc-closed-icon" src={launcherIcon} />
+          <img className={'sc-open-icon'} src={launcherIconActive} />
+          <img className={'sc-closed-icon'} src={launcherIcon} />
         </div>
         <ChatWindow
           messageList={this.props.messageList}
@@ -47,11 +49,11 @@ class ChatApp extends Component {
   }
 }
 
-const MessageCount = (props) => {
+const MessageCount = props => {
   if (props.count === 0 || props.isOpen === true) {
     return null;
   }
-  return <div className="sc-new-messsages-count">{props.count}</div>;
+  return <div className={'sc-new-messsages-count'}>{props.count}</div>;
 };
 
 ChatApp.propTypes = {
@@ -61,12 +63,12 @@ ChatApp.propTypes = {
   isOpen: PropTypes.bool,
   handleClick: PropTypes.func,
   messageList: PropTypes.arrayOf(PropTypes.object),
-  showEmoji: PropTypes.bool,
+  showEmoji: PropTypes.bool
 };
 
 ChatApp.defaultProps = {
   newMessagesCount: 0,
-  showEmoji: true,
+  showEmoji: true
 };
 
 export default ChatApp;
