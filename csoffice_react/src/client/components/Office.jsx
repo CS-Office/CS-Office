@@ -6,8 +6,8 @@ import messageHistory from './ChatApp/components/Messages/MessageHistory';
 import CodeEditor from './CodeEditor.jsx';
 
 class Office extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   }
 
   render() {
