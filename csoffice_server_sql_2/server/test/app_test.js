@@ -31,4 +31,18 @@ describe('CRUD Users', () => {
       })
       .catch(done);
   });
+  it('Show one record by id', (done) => {
+    request(app)
+      .get('/api/users/3')
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .then((response) => {
+        expect(response.body).to.be.a('object');
+        // console.log(response.body);
+        expect(response.body).to.deep.equal(fixtures.users[2]);
+        done();
+      })
+      .catch(done);
+  });
 });
