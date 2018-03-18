@@ -1,8 +1,9 @@
 const express = require('express');
+const bcrypt = require('bcrypt');
 
 const router = express.Router();
 
-const queries = require('../db/queries');
+const User = require('../db/queries');
 
 // Routes are prepended with /auth
 
@@ -23,15 +24,28 @@ const validateUser = ((user) => {
 
 router.post('/signup', (req, res, next) => {
   if (validateUser(req.body)) {
-    queries.getOneByEmail(req.body.email).then((user) => {
-      console.log('user', user);
+    User.getOneByEmail(req.body.email).then((user) => {
       // if user not found
       if (!user) {
-        //
-        res.json({
-          user,
-          message: '/signup working',
-        });
+        bcrypt.hash(req.body.password, 10)
+          .then((hash) => {
+            // insert into db
+            const user = {
+              firstName: req.body.email,
+              lastName: req.body.lastName,
+              email: req.body.email,
+              password: hash,
+            };
+
+            User
+              .create(user)
+              .then((id) => {
+                res.json({
+                  id,
+                  message: '/signup working',
+                });
+              }); 
+          });
       } else {
         next(new Error('Email is in Use'));
       }
