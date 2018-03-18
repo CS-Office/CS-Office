@@ -4,7 +4,7 @@ const users = [{
   lastName: 'Washington',
   email: 'star@star.com',
   password: 'ilovetesting',
-  admin: true, 
+  admin: true,
 },
 {
   id: 2,
@@ -20,7 +20,7 @@ const users = [{
   lastName: 'Park',
   email: 'simon@simon.com',
   password: 'ilovetesting',
-  admin: false, 
+  admin: false,
 },
 {
   id: 4,
@@ -31,6 +31,16 @@ const users = [{
   admin: false,
 }];
 
+const user = {
+  id: 6,
+  firstName: 'Haley',
+  lastName: 'God',
+  email: 'haley@haley.com',
+  password: 'ilovetesting',
+  admin: true,
+};
+
 module.exports = {
   users,
+  user,
 };

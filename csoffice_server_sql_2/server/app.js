@@ -20,16 +20,25 @@ app.use(cookieParser());
 app.use('/api/users', users);
 
 // error handling middleware
-app.use((err, req, res, next) => {
-    res.status(err.status || 500);
-    // render the error page if in production hide the stack trace
-    res.json({
-        message: err.message,
-        error: req.app.get('env') === 'development' ? err : {},
-    });
+
+// catch 404 and forward to error handler
+app.use((req, res, next) => {
+  const err = new Error('Not Found');
+  err.status = 404;
+  next(err);
 });
+
+app.use((err, req, res, next) => {
+  res.status(err.status || 500);
+  // render the error page if in production hide the stack trace
+  res.json({
+    message: err.message,
+    error: req.app.get('env') === 'development' ? err : {},
+  });
+});
+
 app.listen(PORT, () => {
-    console.log('Server started listening on port 5555');
+  console.log('Server started listening on port 5555');
 });
 
 module.exports = app;
