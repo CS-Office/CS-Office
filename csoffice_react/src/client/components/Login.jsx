@@ -13,7 +13,11 @@ const Login = props => (
             <Input type="email" />
             <Input type="password" />
             <div>
-            <Input type="submit" className="button btn btn-primary sign-in-button" value="Login" />
+              <Input
+                type="submit"
+                className="button btn btn-primary sign-in-button"
+                value="Login"
+              />
             </div>
           </form>
           <div className="horizontal-line">or</div>
