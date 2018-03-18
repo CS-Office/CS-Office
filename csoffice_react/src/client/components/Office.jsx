@@ -10,6 +10,10 @@ class Office extends Component {
     super(props);
   }
 
+  componentDidMount() {
+    this.props.history.push('/office');
+  }
+
   render() {
     return (
       <div>

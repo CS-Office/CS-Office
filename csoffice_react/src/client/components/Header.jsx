@@ -1,12 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const Header = () => (
   <nav className="navbar navbar-default">
     <div className="container">
-      <Link to="/office" className="navbar-brand">
+      <NavLink to="/" className="navbar-brand">
         <img src="./../public/images/codesmith-logo-md.png" alt="Codesmith Logo" />
-      </Link>
+      </NavLink>
     </div>
   </nav>
 );

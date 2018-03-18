@@ -4,7 +4,6 @@ const Input = (props) => {
   switch (props.type) {
     case 'text':
       return <input type="text" className={props.className} placeholder={props.placeHolder} />;
-
     case 'email':
       return (
         <input
