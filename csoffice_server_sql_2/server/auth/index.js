@@ -66,11 +66,24 @@ router.post('/login', (req, res, next) => {
       console.log('user', user);
 
       if (user) {
+        // compare password with hashed password
         bcrypt.compare(req.body.password, user.password).then((result) => {
-          res.json({
-            result,
-            message: 'Logging in...',
-          });
+          // if the passwords match
+          if (result) {
+            // setting the set-cookie header
+            const isSecure = req.app.get('env') !== 'development';
+            res.cookie('user_id', user.id, {
+              // Cookies are http only
+              httpOnly: true,
+              // cookie signed
+              signed: true,
+              // make more secure, secured when in production
+              secured: isSecure,
+            });
+            res.json({
+              message: 'Logged In',
+            });
+          }
         });
       } else {
         next(new Error('Invalid Login'));
