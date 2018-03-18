@@ -22,29 +22,33 @@ const validateUser = ((user) => {
   return validEmail && validPassowrd;
 });
 
-router.post('/signup', (req, res, next) => {
+router.post('/sign-up', (req, res, next) => {
   if (validateUser(req.body)) {
+    // check if there is a user in db
     User.getOneByEmail(req.body.email).then((user) => {
       // if user not found
       if (!user) {
+        // this is a unique email
         bcrypt.hash(req.body.password, 10)
+        // then hashed the password
           .then((hash) => {
-            // insert into db
+            // create user based off that hash password
             const user = {
               firstName: req.body.email,
               lastName: req.body.lastName,
               email: req.body.email,
               password: hash,
             };
-
+            // Insert the user into the db from queries.js methods
             User
               .create(user)
               .then((id) => {
+                // return id when success
                 res.json({
                   id,
-                  message: '/signup working',
+                  message: 'signed up',
                 });
-              }); 
+              });
           });
       } else {
         next(new Error('Email is in Use'));
@@ -52,6 +56,28 @@ router.post('/signup', (req, res, next) => {
     });
   } else {
     next(new Error('Invalid'));
+  }
+});
+
+
+router.post('/login', (req, res, next) => {
+  if (validateUser(req.body)) {
+    User.getOneByEmail(req.body.email).then((user) => {
+      console.log('user', user);
+
+      if (user) {
+        bcrypt.compare(req.body.password, user.password).then((result) => {
+          res.json({
+            result,
+            message: 'Logging in...',
+          });
+        });
+      } else {
+        next(new Error('Invalid Login'));
+      }
+    });
+  } else {
+    next(new Error('Invalid Login'));
   }
 });
 
