@@ -9,15 +9,19 @@ const PORT = 5555;
 const app = express();
 
 const users = require('./api/users');
+const auth = require('./auth/index');
 
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+// set a secret for our cookie, env.sample cookie secret
+app.use(cookieParser('process.env.COOKIE_SECRET'));
 
-
+// Requests that start with /auth
+app.use('/auth', auth);
 app.use('/api/users', users);
+
 
 // error handling middleware
 

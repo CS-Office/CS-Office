@@ -8,8 +8,11 @@ module.exports = {
   getOne(id) {
     return knex('users').where('id', id).first();
   },
+  getOneByEmail(email) {
+    return knex('users').where('email', email).first();
+  },
   create(user) {
-    return knex('users').insert(user, '*');
+    return knex('users').insert(user, 'id').then(ids => ids[0]);
   },
   update(id, user) {
     return knex('users').where('id', id).update(user, '*');
