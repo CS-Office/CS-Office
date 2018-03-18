@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import Video from './Video.jsx';
 import { ChatApp } from './ChatApp/index.jsx';
-import messageHistory from './ChatApp/components/Messages/MessageHistory';
 import CodeEditor from './CodeEditor.jsx';
 
 class Office extends Component {

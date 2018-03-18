@@ -8,6 +8,7 @@ import SignUp from './SignUp.jsx';
 class App extends Component {
   constructor(props) {
     super(props);
+    // MAKE SURE TO CHANGE BACK TO FALSE!!!!!!!!!!!!!
     this.state = { isAuth: false };
     this.authorize = this.authorize.bind(this);
   }
@@ -26,11 +27,7 @@ class App extends Component {
               exact
               path="/"
               render={() =>
-                (!this.state.isAuth ? (
-                  <Login clickHandler={this.authorize} />
-                ) : (
-                  <Office />
-                ))
+                (!this.state.isAuth ? <Login clickHandler={this.authorize} /> : <Office />)
               }
             />
             <Route path="/login" render={() => <Redirect to="/" />} />

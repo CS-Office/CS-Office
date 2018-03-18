@@ -3,4 +3,5 @@ node_modules
 package-lock.json
 CSBin.io.js
 $GIT_DIR/csoffice_react/build/
-bundle
+bundle.js
+build/

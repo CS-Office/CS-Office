@@ -7,11 +7,17 @@ export default class LoginForm extends Component {
 
     this.state = {
       nickname: '',
-      error: ''
+      error: '',
     };
+
+    this.setUser = this.setUser.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.setError = this.setError.bind(this);
   }
 
   setUser({ user, isUser }) {
+    console.log(user, isUser);
     if (isUser) {
       this.setError('User name taken');
     } else {
@@ -28,7 +34,9 @@ export default class LoginForm extends Component {
   }
 
   handleChange(e) {
-    this.setState({ nickname: e.target.value });
+    const newState = Object.assign({}, this.state);
+    newState.nickname = e.target.value;
+    this.setState(newState);
   }
 
   setError(error) {
@@ -41,19 +49,19 @@ export default class LoginForm extends Component {
       <div className="login">
         <form onSubmit={this.handleSubmit} className="login-form">
           <label htmlFor="nickname">
-            <h2>Got a nickname?</h2>
+            <h2>Hi what's your name?</h2>
           </label>
           <input
-            ref={input => {
+            ref={(input) => {
               this.textInput = input;
             }}
             type="text"
             id="nickname"
             value={nickname}
             onChange={this.handleChange}
-            placeholder={'MYCoolUSername'}
+            placeholder="Enter full name..."
           />
-          <div className="error">{error ? error : null}</div>
+          <div className="error">{error || null}</div>
         </form>
       </div>
     );
