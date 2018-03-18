@@ -53,16 +53,21 @@ app.get('*', (request, response) => {
 });
 
 const PORT = process.env.PORT || 3000;
-const server = app.listen(PORT, () => console.log('===SERVER LISTENING ON PORT 3000==='));
 
 //  SOCKETS
-const SocketManager = require('./socketManager');
-const io = require('socket.io');
+const server = require('http').Server(app);
+const socket = require('socket.io')(server);
 
-const socket = io(server);
-module.exports = socket;
+const SocketManager = require('./SocketManager');
+
+// const io = require('socket.io')(server);
+
+// const socket = io(server);
 
 socket.on('connection', SocketManager);
+
+server.listen(PORT, () => console.log('===SERVER LISTENING ON PORT 3000==='));
+module.exports = socket;
 
 // //////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////

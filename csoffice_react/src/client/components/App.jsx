@@ -27,7 +27,11 @@ class App extends Component {
               exact
               path="/"
               render={() =>
-                (!this.state.isAuth ? <Login oAuthSuccess={this.authorize} /> : <Redirect to="/office" />)
+                (!this.state.isAuth ? (
+                  <Login oAuthSuccess={this.authorize} />
+                ) : (
+                  <Redirect to="/office" />
+                ))
               }
             />
             <Route path="/sign-up" component={Signup} />

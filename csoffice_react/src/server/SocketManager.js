@@ -1,4 +1,6 @@
-const socket = require('./server.js').socket;
+// const socket = require('./server.js');
+
+// console.log('SERVER SOCKET ===', socket);
 
 const {
   VERIFY_USER,
@@ -79,30 +81,34 @@ module.exports = function(socket) {
   socket.on(TYPING, ({ chatId, isTyping }) => {
     sendTypingFromUser(chatId, isTyping);
   });
-};
-/*
+
+  /*
 * Returns a function that will take a chat id and a boolean isTyping
 * and then emit a broadcast to the chat id that the sender is typing
 * @param sender {string} username of sender
 * @return function(chatId, message)
 */
-function sendTypingToChat(user) {
-  return (chatId, isTyping) => {
-    socket.emit(`${TYPING}-${chatId}`, { user, isTyping });
-  };
-}
+  function sendTypingToChat(user) {
+    return (chatId, isTyping) => {
+      socket.emit(`${TYPING}-${chatId}`, { user, isTyping });
+    };
+  }
 
-/*
+  /*
 * Returns a function that will take a chat id and message
 * and then emit a broadcast to the chat id.
 * @param sender {string} username of sender
 * @return function(chatId, message)
 */
-function sendMessageToChat(sender) {
-  return (chatId, message) => {
-    socket.emit(`${MESSAGE_RECIEVED}-${chatId}`, createMessage({ message, sender }));
-  };
-}
+  function sendMessageToChat(sender) {
+    return (chatId, message) => {
+      console.log('CHATID === ', chatId);
+      console.log('MESSAGE === ', message);
+      // console.log('SOCKETTTTTTTTTT === ', socket);
+      socket.emit(`${MESSAGE_RECIEVED}-${chatId}`, createMessage({ message, sender }));
+    };
+  }
+};
 
 /*
 * Adds user to list passed in.
