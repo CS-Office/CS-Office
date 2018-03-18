@@ -12,12 +12,21 @@ const Signup = () => (
             <Input type="email" />
             <Input type="text" className="email-sign-in" placeHolder="First Name" />
             <Input type="text" className="email-sign-in" placeHolder="Last Name" />
-            <Input type="password" className="email-sign-in" />
-            <Input type="password" placeHolder="Confirm Password" />
+            <Input type="password" name="password" className="email-sign-in" />
+            <Input type="password" name="confirm-password" placeHolder="Confirm Password" />
             <div>
-            <Input type="submit" className="button btn btn-primary sign-in-button" value="Sign Up" />
+              <Input
+                type="submit"
+                className="button btn btn-primary sign-in-button"
+                value="Sign Up"
+              />
             </div>
           </form>
+        </div>
+        <div className="check-user">
+          <p>
+            Already a user? <Link to="/login">Sign in</Link>
+          </p>
         </div>
       </div>
     </div>

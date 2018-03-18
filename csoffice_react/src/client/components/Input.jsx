@@ -21,7 +21,7 @@ const Input = (props) => {
           type="password"
           id="password"
           className={props.className ? props.className : 'password-sign-in'}
-          name="password"
+          name={props.name ? props.name : 'password'}
           required="true"
           placeholder={props.placeHolder ? props.placeHolder : 'Password'}
         />
@@ -29,6 +29,7 @@ const Input = (props) => {
     case 'submit':
       return <input type="submit" className={props.className} value={props.value} />;
     default:
+
   }
 };
 
