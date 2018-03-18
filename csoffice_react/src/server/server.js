@@ -5,6 +5,7 @@ const ws = require('ws');
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+
 const app = express();
 
 //  FILES
@@ -35,37 +36,37 @@ app.use(bodyParser.json());
 
 // COOKIE SESSION // ENCRYPTS COOKIE - SET NAME, AGE (24 HOURS), AND KEY
 const cookieSession = require('cookie-session');
-app.use(
-  cookieSession({
-    name: 'hi im a cookie',
-    maxAge: 30 * 24 * 60 * 60 * 1000,
-    keys: [keys.cookieKey]
-  })
-);
+
+app.use(cookieSession({
+  name: 'hi im a cookie',
+  maxAge: 30 * 24 * 60 * 60 * 1000,
+  keys: [keys.cookieKey],
+}));
 
 //  PATH FOR STATIC FILES
-app.use(express.static(__dirname + './../../'));
+app.use(express.static(`${__dirname}./../../`));
 app.use('/css', express.static(path.join(__dirname, './../client/css')));
 app.use('/public', express.static(path.join(__dirname, './../client/public')));
 
-app.get('*', function(request, response) {
+app.get('*', (request, response) => {
   response.sendFile(path.resolve(__dirname, './../../index.html'));
 });
 
 const PORT = process.env.PORT || 3000;
-let server = app.listen(PORT, () => console.log('===SERVER LISTENING ON PORT 3000==='));
+const server = app.listen(PORT, () => console.log('===SERVER LISTENING ON PORT 3000==='));
 
 //  SOCKETS
-const SocketManager = require('./socket_chatApp');
+const SocketManager = require('./socketManager');
 const io = require('socket.io');
-let socket = io(server);
+
+const socket = io(server);
 module.exports = socket;
 
 socket.on('connection', SocketManager);
 
-////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////
+// //////////////////////////////////////////////////////////////
+// //////////////////////////////////////////////////////////////
+// //////////////////////////////////////////////////////////////
 // var wsServer = new ws.Server({ server: server });
 // var peers = {};
 // var waitingId = null;
