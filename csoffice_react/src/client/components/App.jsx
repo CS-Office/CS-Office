@@ -8,6 +8,7 @@ import Signup from './SignUp.jsx';
 class App extends Component {
   constructor(props) {
     super(props);
+    // MAKE SURE TO CHANGE BACK TO FALSE!!!!!!!!!!!!!
     this.state = { isAuth: false };
     this.authorize = this.authorize.bind(this);
   }
