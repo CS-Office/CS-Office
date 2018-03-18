@@ -47,13 +47,14 @@ class ChatContainer extends Component {
   addChat(chat, reset) {
     const { socket } = this.props;
     const { chats } = this.state;
+
     const newChats = reset ? [chat] : [...chats, chat];
-    this.setState({ chats: newChats });
+    this.setState({ chats: newChats, activeChat: reset ? chat : this.state.activeChat });
 
     const messageEvent = `${MESSAGE_RECIEVED}-${chat.id}`;
     const typingEvent = `${TYPING}-${chat.id}`;
 
-    socket.on(typingEvent);
+    socket.on(typingEvent, this.updateTypingInChat(chat.id));
     socket.on(messageEvent, this.addMessageToChat(chat.id));
   }
 
@@ -68,6 +69,7 @@ class ChatContainer extends Component {
         if (chat.id === chatId) chat.messages.push(message);
         return chat;
       });
+
       this.setState({ chats: newChats });
     };
   }
@@ -77,14 +79,24 @@ class ChatContainer extends Component {
    * @param chatId {number}
    */
   updateTypingInChat(chatId) {
-    console.log('hi');
-  }
+    return ({ isTyping, user }) => {
+      if (user !== this.props.user.name) {
+        const { chats } = this.state;
 
-  /*
-   * Adds a message to the specified chat
-   * @param chatId {number} The id of the chat to be added to.
-   * @param message {string} The message to be added to the chat.
-   */
+        const newChats = chats.map((chat) => {
+          if (chat.id === chatId) {
+            if (isTyping && !chat.typingUsers.includes(user)) {
+              chat.typingUsers.push(user);
+            } else if (!isTyping && chat.typingUsers.includes(user)) {
+              chat.typingUsers = chat.typingUsers.filter(u => u !== user);
+            }
+          }
+          return chat;
+        });
+        this.setState({ chats: newChats });
+      }
+    };
+  }
 
   /*
   * Adds a message to the specified chat
@@ -93,6 +105,7 @@ class ChatContainer extends Component {
   */
   sendMessage(chatId, message) {
     const { socket } = this.props;
+    console.log('SOCKET ===', socket);
     socket.emit(MESSAGE_SENT, { chatId, message });
   }
 
