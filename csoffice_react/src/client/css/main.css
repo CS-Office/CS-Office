@@ -66,11 +66,6 @@ input {
   color: #676e7b;
 }
 
-/* input:-webkit-autofill {
-    -webkit-text-fill-color: yellow !important;
-} */
-
-
 p {
   font-size: 14px;
   text-align: center;
@@ -93,6 +88,7 @@ a:focus, a:hover {
 }
 
 .navbar-default {
+   height: 70px;
     background: #363E46;;
     border-color:transparent;
 }
@@ -120,10 +116,14 @@ a:focus, a:hover {
   background: url('./../public/images/codesmith_.png') no-repeat left top;
 
 }
+.navbar-brand {
+  height: 100%;
+}
 
 .navbar-brand > img {
-    height: 50px;
-    margin: 10px 19px 10 0;
+    height: 35px;
+    vertical-align: middle;
+    margin: 17px 25px 10px 0;
     font-size: 14px;
 }
 
@@ -216,8 +216,9 @@ a:focus, a:hover {
 }
 
 .container {
-  margin-right: auto;
-  margin-left: auto;
+  height: 100%;
+  margin-right: 30px;
+  margin-left: 30px;
   padding-left: 30px;
   padding-right: 30px;
   font-family: inherit;
@@ -227,6 +228,10 @@ a:focus, a:hover {
 
 .contaner::after {
   clear: both;
+}
+
+.check-user {
+    font-size: 18px;
 }
 
 .well {
@@ -275,9 +280,6 @@ a:focus, a:hover {
   margin: 0 auto;
 }
 
-.check-user {
-    font-size: 18px;
-}
 
 div.sign-in-header {
     text-align: center;
@@ -445,11 +447,11 @@ div.sign-in-header {
     }
 }
 
-@media (min-width: 768px) {
+/* @media (min-width: 768px) {
     .navbar {
         border-radius:4px;
     }
-}
+} */
 
 @media (min-width: 1200px) {
     .col-lg-7 {

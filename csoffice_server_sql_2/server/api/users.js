@@ -2,9 +2,12 @@ const express = require('express');
 
 const router = express.Router();
 
+const queries = require('../db/queries');
+
+// Get all rows from db
 router.get('/', (req, res) => {
-    res.json({
-        message: 'im running',
+    queries.getAll().then((users) => {
+        res.json(users);
     });
 });
 

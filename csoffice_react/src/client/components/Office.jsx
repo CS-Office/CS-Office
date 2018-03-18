@@ -5,8 +5,8 @@ import { ChatApp } from './ChatApp/index.jsx';
 import CodeEditor from './CodeEditor.jsx';
 
 class Office extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   }
 
   render() {
