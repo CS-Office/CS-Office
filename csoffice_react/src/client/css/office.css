@@ -1,30 +1,28 @@
 /***************************
 OFFICE CONTAINERS
 ***************************/
-.office-container {
-  display: flex;
-  flex-direction: column;
+#office-container {
+  margin: 0;
+  padding: 0;
+  width: 100%;
   height: 100%;
 }
-.code-chat-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-end;
-  height: 70%;
+
+.editor-container {
   border: 1px solid black;
 }
-
+.chat-container {
+  border: 1px solid black;
+}
 .Video-container {
-  height: 30%;
+  /* height: 30%; */
   border: 1px solid black;
 }
 
 /***************************
 CHATAPP LOGIN
 ***************************/
-.login {
-  /* width: 80%; */
+/* .login {
   height: 100%;
   display: flex;
   justify-content: center;
@@ -64,13 +62,12 @@ CHATAPP LOGIN
   margin-right: 10px;
   max-width: 400px;
   height: 920px;
-  /* order: -1; */
-}
+} */
 
 /***************************
 CHATAPP SIDEBAR
 ***************************/
-#side-bar {
+/* #side-bar {
   font-size: 0.8em;
   box-sizing: border-box;
   width: 33.75%;
@@ -152,18 +149,7 @@ CHATAPP SIDEBAR
   overflow-y: scroll;
   background: #5b8cf7;
   flex-grow: 1;
-}
-#side-bar .users::-webkit-scrollbar-track {
-  /* -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  background-color: #cac8ee; */
-}
-#side-bar .users::-webkit-scrollbar {
-  /* width: 5px;
-  background-color: green; */
-}
-#side-bar .users::-webkit-scrollbar-thumb {
-  /* background-color: #484d79; */
-}
+} 
 #side-bar .users .user {
   align-items: center;
   display: flex;
@@ -237,13 +223,12 @@ CHATAPP SIDEBAR
   padding-left: 13px;
   font-size: 14px;
 }
-
+*/
 /***************************
 CHATAPP HEADER
 ***************************/
-.chat-header {
+/* .chat-header {
   background: white;
-  /* box-shadow: 0px 6px 5px -2px rgba(225, 225, 225, 0.7); */
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
@@ -294,12 +279,12 @@ CHATAPP HEADER
   .chat-room-container {
     width: 100%;
   }
-}
+} */
 
 /***************************
 CHATAPP ROOM
 ***************************/
-.chat-room {
+/* .chat-room {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -310,27 +295,16 @@ CHATAPP ROOM
   align-items: center;
   justify-content: center;
   font-size: 2em;
-}
+} */
 
 /***************************
 CHATAPP THREAD
 ***************************/
-.thread-container {
+/* .thread-container {
   max-width: 260px;
   flex-grow: 1;
   overflow-y: scroll;
   position: relative;
-}
-.thread-container::-webkit-scrollbar-track {
-  /* -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  background-color: #cac8ee; */
-}
-.thread-container::-webkit-scrollbar {
-  /* width: 5px;
-  background-color: green; */
-}
-.thread-container::-webkit-scrollbar-thumb {
-  /* background-color: #48s4d79; */
 }
 .thread-container .thread {
   position: relative;
@@ -344,12 +318,12 @@ CHATAPP THREAD
   border-right: 0.5px solid #e8e8e8;
   border-bottom: none;
   overflow: auto;
-}
+} */
 
 /***************************
 CHATAPP MESSAGE
 ***************************/
-.message-container {
+/* .message-container {
   display: flex;
   justify-content: flex-start;
   min-height: 50px;
@@ -358,8 +332,6 @@ CHATAPP MESSAGE
 }
 .message-container .time {
   display: none;
-  /* order: 1;
-  font-size: 0.62em; */
 }
 .message-container .data {
   order: 2;
@@ -388,29 +360,13 @@ CHATAPP MESSAGE
     opacity: 1;
   }
 }
-.message-container .message::before {
-  /* border-bottom-color: transparent;
-  border-left-color: transparent;
-  border-right-color: #fff;
-  border-style: solid;
-  border-top-color: #fff;
-  border-width: 4px;
-  content: '';
-  height: 0;
-  left: -7px;
-  position: absolute;
-  top: 0;
-  width: 0; */
-}
+
 .message-container.right {
   text-align: right;
   justify-content: flex-end;
 }
 .message-container.right .time {
   display: none;
-  /* order: 2;
-  margin-left: 5px;
-  font-size: 12px; */
 }
 .message-container.right .data {
   margin-left: 0;
@@ -422,7 +378,6 @@ CHATAPP MESSAGE
 .message-container.right .message {
   background: #5b8cf7;
   color: #fff;
-  /* border-top-left-radius: 5px; */
   font-size: 12px;
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -487,21 +442,11 @@ CHATAPP MESSAGE
   color: #cccdd0;
   opacity: 1;
 }
-.message-input .message-form .form-control::-webkit-scrollbar-track {
-  /* -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  background-color: #cac8ee; */
-}
-.message-input .message-form .form-control::-webkit-scrollbar {
-  /* width: 5px;
-  background-color: green; */
-}
-.message-input .message-form .form-control::-webkit-scrollbar-thumb {
-  /* background-color: #484d79; */
-}
+
 .message-input .message-form .form-control:focus {
   outline: none;
-}
-.message-input .message-form .send {
+} */
+/* .message-input .message-form .send {
   display: none;
   /* width: 20%;
   box-sizing: border-box;
@@ -512,12 +457,12 @@ CHATAPP MESSAGE
   color: #fff;
   background: #3e3e5e;
   transition: all 0.35s ease-out; */
-}
+/* } */
 
-.message-form input {
+/* .message-form input {
   font-size: 0.62em;
 }
 
 .message-input .message-form .send:disabled {
   display: none;
-}
+} */

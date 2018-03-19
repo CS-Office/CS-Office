@@ -11,7 +11,7 @@ class App extends React.Component {
     super(props);
     // MAKE SURE TO CHANGE BACK TO FALSE!!!!!!!!!!!!!
     this.state = {
-      isAuth: false,
+      isAuth: true,
       isAdmin: true,
       adminName: 'Admin',
       user: {},
