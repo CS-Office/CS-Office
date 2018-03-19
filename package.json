@@ -1,7 +1,7 @@
 {
-  "name": "cs-office",
+  "name": "CS-Office",
   "version": "0.1.0",
-  "description": "CS Office Hour",
+  "description": "CS office hour",
   "main": "index.js",
   "dependencies": {
     "axios": "^0.18.0",
@@ -51,7 +51,7 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/johnhpark/CS-Office/issues"
+    "url": "https://github.com/CS-Office/CS-Office/issues"
   },
-  "homepage": "https://github.com/johnhpark/CS-Office#readme"
+  "homepage": "https://github.com/CS-Office/CS-Office#readme"
 }

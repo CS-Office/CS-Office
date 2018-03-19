@@ -9,7 +9,7 @@ const Signup = () => (
         <div className="sign-in-container well well-csx">
           <div className="sign-in-header">Create your account</div>
           <form className="sign-in-form">
-            <Input type="email" />
+            <Input type="email" autoComplete="off" />
             <Input type="text" className="email-sign-in" placeHolder="First Name" />
             <Input type="text" className="email-sign-in" placeHolder="Last Name" />
             <Input type="password" name="password" className="email-sign-in" />

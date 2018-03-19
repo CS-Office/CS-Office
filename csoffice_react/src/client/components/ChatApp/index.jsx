@@ -1,4 +1,4 @@
 import React from 'react';
-import ChatApp from './components/ChatApp.jsx';
+import ChatApp from './components/ChatApp';
 
 export { ChatApp };
