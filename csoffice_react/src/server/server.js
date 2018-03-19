@@ -56,18 +56,17 @@ const PORT = process.env.PORT || 3000;
 
 //  SOCKETS
 const server = require('http').Server(app);
-const socket = require('socket.io')(server);
+const io = (module.exports.io = require('socket.io')(server));
 
 const SocketManager = require('./SocketManager');
 
 // const io = require('socket.io')(server);
-
 // const socket = io(server);
 
-socket.on('connection', SocketManager);
+io.on('connection', SocketManager);
 
 server.listen(PORT, () => console.log('===SERVER LISTENING ON PORT 3000==='));
-module.exports = socket;
+// module.exports = io;
 
 // //////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////

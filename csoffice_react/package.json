@@ -33,6 +33,7 @@
     "path": "^0.12.7",
     "prop-types": "^15.6.1",
     "react": "^16.2.0",
+    "react-bootstrap": "^0.32.1",
     "react-dom": "^16.2.0",
     "react-google-login": "^3.0.10",
     "react-highlight": "^0.11.1",

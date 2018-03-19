@@ -13,12 +13,6 @@ function ChatHeading({ name, numberOfUsers }) {
           <span>{numberOfUsers || null}</span>
         </div>
       </div>
-      {/* "options" = video, adduser, and menu icons */}
-      <div className="options">
-        <FAVideo />
-        <FAUserPlus />
-        <MdEllipsisMenu />
-      </div>
     </div>
   );
 }
