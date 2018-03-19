@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
-import Header from './Header.jsx';
-import Office from './Office.jsx';
-import Login from './Login.jsx';
-import Signup from './SignUp.jsx';
+import NavBar from './NavBar';
+import Office from './Office';
+import Login from './Login';
+import Signup from './Signup';
 
-class App extends Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
     // MAKE SURE TO CHANGE BACK TO FALSE!!!!!!!!!!!!!
@@ -14,46 +14,35 @@ class App extends Component {
   }
 
   authenticate() {
-    console.log('hello');
     this.setState({ ...this.state, isAuthenticated: true });
   }
 
   render() {
-    console.log(this.state);
-    const PrivateRoute = ({ component, ...rest }) => (
+    const PrivateRoute = ({ component: Component, ...rest }) => (
       <Route
         {...rest}
-        render={props =>
-          (this.state.isAuthenticated === true ? <component {...props} /> : <Redirect to="/login" />)
-        }
+        render={() => (this.state.isAuthenticated ? <Component /> : <Redirect to="/login" />)}
       />
     );
 
     return (
       <div className="wrapper">
-        <Header />
+        <NavBar />
         <main>
-          {/* <Switch>
-            <Route exact path="/" render={() => <Redirect to="/login" />} />
-            <Route path="/login" render={() => <Login oAuthSuccess={this.authorize} />} />
-            <Route path="/sign-up" component={Signup} />
-            <PrivateRoute path="/office" component={Office} />
-          </Switch> */}
           <Switch>
+            <Route exact path="/" render={() => <Redirect to="/login" />} />
+            <Route path="/sign-up" component={Signup} />
             <Route
-              exact
-              path="/"
+              path="/login"
               render={() =>
-                (!this.state.isAuthenticated ? (
-                  <Login oAuthSuccess={this.authenticate} />
-                ) : (
+                (this.state.isAuthenticated ? (
                   <Redirect to="/office" />
+                ) : (
+                  <Login oAuthSuccess={this.authenticate} />
                 ))
               }
             />
-            <Route path="/sign-up" component={Signup} />
-            <Route path="/login" render={() => <Login oAuthSuccess={this.authenicate} />} />
-            <Route path="/office" component={Office} />
+            <PrivateRoute path="/office" component={Office} />
           </Switch>
         </main>
       </div>

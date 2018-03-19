@@ -29,7 +29,6 @@ const Input = (props) => {
     case 'submit':
       return <input type="submit" className={props.className} value={props.value} />;
     default:
-
   }
 };
 

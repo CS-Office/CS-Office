@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Input from './Input.jsx';
+import Input from './Input';
 
 const Signup = () => (
   <div className="container-boundingbox">

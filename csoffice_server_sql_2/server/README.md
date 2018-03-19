@@ -5,8 +5,8 @@
 ```sh
 run this command in terminal
 
-./setup.sh
+get into server directory
 
-nodemon
+npm start
 
 ```
