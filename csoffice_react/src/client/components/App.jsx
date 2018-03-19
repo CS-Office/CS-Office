@@ -4,12 +4,17 @@ import Header from './Header.jsx';
 import Office from './Office.jsx';
 import Login from './Login.jsx';
 import Signup from './SignUp.jsx';
+import Video from './Video.jsx';
 
 class App extends Component {
   constructor(props) {
     super(props);
     // MAKE SURE TO CHANGE BACK TO FALSE!!!!!!!!!!!!!
-    this.state = { isAuthenticated: false };
+    this.state = { 
+      isAuthenticated: false,
+      isAdmin: true,
+      adminName: 'Admin' 
+    };
     this.authenticate = this.authenticate.bind(this);
   }
 
@@ -52,8 +57,12 @@ class App extends Component {
               }
             />
             <Route path="/sign-up" component={Signup} />
-            <Route path="/login" render={() => <Login oAuthSuccess={this.authenicate} />} />
+            <Route path="/login" render={() => <Login oAuthSuccess={this.authenticate} />} />
             <Route path="/office" component={Office} />
+            {/* <Route path="/video"   
+              render={() => 
+                (<Video adminName={this.state.adminName} isAdmin={this.state.isAdmin}/>)
+              } /> */}
           </Switch>
         </main>
       </div>
