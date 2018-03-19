@@ -1,6 +1,25 @@
 import React, { Component } from 'react';
 
 class Messages extends Component {
+  constructor(props) {
+    super(props);
+
+    this.scrollDown = this.scrollDown.bind(this);
+  }
+
+  scrollDown() {
+    const { container } = this.refs;
+    container.scrollTop = container.scrollHeight;
+  }
+
+  componentDidMount() {
+    this.scrollDown();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    this.scrollDown();
+  }
+
   render() {
     const { messages, user, typingUsers } = this.props;
     return (
