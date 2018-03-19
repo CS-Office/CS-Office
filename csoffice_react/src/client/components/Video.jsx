@@ -21,18 +21,18 @@ class Video extends Component {
     // this.hideUnnecessaryStuff = this.hideUnnecessaryStuff.bind(this);
     // this.rotateInCircle = this.rotateInCircle.bind(this);
     const { socket } = this.props;
-    console.log('VIDEO socketttttt', socket);
+    // console.log('VIDEO socketttttt', socket);
   }
 
   // methods
   handleCreateRoom() {
-    console.log('state --', this.state);
-    console.log('in this function doe');
+    // console.log('state --', this.state);
+    // console.log('in this function doe');
     const newState = Object.assign({}, this.state);
     newState.createdRoom = true;
     this.setState(newState);
     const adminName = this.state.adminName;
-    console.log('this is adminname: ', adminName);
+    // console.log('this is adminname: ', adminName);
     DetectRTC.load(() => {
       captureUserMedia(() => {
         const shared = 'video';
@@ -48,31 +48,30 @@ class Video extends Component {
 
   startConnection() {
     // broadcast(config)
-    console.log('in startConnection');
-    // (config) => {
-    //   config.channel = config.channel || location.href.replace(/\/|:|#|%|\.|\[|\]/g, '');
-    //   console.log('config.channel:', config.channel);
-    //   const sender = Math.round(Math.random() * 999999999) + 999999999;
-    //   console.log('sender: ', sender);
-    //   socket.emit('new-channel', {
-    //     channel: config.channel,
-    //     sender,
-    //   });
-    //   // var socket = io.connect(SIGNALING_SERVER + config.channel);
-    //   socket.channel = config.channel;
-    //   // let socket = this.state.socket;
-    //   this.props.socket.on('connect', () => {
-    //     // if (config.callback) config.callback(socket);
-    //     console.log('socket connected');
-    //   });
-    //   // socket.send = function (message) {
-    //   //     socket.emit('message', {
-    //   //         sender: sender,
-    //   //         data: message
-    //   //     });
-    //   // };
-    //   // socket.on('message', config.onmessage);
+    // console.log('in startConnection');
+    // openSocket: function(config) {
+    //     config.channel = config.channel || location.href.replace(/\/|:|#|%|\.|\[|\]/g, '');
+    //     console.log('config.channel:', config.channel);
+    //     let sender = Math.round(Math.random() * 999999999) + 999999999;
+    //     console.log('sender: ', sender)
+    //     socket.emit('new-channel', {
+    //         channel: config.channel,
+    //         sender: sender
+    //     });
+    //     // var socket = io.connect(SIGNALING_SERVER + configg.channel);
+    //     socket.channel = config.channel;
+    //     // let socket = this.state.socket;
+    //     this.props.socket.on('connect', function () {
+    //         // if (config.callback) config.callback(socket);
+    //         console.log('socket connected')
+    //     });
+    // socket.send = function (message) {
+    //     socket.emit('message', {
+    //         sender: sender,
+    //         data: message
+    //     });
     // };
+    // socket.on('message', config.onmessage);
   }
   // this.initSocket();
 
@@ -177,7 +176,7 @@ class Video extends Component {
 
   render() {
     const isAdmin = this.state.isAdmin;
-    console.log('isAdmin: ', isAdmin);
+    // console.log('isAdmin: ', isAdmin);
     const createdRoom = this.state.createdRoom;
     const disableBtn = createdRoom === true;
     const name = this.state.adminName;
@@ -223,5 +222,4 @@ class Video extends Component {
     );
   }
 }
-
 export default Video;

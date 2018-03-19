@@ -62,6 +62,8 @@ CHATAPP LOGIN
   flex-direction: row;
   align-items: flex-start;
   margin-right: 10px;
+  max-width: 400px;
+  height: 920px;
   /* order: -1; */
 }
 
@@ -180,6 +182,15 @@ CHATAPP SIDEBAR
   margin-left: 15px;
   flex-grow: 1;
 }
+#side-bar .logged-in-as {
+  font-size: 14px;
+  background: #5483ea;
+  color: white;
+  padding-left: 13px;
+}
+#side-bar .users .user .user-info .name {
+  font-size: 14px;
+}
 #side-bar .users .user .user-info .last-message {
   display: none;
   font-size: 12px;
@@ -193,16 +204,18 @@ CHATAPP SIDEBAR
 }
 #side-bar .current-user {
   align-items: center;
-  background: #5b8cf7;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
   height: 10vh;
-  max-height: 65px;
+  max-height: 45px;
   justify-content: space-between;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding-left: 13px;
+  padding-right: 5px;
   color: white;
+  background: #5483ea;
+  line-height: 20px;
+  font-size: 14px;
 }
 #side-bar .current-user .logout {
   align-items: center;
@@ -221,6 +234,8 @@ CHATAPP SIDEBAR
 }
 #side-bar .chat-rooms {
   color: white;
+  padding-left: 13px;
+  font-size: 14px;
 }
 
 /***************************
@@ -240,6 +255,8 @@ CHATAPP HEADER
   border-top-right-radius: 5px;
   border: 0.5px solid #e8e8e8;
   border-left: none;
+  font-size: 18px;
+  font-weight: bold;
 }
 .chat-header .user-info {
   align-items: center;
@@ -248,6 +265,7 @@ CHATAPP HEADER
 .chat-header .user-info .user-name {
   margin-right: 10px;
   color: #333333;
+  font-size: 15px;
 }
 .chat-header .user-info .status {
   align-items: center;
@@ -335,7 +353,7 @@ CHATAPP MESSAGE
   display: flex;
   justify-content: flex-start;
   min-height: 50px;
-  margin: 10px 15px;
+  margin: 0px 10px;
   animation: 0.65s ease-out 0s show;
 }
 .message-container .time {
@@ -345,20 +363,20 @@ CHATAPP MESSAGE
 }
 .message-container .data {
   order: 2;
-  margin-left: 25px;
+  margin: 10px 0 10px 0;
 }
 .message-container .name {
   margin-top: 2px;
   text-align: left;
-  font-size: 0.62em;
-  margin-right: 60px;
+  font-size: 11px;
+  margin-left: 10px;
 }
 .message-container .message {
   background: #f5f7f9;
-  border-radius: 5px;
+  border-radius: 15px;
   box-sizing: border-box;
   color: black;
-  padding: 10px 15px;
+  padding: 7px 15px;
   position: relative;
   font-size: 0.62em;
 }
@@ -404,7 +422,7 @@ CHATAPP MESSAGE
 .message-container.right .message {
   background: #5b8cf7;
   color: #fff;
-  border-top-left-radius: 5px;
+  /* border-top-left-radius: 5px; */
   font-size: 12px;
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -422,6 +440,7 @@ CHATAPP MESSAGE
 .typing-user {
   text-align: right;
   margin: 10px 15px;
+  font-size: 12px;
 }
 .message-input {
   background: white;

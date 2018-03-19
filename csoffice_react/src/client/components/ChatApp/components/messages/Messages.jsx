@@ -42,7 +42,7 @@ class Messages extends Component {
           {/* loop through the typingUsers array and print out their name with is typing... */}
           {typingUsers.map(name => (
             <div key={name} className="typing-user">
-              {`${name} is typing . . .`}
+              {`${name} is typing...`}
             </div>
           ))}
         </div>
