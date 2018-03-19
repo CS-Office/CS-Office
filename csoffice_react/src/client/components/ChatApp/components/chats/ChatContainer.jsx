@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import SideBar from './SideBar.jsx';
-import { COMMUNITY_CHAT, MESSAGE_SENT, MESSAGE_RECIEVED, TYPING } from './../../Events';
+import {
+  COMMUNITY_CHAT,
+  MESSAGE_SENT,
+  MESSAGE_RECIEVED,
+  TYPING,
+  PRIVATE_MESSAGE,
+} from './../../Events';
 import ChatHeading from './ChatHeading.jsx';
 import Messages from './../messages/Messages.jsx';
 import MessageInput from './../messages/MessageInput.jsx';
@@ -14,6 +20,8 @@ class ChatContainer extends Component {
       activeChat: null,
     };
 
+    this.initSocket = this.initSocket.bind(this);
+    this.sendOpenPrivateMessage = this.sendOpenPrivateMessage.bind(this);
     this.resetChat = this.resetChat.bind(this);
     this.addChat = this.addChat.bind(this);
     this.addMessageToChat = this.addMessageToChat.bind(this);
@@ -25,7 +33,21 @@ class ChatContainer extends Component {
 
   componentDidMount() {
     const { socket } = this.props;
+    this.initSocket(socket);
+  }
+
+  initSocket(socket) {
+    const { user } = this.props;
     socket.emit(COMMUNITY_CHAT, this.resetChat);
+    socket.on(PRIVATE_MESSAGE, this.addChat);
+    socket.on('connect', () => {
+      socket.emit(COMMUNITY_CHAT, this.resetChat);
+    });
+  }
+
+  sendOpenPrivateMessage(reciever) {
+    const { socket, user } = this.props;
+    socket.emit(PRIVATE_MESSAGE, { reciever, sender: user.name });
   }
 
   /*
@@ -44,7 +66,7 @@ class ChatContainer extends Component {
   * @param chat {Chat} the chat to be added.
   * @param reset {boolean} if true will set the chat as the only chat
   */
-  addChat(chat, reset) {
+  addChat(chat, reset = false) {
     const { socket } = this.props;
     const { chats } = this.state;
 
@@ -105,7 +127,6 @@ class ChatContainer extends Component {
   */
   sendMessage(chatId, message) {
     const { socket } = this.props;
-    console.log('SOCKET ===', socket);
     socket.emit(MESSAGE_SENT, { chatId, message });
   }
 
@@ -127,13 +148,14 @@ class ChatContainer extends Component {
     const { user, logout } = this.props;
     const { chats, activeChat } = this.state;
     return (
-      <div className="container">
+      <div className="chat-container">
         <SideBar
           logout={logout}
           chats={chats}
           user={user}
           activeChat={activeChat}
           setActiveChat={this.setActiveChat}
+          onSendPrivateMessage={this.sendOpenPrivateMessage}
         />
         <div className="chat-room-container">
           {activeChat !== null ? (

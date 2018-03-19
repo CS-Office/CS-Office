@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './../styles/chatApp.css';
 import { USER_CONNECTED, LOGOUT } from './../Events';
 import LoginForm from './LoginForm.jsx';
 import ChatContainer from './chats/ChatContainer.jsx';
@@ -9,6 +8,7 @@ export default class Layout extends Component {
     super(props);
 
     this.state = {
+      socket: this.props.socket,
       user: null,
     };
 
@@ -21,7 +21,8 @@ export default class Layout extends Component {
 	*	@param user {id:number, name:string}
 	*/
   setUser(user) {
-    this.props.socket.emit(USER_CONNECTED, user);
+    const { socket } = this.state;
+    socket.emit(USER_CONNECTED, user);
     this.setState({ user });
   }
 
@@ -29,17 +30,17 @@ export default class Layout extends Component {
 	*	Sets the user property in state to null.
 	*/
   logout() {
-    this.props.socket.emit(LOGOUT);
+    const { socket } = this.state;
+    socket.emit(LOGOUT);
     this.setState({ user: null });
   }
 
   render() {
-    // const { title } = this.props;
-    const { user } = this.state;
-    const { socket } = this.props;
+    const { title } = this.props;
+    const { socket, user } = this.state;
 
     return (
-      <div className="container">
+      <div className="chat-container">
         {!user ? (
           <LoginForm socket={socket} setUser={this.setUser} />
         ) : (

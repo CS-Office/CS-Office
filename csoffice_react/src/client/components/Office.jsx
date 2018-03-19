@@ -4,6 +4,7 @@ import Video from './Video.jsx';
 import { ChatApp } from './ChatApp/index.jsx';
 import CodeEditor from './CodeEditor.jsx';
 import io from 'socket.io-client';
+import './../css/office.css';
 
 const socketUrl = 'http://localhost:3000/';
 class Office extends Component {
@@ -34,10 +35,14 @@ class Office extends Component {
   render() {
     const { socket } = this.state;
     return (
-      <div>
-        <Video socket={socket} />
-        <CodeEditor />
-        <ChatApp socket={socket} />
+      <div className="Office-container">
+        <div className="Video-container">
+          <Video socket={socket} />
+        </div>
+        <div className="code-chat-container">
+          <CodeEditor />
+          <ChatApp socket={socket} />
+        </div>
       </div>
     );
   }

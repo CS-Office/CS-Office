@@ -1,5 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const Video = () => <div>This is the Video</div>;
+class Video extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return <div> VIDEO </div>;
+  }
+}
 
 export default Video;

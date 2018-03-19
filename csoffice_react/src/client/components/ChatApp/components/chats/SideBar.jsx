@@ -5,31 +5,53 @@ import FASearch from 'react-icons/lib/fa/search';
 import MdEject from 'react-icons/lib/md/eject';
 
 export default class SideBar extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      reciever: '',
+    };
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    const { reciever } = this.state;
+    const { onSendPrivateMessage } = this.props;
+
+    onSendPrivateMessage(reciever);
+  }
+
   render() {
-    // props from ChatContainer
     const {
       chats, activeChat, user, setActiveChat, logout,
     } = this.props;
+    const { reciever } = this.state;
     return (
       <div id="side-bar">
         <div className="heading">
           <div className="app-name">
             Codesmith <FAChevronDown />
           </div>
-          {/* 'menu' currently does nothing... purely visual for now */}
           <div className="menu">
             <FAMenu />
           </div>
         </div>
-        {/* 'search' is the add Chat funtionality where we add private messaging */}
-        <div className="search">
+        <form onSubmit={this.handleSubmit} className="search">
           <i className="search-icon">
             <FASearch />
           </i>
-          <input placeholder="Search" type="text" />
+          <input
+            placeholder="Search"
+            type="text"
+            value={reciever}
+            onChange={(e) => {
+              this.setState({ reciever: e.target.value });
+            }}
+          />
           <div className="plus" />
-        </div>
-        {/* 'users' list of chats we have currently for the user that is logged in */}
+        </form>
         <div
           className="users"
           ref="users"
@@ -37,13 +59,10 @@ export default class SideBar extends Component {
             e.target === this.refs.user && setActiveChat(null);
           }}
         >
-          {/* loop through the chats array */}
           {chats.map((chat) => {
             if (chat.name) {
               const lastMessage = chat.messages[chat.messages.length - 1];
-              const user = chat.users.find(({ name }) => name !== this.props.name) || {
-                name: 'Community',
-              };
+              const chatSideName = chat.users.find(name => name !== user.name) || 'Community';
               const classNames = activeChat && activeChat.id === chat.id ? 'active' : '';
 
               return (
@@ -54,9 +73,9 @@ export default class SideBar extends Component {
                     setActiveChat(chat);
                   }}
                 >
-                  <div className="user-photo">{user.name[0].toUpperCase()}</div>
+                  <div className="user-photo">{chatSideName[0].toUpperCase()}</div>
                   <div className="user-info">
-                    <div className="name">{user.name}</div>
+                    <div className="name">{chatSideName}</div>
                     {lastMessage && <div className="last-message">{lastMessage.message}</div>}
                   </div>
                 </div>
@@ -66,7 +85,6 @@ export default class SideBar extends Component {
             return null;
           })}
         </div>
-        {/* "current-user" shows name of the current user and logout button */}
         <div className="current-user">
           <span>{user.name}</span>
           <div
