@@ -1,9 +1,10 @@
 // THIS FILE RENDERS THE CODE EDITOR, VIDEO, AND CHAT
 import React, { Component } from 'react';
-import Video from './Video.jsx';
-import { ChatApp } from './ChatApp/index.jsx';
-import CodeEditor from './CodeEditor.jsx';
 import io from 'socket.io-client';
+import Video from './Video';
+import { ChatApp } from './ChatApp/index';
+import Editor from './Editor';
+import './../css/office.css';
 
 const socketUrl = 'http://localhost:3000/';
 class Office extends Component {
@@ -36,10 +37,14 @@ class Office extends Component {
   render() {
     const { socket, isAdmin, adminName } = this.state;
     return (
-      <div>
-        <Video socket={socket} isAdmin={isAdmin} adminName={adminName}/>
-        <CodeEditor />
-        <ChatApp socket={socket} />
+      <div className="Office-container">
+        <div className="Video-container">
+          <Video socket={socket} isAdmin={isAdmin} adminName={adminName}/>
+        </div>
+        <div className="code-chat-container">
+          <Editor />
+          <ChatApp socket={socket} />
+        </div>
       </div>
     );
   }

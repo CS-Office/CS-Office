@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import io from 'socket.io-client';
 // const SIGNALING_SERVER = 'https://webrtcweb.com:9559/';
 // const SIGNALING_SERVER = 'http://localhost:5000';
@@ -206,6 +207,16 @@ class Video extends Component {
             </div>
         );
     }
+
+
+class Video extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return <div> VIDEO </div>;
+  }
 }
 
 export default Video;

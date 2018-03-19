@@ -32,6 +32,9 @@ const config = {
       { test: /\.(png|jpg|jpeg|gif|svg)$/, loader: 'url-loader?limit=100000' },
     ],
   },
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
 };
 
 module.exports = config;

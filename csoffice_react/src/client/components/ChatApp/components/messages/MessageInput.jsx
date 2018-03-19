@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class MessageInput extends Component {
+export default class MessageInput extends Component {
   constructor(props) {
     super(props);
 
@@ -11,7 +11,11 @@ class MessageInput extends Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
+    this.sendTyping = this.sendTyping.bind(this);
+    this.startCheckingTyping = this.startCheckingTyping.bind(this);
+    this.stopCheckingTyping = this.stopCheckingTyping.bind(this);
   }
+
   handleSubmit(e) {
     e.preventDefault();
     this.sendMessage();
@@ -22,8 +26,43 @@ class MessageInput extends Component {
     this.props.sendMessage(this.state.message);
   }
 
+  componentWillUnmount() {
+    this.stopCheckingTyping();
+  }
+
   sendTyping() {
-    console.log('hello');
+    this.lastUpdateTime = Date.now();
+    // If user is not typing then set state to true
+    if (!this.state.isTyping) {
+      this.setState({ isTyping: true });
+      this.props.sendTyping(true);
+      this.startCheckingTyping();
+    }
+  }
+
+  /*
+	*	startCheckingTyping
+	*	Start an interval that checks if the user is typing.
+	*/
+  startCheckingTyping() {
+    this.typingInterval = setInterval(() => {
+      // set istyping to false if user hasnt been typing for more than 1 sec
+      if (Date.now() - this.lastUpdateTime > 1000) {
+        this.setState({ isTyping: false });
+        this.stopCheckingTyping();
+      }
+    }, 1000);
+  }
+
+  /*
+	*	stopCheckingTyping
+	*	Start the interval from checking if the user is typing.
+	*/
+  stopCheckingTyping() {
+    if (this.typingInterval) {
+      clearInterval(this.typingInterval);
+      this.props.sendTyping(false);
+    }
   }
 
   render() {
@@ -57,5 +96,3 @@ class MessageInput extends Component {
     );
   }
 }
-
-export default MessageInput;

@@ -1,6 +1,4 @@
-// const socket = require('./server.js');
-
-// console.log('SERVER SOCKET ===', socket);
+const io = require('./server.js').io;
 
 const {
   VERIFY_USER,
@@ -11,6 +9,7 @@ const {
   MESSAGE_RECIEVED,
   MESSAGE_SENT,
   TYPING,
+  PRIVATE_MESSAGE,
 } = require('./../client/components/ChatApp/Events');
 
 const {
@@ -36,19 +35,20 @@ module.exports = function(socket) {
     if (isUser(connectedUsers, nickname)) {
       callback({ isUser: true, user: null });
     } else {
-      callback({ isUser: false, user: createUser({ name: nickname }) });
+      callback({ isUser: false, user: createUser({ name: nickname, socketId: socket.id }) });
     }
   });
 
   // User Connects with username
   socket.on(USER_CONNECTED, (user) => {
+    user.socketId = socket.id;
     connectedUsers = addUser(connectedUsers, user);
     socket.user = user;
 
     sendMessageToChatFromUser = sendMessageToChat(user.name);
     sendTypingFromUser = sendTypingToChat(user.name);
 
-    socket.emit(USER_CONNECTED, connectedUsers);
+    io.emit(USER_CONNECTED, connectedUsers);
     console.log(connectedUsers);
   });
 
@@ -57,7 +57,7 @@ module.exports = function(socket) {
     if ('user' in socket) {
       connectedUsers = removeUser(connectedUsers, socket.user.name);
 
-      socket.emit(USER_DISCONNECTED, connectedUsers);
+      io.emit(USER_DISCONNECTED, connectedUsers);
       console.log('Disconnect', connectedUsers);
     }
   });
@@ -65,7 +65,7 @@ module.exports = function(socket) {
   // User logsout
   socket.on(LOGOUT, () => {
     connectedUsers = removeUser(connectedUsers, socket.user.name);
-    socket.emit(USER_DISCONNECTED, connectedUsers);
+    io.emit(USER_DISCONNECTED, connectedUsers);
     console.log('Disconnect', connectedUsers);
   });
 
@@ -82,33 +82,39 @@ module.exports = function(socket) {
     sendTypingFromUser(chatId, isTyping);
   });
 
-  /*
+  socket.on(PRIVATE_MESSAGE, ({ reciever, sender }) => {
+    if (reciever in connectedUsers) {
+      const newChat = createChat({ name: `${reciever} & ${sender}`, users: [reciever, sender] });
+      const recieverSocket = connectedUsers[reciever].socketId;
+      socket.to(recieverSocket).emit(PRIVATE_MESSAGE, newChat);
+      socket.emit(PRIVATE_MESSAGE, newChat);
+    }
+  });
+};
+
+/*
 * Returns a function that will take a chat id and a boolean isTyping
 * and then emit a broadcast to the chat id that the sender is typing
 * @param sender {string} username of sender
 * @return function(chatId, message)
 */
-  function sendTypingToChat(user) {
-    return (chatId, isTyping) => {
-      socket.emit(`${TYPING}-${chatId}`, { user, isTyping });
-    };
-  }
+function sendTypingToChat(user) {
+  return (chatId, isTyping) => {
+    io.emit(`${TYPING}-${chatId}`, { user, isTyping });
+  };
+}
 
-  /*
+/*
 * Returns a function that will take a chat id and message
 * and then emit a broadcast to the chat id.
 * @param sender {string} username of sender
 * @return function(chatId, message)
 */
-  function sendMessageToChat(sender) {
-    return (chatId, message) => {
-      console.log('CHATID === ', chatId);
-      console.log('MESSAGE === ', message);
-      // console.log('SOCKETTTTTTTTTT === ', socket);
-      socket.emit(`${MESSAGE_RECIEVED}-${chatId}`, createMessage({ message, sender }));
-    };
-  }
-};
+function sendMessageToChat(sender) {
+  return (chatId, message) => {
+    io.emit(`${MESSAGE_RECIEVED}-${chatId}`, createMessage({ message, sender }));
+  };
+}
 
 /*
 * Adds user to list passed in.

@@ -6,57 +6,79 @@
   box-sizing: border-box;
 }
 
-article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
-    display:block;
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+  display: block;
 }
 
-
 body {
-  font-family: HK Grotesk, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
   font-size: 22px;
   line-height: 1.5;
   color: #676e7b;
-  /* background: url('./../public/images/bg.png') top repeat-x #f7f7f7; */
   background-color: #f7f7f7;
   margin: 0;
 }
 
 main {
-  height: 100%;
+  height: 91%;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
 div {
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column; */
 }
 
-button, input, seNamelect, textarea {
-    font-family:inherit;
-    font-size:inherit;
-    line-height:inherit;
+button,
+input,
+seNamelect,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
 }
 
-button, input, optgroup, select, textarea {
-    color:inherit;
-    font:inherit;
-    margin:0;
+button,
+input,
+optgroup,
+select,
+textarea {
+  color: inherit;
+  font: inherit;
+  margin: 0;
 }
 
-button, select {
-    text-transform:none;
+button,
+select {
+  text-transform: none;
 }
 
 button {
-    overflow:visible;
+  overflow: visible;
 }
 
-button, input, optgroup, select, textarea {
-    color:inherit;
-    font:inherit;
-    margin:0;
+button,
+input,
+optgroup,
+select,
+textarea {
+  color: inherit;
+  font: inherit;
+  margin: 0;
 }
 
 input {
@@ -73,14 +95,14 @@ p {
 }
 
 a {
-    color:#34495e;
-    text-decoration:none;
+  color: #34495e;
+  text-decoration: none;
 }
 
-
-a:focus, a:hover {
-    color:#3399eb;
-    text-decoration:underline;
+a:focus,
+a:hover {
+  color: #3399eb;
+  text-decoration: underline;
 }
 
 .wrapper {
@@ -88,18 +110,19 @@ a:focus, a:hover {
 }
 
 .navbar-default {
-   height: 70px;
-    background: #363E46;;
-    border-color:transparent;
+  height: 70px;
+  background: #363e46;
+  border-color: transparent;
 }
 
-.navbar::after, .navbar::before {
-    content:" ";
-    display:table;
+.navbar::after,
+.navbar::before {
+  content: ' ';
+  display: table;
 }
 
 .navbar::after {
-    clear:both;
+  clear: both;
 }
 
 .container-boundingbox {
@@ -108,25 +131,23 @@ a:focus, a:hover {
 }
 
 .heading .branding {
-    height: 68px;
-    margin-bottom: 19px;
+  height: 68px;
+  margin-bottom: 19px;
 }
 
 .branding {
   background: url('./../public/images/codesmith_.png') no-repeat left top;
-
 }
 .navbar-brand {
   height: 100%;
 }
 
 .navbar-brand > img {
-    height: 35px;
-    vertical-align: middle;
-    margin: 17px 25px 10px 0;
-    font-size: 14px;
+  height: 35px;
+  vertical-align: middle;
+  margin: 17px 20px 14px 0;
+  font-size: 14px;
 }
-
 
 .col-lg-1,
 .col-lg-2,
@@ -204,7 +225,7 @@ a:focus, a:hover {
 
 .row::after,
 .row::before {
-  content: " ";
+  content: ' ';
   display: table;
 }
 
@@ -218,7 +239,7 @@ a:focus, a:hover {
 .container {
   height: 100%;
   margin-right: 30px;
-  margin-left: 30px;
+  margin-left: 15px;
   padding-left: 30px;
   padding-right: 30px;
   font-family: inherit;
@@ -231,7 +252,7 @@ a:focus, a:hover {
 }
 
 .check-user {
-    font-size: 18px;
+  font-size: 18px;
 }
 
 .well {
@@ -252,13 +273,7 @@ a:focus, a:hover {
   min-height: 12em;
   margin: 30px 0 40px;
   height: 350px;
-  -webkit-border-image: -webkit-gradient(
-    linear,
-    0 0,
-    100% 0,
-    from(#3399eb),
-    to(#33e77a)
-  );
+  -webkit-border-image: -webkit-gradient(linear, 0 0, 100% 0, from(#3399eb), to(#33e77a));
   -webkit-border-image: -webkit-linear-gradient(left, #3399eb, #33e77a);
   -moz-border-image: -moz-linear-gradient(left, #3399eb, #33e77a);
   -o-border-image: -o-linear-gradient(left, #3399eb, #33e77a);
@@ -280,65 +295,67 @@ a:focus, a:hover {
   margin: 0 auto;
 }
 
-
 div.sign-in-header {
-    text-align: center;
-    /* margin: 0 auto; */
+  text-align: center;
+  /* margin: 0 auto; */
 }
 
 .sign-in-form {
-    margin: 0 auto;
-    margin-top: 50px;
+  margin: 0 auto;
+  margin-top: 50px;
 }
 
 .email-sign-in {
-    width: 100%;
-    margin-bottom: 16px;
+  width: 100%;
+  margin-bottom: 16px;
 }
 
 .password-sign-in {
-    width: 100%;
-    margin-bottom: 26px;
+  width: 100%;
+  margin-bottom: 26px;
 }
 
 .btn-primary {
-    color:#fff;
-    background-color:#3399eb;
-    border-color:#1c8de9;
+  color: #fff;
+  background-color: #3399eb;
+  border-color: #1c8de9;
 }
 
-.btn-primary.active, .btn-primary:active, .btn-primary:hover, .open > .btn-primary.dropdown-toggle {
-    color:#fff;
-    background-color:#1580d6;
-    border-color:#126db6;
+.btn-primary.active,
+.btn-primary:active,
+.btn-primary:hover,
+.open > .btn-primary.dropdown-toggle {
+  color: #fff;
+  background-color: #1580d6;
+  border-color: #126db6;
 }
 
 .btn {
-    display:inline-block;
-    margin-bottom:0;
-    font-weight:400;
-    text-align:center;
-    vertical-align:middle;
-    touch-action:manipulation;
-    cursor:pointer;
-    background-image:none;
-    border:1px solid transparent;
-    white-space:nowrap;
-    padding:6px 12px;
-    font-size:22px;
-    line-height:1.5;
-    border-radius:0;
-    -webkit-user-select:none;
-    -moz-user-select:none;
-    -ms-user-select:none;
-    user-select:none;
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 6px 12px;
+  font-size: 22px;
+  line-height: 1.5;
+  border-radius: 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .sign-in-button {
-    font-size: 16px!important;
-    font-weight: 700!important;
-    line-height: 35px!important;
-    border-radius: 3px;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  line-height: 35px !important;
+  border-radius: 3px;
 }
 
 .sign-in-button:hover {
@@ -346,13 +363,13 @@ div.sign-in-header {
 }
 
 .horizontalRow {
-    position: relative;
-    width: 100%;
-    max-width: 320px;
-    margin-bottom: 30px;
-    margin-top: 43px;
-    display: flex;
-    flex-direction: row;
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  margin-bottom: 30px;
+  margin-top: 43px;
+  display: flex;
+  flex-direction: row;
 }
 
 .horizontal-line {
@@ -365,7 +382,8 @@ div.sign-in-header {
   margin-bottom: 25px;
 }
 
-.horizontal-line:before, .horizontal-line:after {
+.horizontal-line:before,
+.horizontal-line:after {
   background-color: #ddd;
   content: '\a0';
   flex-grow: 1;
@@ -374,10 +392,10 @@ div.sign-in-header {
   top: 0.5em;
 }
 .horizontal-line:before {
-  margin-right:10px;
+  margin-right: 10px;
 }
 .horizontal-line:after {
-  margin-left:10px;
+  margin-left: 10px;
 }
 
 /* ======== MINE ======= */
@@ -387,7 +405,6 @@ div.sign-in-header {
   display: flex;
   flex-direction: row;
   justify-content: center;
-
 }
 
 .oauth-google-inner {
@@ -409,7 +426,7 @@ div.sign-in-header {
 
 .oAuth-button:hover {
   cursor: pointer;
-  border-color:#1c8de9;
+  border-color: #1c8de9;
   color: black;
 }
 
@@ -442,9 +459,9 @@ div.sign-in-header {
 }
 
 @media (min-width: 1200px) {
-    .container {
-        width:1170px;
-    }
+  .container {
+    width: 1170px;
+  }
 }
 
 /* @media (min-width: 768px) {
@@ -454,16 +471,16 @@ div.sign-in-header {
 } */
 
 @media (min-width: 1200px) {
-    .col-lg-7 {
-        width:58.33333%;
-    }
+  .col-lg-7 {
+    width: 58.33333%;
+  }
 }
 
 @media (max-width: 992px) {
-    .well-csx {
-        font-size: 20px;
-        height: 280px;
-    }
+  .well-csx {
+    font-size: 20px;
+    height: 280px;
+  }
 }
 
 @media (min-width: 768px) {
@@ -487,11 +504,11 @@ div.sign-in-header {
 
 /* Fonts used by Codesmith */
 @font-face {
-  font-family: "HKGrotesk-Light";
-  src: url(./../public/fonts/HKGrotesk-Light.woff2) format("woff2"); /* Super Modern Browsers */
+  font-family: 'HKGrotesk-Light';
+  src: url(./../public/fonts/HKGrotesk-Light.woff2) format('woff2'); /* Super Modern Browsers */
 }
 
 @font-face {
-  font-family: "HKGrotesk-Semi-Bold";
-  src: url(./../public/fonts/HKGrotesk-Semi-Bold.woff2) format("woff2"); /* Super Modern Browsers */
+  font-family: 'HKGrotesk-Semi-Bold';
+  src: url(./../public/fonts/HKGrotesk-Semi-Bold.woff2) format('woff2'); /* Super Modern Browsers */
 }
