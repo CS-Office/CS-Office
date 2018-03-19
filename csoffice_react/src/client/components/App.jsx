@@ -7,15 +7,14 @@ import Office from './Office';
 import Login from './Login';
 import Signup from './Signup';
 
-
 class App extends React.Component {
   constructor(props) {
     super(props);
     // MAKE SURE TO CHANGE BACK TO FALSE!!!!!!!!!!!!!
-    this.state = { 
-      isAuthenticated: false,
+    this.state = {
+      isAuthenticated: true,
       isAdmin: true,
-      adminName: 'Admin' 
+      adminName: 'Admin',
     };
     this.authenticate = this.authenticate.bind(this);
   }

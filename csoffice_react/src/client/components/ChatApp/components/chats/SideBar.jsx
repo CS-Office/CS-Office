@@ -17,6 +17,7 @@ export default class SideBar extends Component {
     const { onSendPrivateMessage } = this.props;
 
     onSendPrivateMessage(reciever);
+    this.setState({ reciever: '' });
   }
 
   render() {
@@ -76,6 +77,7 @@ export default class SideBar extends Component {
             return null;
           })}
         </div>
+        <div className="logged-in-as">Logged in as:</div>
         <div className="current-user">
           <span>{user.name}</span>
           {/* LOGOUT BUTTON */}
