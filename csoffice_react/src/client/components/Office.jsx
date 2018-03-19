@@ -1,9 +1,9 @@
 // THIS FILE RENDERS THE CODE EDITOR, VIDEO, AND CHAT
 import React, { Component } from 'react';
 import io from 'socket.io-client';
-import Video from './Video.jsx';
-import { ChatApp } from './ChatApp/index.jsx';
-import Editor from './Editor.jsx';
+import Video from './Video';
+import { ChatApp } from './ChatApp/index';
+import Editor from './Editor';
 import './../css/office.css';
 
 const socketUrl = 'http://localhost:3000/';
