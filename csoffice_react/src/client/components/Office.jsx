@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 import Video from './Video';
 import { ChatApp } from './ChatApp/index';
 import Editor from './Editor';
+import { Grid, Row, Col } from 'react-bootstrap';
 import './../css/office.css';
 
 const socketUrl = 'http://localhost:3000/';
@@ -37,15 +38,32 @@ class Office extends Component {
   render() {
     const { socket, isAdmin, adminName } = this.state;
     return (
-      <div className="Office-container">
-        <div className="Video-container">
-          <Video socket={socket} isAdmin={isAdmin} adminName={adminName} />
-        </div>
-        <div className="code-chat-container">
-          <Editor />
-          <ChatApp socket={socket} />
-        </div>
-      </div>
+      // <div className="Office-container show-grid">
+      //   {/* <Video socket={socket} isAdmin={isAdmin} adminName={adminName} /> */}
+
+      //   <div className="Editor-container xs={12} md={8}">
+      //     <Editor />
+      //   </div>
+
+      // <div className="code-chat-container xs={6} md={4}">
+      //   <ChatApp socket={socket} />
+      // </div>
+      // </div>
+
+      <Grid id="office-container">
+        {/* <Row className="show-grid"> */}
+        <Col md={8} xs={5}>
+          <div className="editor-container ">
+            <Editor />
+          </div>
+        </Col>
+        <Col md={4} xs={5}>
+          <div className="chat-container ">
+            <ChatApp socket={socket} />
+          </div>
+        </Col>
+        {/* </Row> */}
+      </Grid>
     );
   }
 }
