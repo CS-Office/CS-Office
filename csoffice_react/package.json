@@ -28,6 +28,7 @@
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "hat": "0.0.3",
+    "history": "^4.7.2",
     "mongoose": "^5.0.7",
     "path": "^0.12.7",
     "prop-types": "^15.6.1",
