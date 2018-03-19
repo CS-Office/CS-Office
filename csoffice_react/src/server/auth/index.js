@@ -14,13 +14,14 @@ router.get('/', (req, res) => {
 });
 
 // ValidateUser Function
-const validateUser = ((user) => {
+const validateUser = (user) => {
   const validEmail = typeof user.email === 'string' && user.email.trim() !== '';
-  const validPassowrd = typeof user.password === 'string' &&
-                          user.password.trim() !== '' &&
-                          user.password.trim().length >= 6;
+  const validPassowrd =
+    typeof user.password === 'string' &&
+    user.password.trim() !== '' &&
+    user.password.trim().length >= 6;
   return validEmail && validPassowrd;
-});
+};
 
 router.post('/sign-up', (req, res, next) => {
   if (validateUser(req.body)) {
@@ -29,8 +30,9 @@ router.post('/sign-up', (req, res, next) => {
       // if user not found
       if (!user) {
         // this is a unique email
-        bcrypt.hash(req.body.password, 10)
-        // then hashed the password
+        bcrypt
+          .hash(req.body.password, 10)
+          // then hashed the password
           .then((hash) => {
             // create user based off that hash password
             const user = {
@@ -40,15 +42,13 @@ router.post('/sign-up', (req, res, next) => {
               password: hash,
             };
             // Insert the user into the db from queries.js methods
-            User
-              .create(user)
-              .then((id) => {
-                // return id when success
-                res.json({
-                  id,
-                  message: 'signed up',
-                });
+            User.create(user).then((id) => {
+              // return id when success
+              res.json({
+                id,
+                message: 'signed up',
               });
+            });
           });
       } else {
         next(new Error('Email is in Use'));
@@ -59,11 +59,10 @@ router.post('/sign-up', (req, res, next) => {
   }
 });
 
-
 router.post('/login', (req, res, next) => {
   if (validateUser(req.body)) {
     User.getOneByEmail(req.body.email).then((user) => {
-      console.log('user', user);
+      // console.log('user', user);
 
       if (user) {
         // compare password with hashed password
