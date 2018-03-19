@@ -145,7 +145,7 @@ a:hover {
 .navbar-brand > img {
   height: 35px;
   vertical-align: middle;
-  margin: 17px 25px 10px 0;
+  margin: 17px 20px 14px 0;
   font-size: 14px;
 }
 
@@ -239,7 +239,7 @@ a:hover {
 .container {
   height: 100%;
   margin-right: 30px;
-  margin-left: 30px;
+  margin-left: 15px;
   padding-left: 30px;
   padding-right: 30px;
   font-family: inherit;
