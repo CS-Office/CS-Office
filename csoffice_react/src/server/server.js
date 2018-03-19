@@ -1,55 +1,57 @@
 //  REQUIRED
+const express = require('express');
+const mongoose = require('mongoose');
 const path = require('path');
 const hat = require('hat');
 const ws = require('ws');
-const express = require('express');
-const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-
-const app = express();
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
 
 //  FILES
-const keys = require('../config/keys');
-// require('./models/user');
-// require('./passport');
-// require('./routes/auth_routes')(app); //require returns functions from routes file and then immediately invokes the function with the app object
+const users = require('./api/users');
+const auth = require('./auth/index');
+
+//  EXPRESS
+const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 //  MONGOOSE
-mongoose.connect(keys.mongoURI);
 mongoose.connection.once('open', () => {
   console.log('===CONNECTED TO DATABASE===');
 });
 
-//  EXPRESS
+// LOGGER
+app.use(logger('dev'));
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
-//  PASSPORT
-// const passport = require('passport');
-// // initialize passport library to use it (create an instance?) in our app
-// app.use(passport.initialize());
-// // authenticate session for passport that we have created (cookieSession in our case)
-// app.use(passport.session());
-
-//  MIDDLEWARE
-
-// COOKIE SESSION // ENCRYPTS COOKIE - SET NAME, AGE (24 HOURS), AND KEY
-const cookieSession = require('cookie-session');
-
-app.use(cookieSession({
-  name: 'hi im a cookie',
-  maxAge: 30 * 24 * 60 * 60 * 1000,
-  keys: [keys.cookieKey],
-}));
+// COOKIES
+app.use(cookieParser('process.env.COOKIE_SECRET'));
+app.use('/auth', auth);
+app.use('/api/users', users);
 
 //  PATH FOR STATIC FILES
 app.use(express.static(`${__dirname}./../../`));
 app.use('/css', express.static(path.join(__dirname, './../client/css')));
 app.use('/public', express.static(path.join(__dirname, './../client/public')));
-
 app.get('*', (request, response) => {
   response.sendFile(path.resolve(__dirname, './../../index.html'));
+});
+
+// ERROR HANDLERS
+// catch 404 and forward to error handler
+app.use((req, res, next) => {
+  const err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+app.use((err, req, res, next) => {
+  res.status(err.status || 500);
+  // render the error page if in production hide the stack trace
+  res.json({
+    message: err.message,
+    error: req.app.get('env') === 'development' ? err : {},
+  });
 });
 
 const PORT = process.env.PORT || 3000;
@@ -59,9 +61,6 @@ const server = require('http').Server(app);
 const io = (module.exports.io = require('socket.io')(server));
 
 const SocketManager = require('./SocketManager');
-
-// const io = require('socket.io')(server);
-// const socket = io(server);
 
 io.on('connection', SocketManager);
 
