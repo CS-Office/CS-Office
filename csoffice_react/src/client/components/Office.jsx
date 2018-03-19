@@ -13,6 +13,8 @@ class Office extends Component {
 
     this.state = {
       socket: null,
+      isAdmin: true,
+      adminName: 'Admin' 
     };
     this.initSocket = this.initSocket.bind(this);
   }
@@ -33,11 +35,11 @@ class Office extends Component {
   }
 
   render() {
-    const { socket } = this.state;
+    const { socket, isAdmin, adminName } = this.state;
     return (
       <div className="Office-container">
         <div className="Video-container">
-          <Video socket={socket} />
+          <Video socket={socket} isAdmin={isAdmin} adminName={adminName}/>
         </div>
         <div className="code-chat-container">
           <Editor />
