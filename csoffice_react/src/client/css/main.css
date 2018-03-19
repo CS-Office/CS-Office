@@ -4,6 +4,7 @@
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+  position: relative;
 }
 
 article,
@@ -24,7 +25,7 @@ summary {
 
 body {
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-  font-size: 22px;
+  font-size: 16px;
   line-height: 1.5;
   color: #676e7b;
   background-color: #f7f7f7;
@@ -38,10 +39,6 @@ main {
   justify-content: center;
 }
 
-div {
-  /* display: flex;
-  flex-direction: column; */
-}
 
 button,
 input,
@@ -109,45 +106,24 @@ a:hover {
   height: 100%;
 }
 
-.navbar-default {
-  height: 70px;
-  background: #363e46;
-  border-color: transparent;
-}
-
-.navbar::after,
-.navbar::before {
-  content: ' ';
-  display: table;
-}
-
-.navbar::after {
-  clear: both;
-}
-
 .container-boundingbox {
   display: flex;
   flex-direction: column;
 }
 
-.heading .branding {
-  height: 68px;
-  margin-bottom: 19px;
+
+.nav>li>a {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
 }
 
-.branding {
-  background: url('./../public/images/codesmith_.png') no-repeat left top;
-}
-.navbar-brand {
-  height: 100%;
+.navbar-nav>li>a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    line-height: 20px;
 }
 
-.navbar-brand > img {
-  height: 35px;
-  vertical-align: middle;
-  margin: 17px 20px 14px 0;
-  font-size: 14px;
-}
 
 .col-lg-1,
 .col-lg-2,
@@ -218,11 +194,6 @@ a:hover {
   float: left;
 }
 
-/* .row {
-  margin-left: -30px;
-  margin-right: -30px;
-} */
-
 .row::after,
 .row::before {
   content: ' ';
@@ -236,18 +207,7 @@ a:hover {
   min-height: 560px;
 }
 
-.container {
-  height: 100%;
-  margin-right: 30px;
-  margin-left: 15px;
-  padding-left: 30px;
-  padding-right: 30px;
-  font-family: inherit;
-  display: flex;
-  flex-direction: column;
-}
-
-.contaner::after {
+.container::after {
   clear: both;
 }
 
@@ -449,6 +409,48 @@ div.sign-in-header {
   flex-direction: column;
 }
 
+#top-nav {
+    background: #363E46;
+    border-radius: 0;
+    font-weight: 400;
+    border: none;
+}
+
+#top-nav .container {
+    width: 100%;
+    margin-left: 0;
+    padding-right: 30px;
+    padding-left: 15px;
+}
+
+#top-nav .navbar-header {
+    height: 70px;
+}
+#top-nav .navbar-nav {
+    min-height: 70px;
+}
+
+#top-nav .user-display #user-dropdown {
+    background: transparent;
+}
+
+#top-nav .navbar-nav a {
+    text-decoration: none;
+    color: white;
+}
+
+
+#cs-logo {
+    height: 35px;
+    margin-right: 25px;
+}
+
+#basic-nav-dropdown {
+  background-color: transparent;
+}
+
+
+
 #google-logo {
   display: inline-block;
   position: absolute;
@@ -464,11 +466,6 @@ div.sign-in-header {
   }
 }
 
-/* @media (min-width: 768px) {
-    .navbar {
-        border-radius:4px;
-    }
-} */
 
 @media (min-width: 1200px) {
   .col-lg-7 {
@@ -488,6 +485,17 @@ div.sign-in-header {
     width: 83.33333%;
     padding-bottom: 50px;
   }
+}
+
+@media screen and (min-width: 768px) {
+#top-nav .csx-signout a {
+    color: #333 !important;
+}
+
+@media screen and (min-width: 768px) {
+#top-nav .navbar-nav {
+    display: flex;
+    align-items: center;
 }
 
 @media (min-width: 768px) {
