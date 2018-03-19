@@ -1,15 +1,22 @@
 import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
+import Video from './Video.jsx';
+
 import NavBar from './NavBar';
 import Office from './Office';
 import Login from './Login';
 import Signup from './Signup';
 
+
 class App extends React.Component {
   constructor(props) {
     super(props);
     // MAKE SURE TO CHANGE BACK TO FALSE!!!!!!!!!!!!!
-    this.state = { isAuthenticated: false };
+    this.state = { 
+      isAuthenticated: false,
+      isAdmin: true,
+      adminName: 'Admin' 
+    };
     this.authenticate = this.authenticate.bind(this);
   }
 
