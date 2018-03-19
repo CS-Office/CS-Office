@@ -17,7 +17,6 @@ class App extends React.Component {
   }
 
   authenticate() {
-    history.push('/office');
     this.setState({ ...this.state, isAuthenticated: true });
   }
 
@@ -34,9 +33,18 @@ class App extends React.Component {
         <NavBar />
         <main>
           <Switch>
-            <Route exact path="/" render={() => history.push('/login')} />
+            <Route exact path="/" render={() => <Redirect to="/login" />} />
             <Route path="/sign-up" component={Signup} />
-            <Route path="/login" render={() => <Login oAuthSuccess={this.authenticate} />} />
+            <Route
+              path="/login"
+              render={() =>
+                (this.state.isAuthenticated ? (
+                  <Redirect to="/office" />
+                ) : (
+                  <Login oAuthSuccess={this.authenticate} />
+                ))
+              }
+            />
             <PrivateRoute path="/office" component={Office} />
           </Switch>
         </main>
