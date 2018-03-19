@@ -1,12 +1,9 @@
 import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
-import createHistory from 'history/createBrowserHistory';
-import NavBar from './NavBar.jsx';
-import Office from './Office.jsx';
-import Login from './Login.jsx';
-import Signup from './Signup.jsx';
-
-const history = createHistory();
+import NavBar from './NavBar';
+import Office from './Office';
+import Login from './Login';
+import Signup from './Signup';
 
 class App extends React.Component {
   constructor(props) {

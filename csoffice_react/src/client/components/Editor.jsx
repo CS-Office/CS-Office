@@ -1,5 +1,5 @@
 import React from 'react';
-import Solution from './Solution.jsx';
+import Solution from './Solution';
 
 const Editor = () => (
   <div>

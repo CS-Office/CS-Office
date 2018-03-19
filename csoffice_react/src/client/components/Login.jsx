@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Input from './Input.jsx';
-import OAuth from './OAuth.jsx';
+import Input from './Input';
+import OAuth from './OAuth';
 
 const Login = props => (
   <div className="container-boundingbox">
