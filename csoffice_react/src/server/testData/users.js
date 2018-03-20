@@ -23,7 +23,14 @@ module.exports = [
   {
     firstName: 'Monica',
     lastName: 'Shim',
-    email: 'monica@monica.com',
+    email: 'monica1@monica.com',
+    password: 'ilovetesting',
+    admin: false,
+  },
+  {
+    firstName: 'James',
+    lastName: 'Edwards',
+    email: 'james@james.com',
     password: 'ilovetesting',
     admin: false,
   },
