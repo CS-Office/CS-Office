@@ -9,8 +9,13 @@ OFFICE CONTAINERS
 }
 
 .editor-container {
+  height: 100%;
   border: 1px solid black;
+  display: flex;
+  flex-direction: column;
 }
+
+
 .chat-container {
   border: 1px solid black;
 }
@@ -18,6 +23,36 @@ OFFICE CONTAINERS
   /* height: 30%; */
   border: 1px solid black;
 }
+
+/***************************
+John's CSS for Editor - Flexbox
+***************************/
+.editor-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+#editor {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.CodeMirror {
+  flex: 1 1 auto;
+}
+
+#solution {
+  border-top: 1px solid black;
+  padding: 10px;
+  flex: 1 0;
+  margin-bottom: 10px;
+  list-style-type: none;
+  overflow: auto;
+}
+
 
 /***************************
 CHATAPP LOGIN
