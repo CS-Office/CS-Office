@@ -51,18 +51,16 @@ class Office extends Component {
       // </div>
 
       <Grid id="office-container">
-        {/* <Row className="show-grid"> */}
-        <Col md={8} xs={5}>
-          <div className="editor-container ">
-            <Editor />
-          </div>
-        </Col>
-        <Col md={4} xs={5}>
-          <div className="chat-container ">
+        <Row id="office-grid" className="show-grid">
+          <Col md={8} xs={6}>
+            <div className="editor-container ">
+              <Editor />
+            </div>
+          </Col>
+          <Col id="chat-master-container" md={4} xs={5}>
             <ChatApp socket={socket} />
-          </div>
-        </Col>
-        {/* </Row> */}
+          </Col>
+        </Row>
       </Grid>
     );
   }
