@@ -24,13 +24,10 @@ class Office extends Component {
     this.initSocket();
   }
 
-  /*
-	*	Connect to and initializes the socket.
-	*/
   initSocket() {
     const socket = io(socketUrl);
     socket.on('connect', () => {
-      console.log('Connected Socket in Client');
+
     });
     this.setState({ socket });
   }
@@ -38,27 +35,17 @@ class Office extends Component {
   render() {
     const { socket, isAdmin, adminName } = this.state;
     return (
-      // <div className="Office-container show-grid">
-      //   {/* <Video socket={socket} isAdmin={isAdmin} adminName={adminName} /> */}
-
-      //   <div className="Editor-container xs={12} md={8}">
-      //     <Editor />
-      //   </div>
-
-      // <div className="code-chat-container xs={6} md={4}">
-      //   <ChatApp socket={socket} />
-      // </div>
-      // </div>
-
       <Grid id="office-container">
-        <Row id="office-grid" className="show-grid">
-          <Col md={8} xs={6}>
+        <Row className="show-grid">
+          <Col md={8} xs={5}>
             <div className="editor-container ">
-              <Editor />
+              <Editor socket={socket} />
             </div>
           </Col>
-          <Col id="chat-master-container" md={4} xs={5}>
-            <ChatApp socket={socket} />
+          <Col md={4} xs={5}>
+            <div className="chat-container ">
+              <ChatApp socket={socket} />
+            </div>
           </Col>
         </Row>
       </Grid>

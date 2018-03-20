@@ -14,7 +14,10 @@ OFFICE CONTAINERS
 }
 
 .editor-container {
+  height: 100%;
   border: 1px solid black;
+  display: flex;
+  flex-direction: column;
 }
 
 .Video-container {
@@ -35,6 +38,50 @@ OFFICE CONTAINERS
   height: 100%;
   width: 100%;
 }
+
+/***************************
+John's CSS for Editor - Flexbox
+***************************/
+.editor-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+#editor {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.CodeMirror {
+  flex: 1 1 auto;
+}
+
+.btn-toolbar {
+  margin: 10px 0 10px 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.btn-sm {
+  font-size: 16px;
+  width: 100px;
+  margin-right: 10px;
+}
+
+
+#solution {
+  border-top: 1px solid black;
+  padding: 10px;
+  flex: 1 0;
+  margin-bottom: 10px;
+  list-style-type: none;
+  overflow: auto;
+}
+
 
 /***************************
 CHATAPP LOGIN
