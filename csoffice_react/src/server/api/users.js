@@ -41,7 +41,7 @@ router.get('/:id', isValidId, (req, res, next) => {
 router.post('/', (req, res, next) => {
   if (validUser(req.body)) {
     queries.create(req.body).then((users) => {
-      res.json(users[0]);
+      res.json(users);
     });
   } else {
     next(new Error('Invalid'));
@@ -50,12 +50,13 @@ router.post('/', (req, res, next) => {
 
 // Updates a user
 router.put('/:id', isValidId, (req, res, next) => {
-  if (validUser(req.body)) {
-    queries.update(req.params.id, req.body).then((users) => {
-      res.json(users[0]);
-    });
+  if (isValidId) {
+    queries.update(req.params.id, req.body)
+      .then((users) => {
+        res.json(users[0]);
+      });
   } else {
-    next(new Error('Invalid yo'));
+    next(new Error('Invalid'));
   }
 });
 
