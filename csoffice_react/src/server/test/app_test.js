@@ -2,7 +2,7 @@ const request = require('supertest');
 const expect = require('chai').expect;
 const knex = require('../db/knex');
 
-const app = require('../app.js');
+const app = require('../server.js');
 
 // to ensure our test data is correct
 const fixtures = require('./fixtures.js');
