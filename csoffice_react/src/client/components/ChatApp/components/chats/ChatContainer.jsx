@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SideBar from './SideBar.jsx';
+import SideBar from './../sidebar/SideBar';
 import {
   COMMUNITY_CHAT,
   MESSAGE_SENT,
@@ -20,7 +20,7 @@ class ChatContainer extends Component {
       activeChat: null,
     };
 
-    this.initSocket = this.initSocket.bind(this);
+    // this.initSocket = this.initSocket.bind(this);
     this.sendOpenPrivateMessage = this.sendOpenPrivateMessage.bind(this);
     this.resetChat = this.resetChat.bind(this);
     this.addChat = this.addChat.bind(this);

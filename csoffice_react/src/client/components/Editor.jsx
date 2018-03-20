@@ -19,7 +19,17 @@ class Editor extends Component {
     return (
       <div className="editor-wrapper">
         <div id="editor" />
-        <ButtonToolbar><Button id="run-code" bsStyle="primary">Run Code</Button></ButtonToolbar>
+        <ButtonToolbar>
+          <Button id="run-code" bsSize="small" bsStyle="primary">
+            Run Code
+          </Button>
+          <Button id="start-over" bsSize="small" bsStyle="danger">
+            Start Over
+          </Button>
+          <Button id="save" bsSize="small" bsStyle="success">
+            Save
+          </Button>
+        </ButtonToolbar>
         <ul id="solution" />
       </div>
     );
