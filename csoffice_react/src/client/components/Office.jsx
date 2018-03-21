@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 import Video from './Video';
 import { ChatApp } from './ChatApp/index';
 import Editor from './Editor';
+import EditorOptions from './../components/EditorOptions';
 import { Grid, Row, Col } from 'react-bootstrap';
 import './../css/office.css';
 
@@ -18,6 +19,7 @@ class Office extends Component {
       adminName: 'Admin',
     };
     this.initSocket = this.initSocket.bind(this);
+    this.openEditorOption = this.openEditorOption.bind(this);
   }
 
   componentWillMount() {
@@ -26,10 +28,12 @@ class Office extends Component {
 
   initSocket() {
     const socket = io(socketUrl);
-    socket.on('connect', () => {
-
-    });
+    socket.on('connect', () => {});
     this.setState({ socket });
+  }
+
+  openEditorOption() {
+    document.getElementById('mySidenav').style.width = '300px';
   }
 
   render() {
@@ -38,8 +42,10 @@ class Office extends Component {
       <Grid id="office-container">
         <Row className="show-grid">
           <Col md={8} xs={5}>
+            <span id="editor-option-btn" title="Settings" onClick={this.openEditorOption}>&#9776;</span>
             <div className="editor-container ">
               <Editor socket={socket} />
+              <EditorOptions />
             </div>
           </Col>
           <Col md={4} xs={5}>
