@@ -2,6 +2,14 @@
 OFFICE CONTAINERS
 ***************************/
 
+#editor1 {
+  padding: 0 !important;
+}
+
+#chat {
+  padding: 0 !important;
+}
+
 #office-container {
   margin: 0;
   padding: 0;
@@ -70,6 +78,7 @@ Code Editor - Flexbox
 }
 
 #editor-option-btn {
+  display: none;
   font-size: 25px;
   cursor: pointer;
 }

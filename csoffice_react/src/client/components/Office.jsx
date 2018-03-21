@@ -48,7 +48,7 @@ class Office extends Component {
     return (
       <Grid id="office-container">
         <Row className="show-grid">
-          <Col md={8} xs={5}>
+          <Col id="editor1" md={8} xs={5}>
             <span id="editor-option-btn" title="Settings" onClick={this.openEditorOption}>
               &#9776;
             </span>
@@ -57,7 +57,7 @@ class Office extends Component {
               <EditorOptions clickHandler={this.closeEditorOption} />
             </div>
           </Col>
-          <Col md={4} xs={5}>
+          <Col id="chat" md={4} xs={4}>
             <div className="chat-container ">
               <ChatApp socket={socket} />
             </div>
