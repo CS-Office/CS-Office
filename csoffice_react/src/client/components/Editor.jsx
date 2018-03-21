@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { ButtonToolbar, Button } from 'react-bootstrap';
-// import { UnControlled as CodeMirror } from 'react-codemirror2';
-import CodeEditor from './../js/code_editor';
 
+import CodeEditor from './../js/code_editor';
 
 class Editor extends Component {
   constructor(props) {
@@ -10,18 +9,32 @@ class Editor extends Component {
     this.state = {
       socket: this.props.socket,
     };
+    this.openEditorOption = this.openEditorOption.bind(this);
+    this.closeEditorOption = this.closeEditorOption.bind(this);
   }
 
   componentDidMount() {
     CodeEditor(this.state.socket);
   }
 
+  openEditorOption(e) {
+    e.preventDefault();
+    document.getElementById('mySidenav').style.width = '300px';
+  }
+
+  closeEditorOption(e) {
+    e.preventDefault();
+    document.getElementById('mySidenav').style.width = '0';
+  }
 
   render() {
     return (
       <div className="editor-wrapper">
         <div id="editor" />
         <ButtonToolbar>
+          <span id="editor-option-btn" title="Settings" onClick={this.openEditorOption}>
+            &#9776;
+          </span>
           <Button id="run-code" bsSize="small" bsStyle="primary">
             Run Code
           </Button>
