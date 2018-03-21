@@ -414,6 +414,7 @@ div.sign-in-header {
     border-radius: 0;
     font-weight: 400;
     border: none;
+    margin-bottom: 0;
 }
 
 #top-nav .container {

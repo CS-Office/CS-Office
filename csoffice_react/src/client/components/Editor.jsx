@@ -3,18 +3,19 @@ import { ButtonToolbar, Button } from 'react-bootstrap';
 // import { UnControlled as CodeMirror } from 'react-codemirror2';
 import CodeEditor from './../js/code_editor';
 
+
 class Editor extends Component {
   constructor(props) {
     super(props);
     this.state = {
       socket: this.props.socket,
-
     };
   }
 
   componentDidMount() {
     CodeEditor(this.state.socket);
   }
+
 
   render() {
     return (
