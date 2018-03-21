@@ -3,6 +3,7 @@ const USER = credentialsDB.user;
 const PASS = credentialsDB.password;
 const HOST = credentialsDB.host;
 const DB = credentialsDB.table;
+const TESTDB = credentialsDB.testTable;
 const localDbUser = require('./credentials').localDbUser;
 
 console.log('DBTable:', DB, 'USERNAME:', USER, 'PASS:', PASS, 'HOST:', HOST, 'localDBUSER:', localDbUser);
@@ -25,11 +26,22 @@ console.log('DBTable:', DB, 'USERNAME:', USER, 'PASS:', PASS, 'HOST:', HOST, 'lo
 
 module.exports = {
 
-  testing: {
+  test: {
     client: 'pg',
     connection: {
-      user: localDbUser,
-      database: 'test-cs_office_19',
+      host: HOST,
+      port: '5432',
+      database: DB,
+      user: USER,
+      password: PASS,
+    },
+
+    migrations: {
+      directory: __dirname + '/migrations',
+    },
+
+    seeds: {
+      directory: __dirname + '/seeds',
     },
   },
 

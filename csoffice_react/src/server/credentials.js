@@ -15,6 +15,7 @@ const credentialsDB = {
     user: 'csoffice19',
     password: 'csoffice19',
     table: 'cs_office_19',
+    testTable: 'test_cs_office_19',
     host: 'postgres-cs-office.cdulqhk3fcwx.us-west-1.rds.amazonaws.com',
   },
 
