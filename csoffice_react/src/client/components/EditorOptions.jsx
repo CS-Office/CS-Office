@@ -3,7 +3,7 @@ import { ButtonToolbar, DropdownButton, MenuItem } from 'react-bootstrap';
 
 const EditorOption = props => (
   <div id="mySidenav" className="sidenav">
-    <a href="#" className="closebtn">
+    <a href="#" className="closebtn" onClick={props.closeEditorOption}>
       &times;
     </a>
     <div id="options-container">

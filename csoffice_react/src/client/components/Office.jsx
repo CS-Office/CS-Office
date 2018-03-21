@@ -20,6 +20,7 @@ class Office extends Component {
     };
     this.initSocket = this.initSocket.bind(this);
     this.openEditorOption = this.openEditorOption.bind(this);
+    this.closeEditorOption = this.closeEditorOption.bind(this);
   }
 
   componentWillMount() {
@@ -32,8 +33,14 @@ class Office extends Component {
     this.setState({ socket });
   }
 
-  openEditorOption() {
+  openEditorOption(e) {
+    e.preventDefault();
     document.getElementById('mySidenav').style.width = '300px';
+  }
+
+  closeEditorOption(e) {
+    e.preventDefault();
+    document.getElementById('mySidenav').style.width = '0';
   }
 
   render() {
@@ -42,10 +49,12 @@ class Office extends Component {
       <Grid id="office-container">
         <Row className="show-grid">
           <Col md={8} xs={5}>
-            <span id="editor-option-btn" title="Settings" onClick={this.openEditorOption}>&#9776;</span>
+            <span id="editor-option-btn" title="Settings" onClick={this.openEditorOption}>
+              &#9776;
+            </span>
             <div className="editor-container ">
               <Editor socket={socket} />
-              <EditorOptions />
+              <EditorOptions clickHandler={this.closeEditorOption} />
             </div>
           </Col>
           <Col md={4} xs={5}>
