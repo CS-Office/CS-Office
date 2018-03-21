@@ -14,7 +14,11 @@ import ChatHeading from './ChatHeading.jsx';
 import Messages from './../messages/Messages.jsx';
 import MessageInput from './../messages/MessageInput.jsx';
 import { values, difference, differenceBy } from 'lodash';
-import { DropdownButton, ButtonToolbar, SplitButton, MenuItem } from 'react-bootstrap';
+
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 export default class ChatContainer extends Component {
   constructor(props) {
@@ -186,16 +190,6 @@ export default class ChatContainer extends Component {
     const { chats, activeChat, users } = this.state;
     return (
       <div id="chat-container-inner" className="container">
-        {/* <SideBar
-          logout={logout}
-          chats={chats}
-          user={user}
-          users={users}
-          activeChat={activeChat}
-          setActiveChat={this.setActiveChat}
-          onSendPrivateMessage={this.sendOpenPrivateMessage}
-        /> */}
-
         <div className="chat-room-container">
           {activeChat !== null ? (
             <div className="chat-room">
@@ -235,8 +229,7 @@ export default class ChatContainer extends Component {
             </div>
           </div> */}
 
-          {/* <ButtonToolbar> */}
-          <DropdownButton dropup className="dropup-img dropbtn">
+          {/* <DropdownButton dropup className="dropup-img dropbtn">
             <SideBar
               logout={logout}
               chats={chats}
@@ -246,8 +239,27 @@ export default class ChatContainer extends Component {
               setActiveChat={this.setActiveChat}
               onSendPrivateMessage={this.sendOpenPrivateMessage}
             />
-          </DropdownButton>
-          {/* </ButtonToolbar> */}
+          </DropdownButton> */}
+
+          <IconMenu
+            iconButtonElement={
+              <IconButton>
+                <MoreVertIcon />
+              </IconButton>
+            }
+            anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+            targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+          >
+            <SideBar
+              logout={logout}
+              chats={chats}
+              user={user}
+              users={users}
+              activeChat={activeChat}
+              setActiveChat={this.setActiveChat}
+              onSendPrivateMessage={this.sendOpenPrivateMessage}
+            />
+          </IconMenu>
         </div>
       </div>
     );
