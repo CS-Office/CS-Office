@@ -13,6 +13,12 @@ router.get('/', (req, res) => {
   });
 });
 
+// Middleware test for valid id
+function isValidId(req, res, next) {
+  if (!isNaN(req.params.id)) return next();
+  next(new Error('Invalid ID'));
+}
+
 // ValidateUser Function
 const validateUser = (user) => {
   const validEmail = typeof user.email === 'string' && user.email.trim() !== '';
@@ -59,7 +65,51 @@ router.post('/sign-up', (req, res, next) => {
   }
 });
 
-router.post('/login', (req, res, next) => {
+// Google oAuth
+// router.post('/login/google', (req, res, next) => {
+//   console.log('Hit the server');
+//   if (!isValidId) {
+//     const user = {
+//       firstName: req.body.profileObj.givenName,
+//       lastName: req.body.profileObj.familyName,
+//       email: req.body.profileObj.email,
+//       password: req.body.profileObj.password,
+//     };
+
+//     User.create(user).then((id) => {
+//       // return id when success
+//       res.json({
+//         id,
+//         message: 'signed up',
+//       });
+//     });
+//   }
+// });
+
+router.post('/login/google', (req, res, next) => {
+    console.log('Hit the server');
+   
+      const user = {
+        firstName: req.body.profileObj.givenName,
+        lastName: req.body.profileObj.familyName,
+        email: req.body.profileObj.email,
+        password: req.body.profileObj.password,
+      };
+      console.log("Request Body: ", req.body);
+      console.log("Server USer Object: :", user);
+  
+      User.create(user).then((id) => {
+        // return id when success
+        res.json({
+          id,
+          message: 'signed up',
+        });
+      });
+  });
+
+ 
+// Email Login
+router.post('/login/email', (req, res, next) => {
   if (validateUser(req.body)) {
     User.getOneByEmail(req.body.email).then((user) => {
       // console.log('user', user);

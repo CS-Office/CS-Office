@@ -9,7 +9,7 @@ const Login = props => (
       <div className="col-xs-12 col-sm-10 col-md-8 col-lg-7 inner-sign-in-wrapper">
         <div className="sign-in-container well well-csx">
           <div className="sign-in-header">Sign in to your account</div>
-          <form className="sign-in-form">
+          <form className="sign-in-form" onSubmit={props.sumbitHandler}>
             <Input type="email" />
             <Input type="password" />
             <div>
