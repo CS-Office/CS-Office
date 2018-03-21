@@ -16,10 +16,17 @@ const EditorOption = props => (
       </select>
       <label className="editor-options">Font Size</label>
       <select className="editor-options">
+        <option value="">10</option>
         <option value="">12</option>
         <option value="saab">14</option>
         <option value="mercedes">16</option>
         <option value="audi">18</option>
+      </select>
+      <label className="editor-options">Key Map</label>
+      <select className="editor-options">
+        <option value="">Sublime</option>
+        <option value="saab">VIM</option>
+        <option value="mercedes">EMACS</option>
       </select>
     </div>
   </div>

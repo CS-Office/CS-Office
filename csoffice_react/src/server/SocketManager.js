@@ -99,7 +99,6 @@ module.exports = function(socket) {
   // Code Editor
 
   socket.on('send code change', (data) => {
-    console.log("this is in the server side", data);
     io.emit('send code change', data);
   });
 };

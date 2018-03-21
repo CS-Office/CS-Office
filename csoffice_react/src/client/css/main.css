@@ -339,7 +339,7 @@ div.sign-in-header {
   justify-content: center;
   text-align: center;
   margin-top: 30px;
-  margin-bottom: 25px;
+  margin-bottom: 35px;
 }
 
 .horizontal-line:before,
@@ -391,9 +391,10 @@ div.sign-in-header {
 }
 
 .oAuth-text {
-  margin-left: 35px;
+  margin-left: 25px;
   position: relative;
   display: inline-block;
+  font-size: 14px;
 }
 
 .google-button {
@@ -440,7 +441,6 @@ div.sign-in-header {
     color: white;
 }
 
-
 #cs-logo {
     height: 35px;
     margin-right: 25px;
@@ -459,7 +459,7 @@ input:required {
   width: 18px;
   height: 18px;
   left: 11px;
-  top: 3px;
+  top: 2px;
 }
 
 @media (min-width: 1200px) {
