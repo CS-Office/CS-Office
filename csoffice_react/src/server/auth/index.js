@@ -29,6 +29,39 @@ const validateUser = (user) => {
   return validEmail && validPassowrd;
 };
 
+// find the user by e,ail address
+// hash password
+// compare that to the hashed password to db
+// set cookie
+
+router.post('/login/email', (req, res, next) => {
+  console.log(req.body);
+  if (validateUser(req.body)) {
+    // check if they are in DB
+    User.getOneByEmail(req.body.email)
+      .then((user) => {
+        if (user) {
+          bcrypt.compare(req.body.password, user.password)
+            .then((result) => {
+            // res == true
+              // compare passowrd with hashed
+              res.json({
+                result,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                admin: user.admin,
+              });
+            });
+        } else {
+          next(new Error('Invalid Login'));
+        }
+      });
+  } else {
+    next(new Error('Invalid login'));
+  }
+});
+
 router.post('/sign-up', (req, res, next) => {
   if (validateUser(req.body)) {
     // check if there is a user in db
@@ -65,47 +98,26 @@ router.post('/sign-up', (req, res, next) => {
   }
 });
 
-// Google oAuth
-// router.post('/login/google', (req, res, next) => {
-//   console.log('Hit the server');
-//   if (!isValidId) {
-//     const user = {
-//       firstName: req.body.profileObj.givenName,
-//       lastName: req.body.profileObj.familyName,
-//       email: req.body.profileObj.email,
-//       password: req.body.profileObj.password,
-//     };
-
-//     User.create(user).then((id) => {
-//       // return id when success
-//       res.json({
-//         id,
-//         message: 'signed up',
-//       });
-//     });
-//   }
-// });
-
 router.post('/login/google', (req, res, next) => {
-    console.log('Hit the server');
+  console.log('Hit the server');
    
-      const user = {
-        firstName: req.body.profileObj.givenName,
-        lastName: req.body.profileObj.familyName,
-        email: req.body.profileObj.email,
-        password: req.body.profileObj.password,
-      };
-      console.log("Request Body: ", req.body);
-      console.log("Server USer Object: :", user);
+  const user = {
+    firstName: req.body.profileObj.givenName,
+    lastName: req.body.profileObj.familyName,
+    email: req.body.profileObj.email,
+    password: req.body.profileObj.password,
+  };
+  console.log("Request Body: ", req.body);
+  console.log("Server USer Object: :", user);
   
-      User.create(user).then((id) => {
-        // return id when success
-        res.json({
-          id,
-          message: 'signed up',
-        });
-      });
+  User.create(user).then((id) => {
+    // return id when success
+    res.json({
+      id,
+      message: 'signed up',
+    });
   });
+});
 
  
 // Email Login

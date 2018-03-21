@@ -45,7 +45,30 @@ class App extends React.Component {
   }
 
   emailLogIn(e) {
-    console.log('submitting!!!!');
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    const user = { email, password };
+    console.log('This is the user info', user);
+    
+    this.setState({...this.state, user});
+    fetch('/auth/login/email', {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+      }),
+      body: JSON.stringify(user), // must match ‘Content-Type’ header
+    })
+      .then((result) => {
+        console.log("result: ", result);
+        return result.json();
+      })
+      .then((data) => {
+        // Grab user state from data object
+        console.log('Data :', data);
+      })
+      .catch(err => console.log(err));
   }
 
   logout() {
