@@ -7,6 +7,7 @@ OFFICE CONTAINERS
   padding: 0;
   width: 100%;
   height: 100%;
+  font-family: 'Roboto', sans-serif !important;
 }
 
 #office-grid {
@@ -15,11 +16,10 @@ OFFICE CONTAINERS
 
 .editor-container {
   height: 95%;
-  margin-bottom: 10px;  
+  margin-bottom: 10px;
   border: 1px solid #39464e;
   display: flex;
   flex-direction: column;
-
 }
 
 .Video-container {
@@ -27,8 +27,9 @@ OFFICE CONTAINERS
 }
 
 #chat-master-container {
-  border: 1px solid black;
   height: 100%;
+  margin: 0;
+  padding: 5px;
 }
 
 .chat-container {
@@ -36,14 +37,21 @@ OFFICE CONTAINERS
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  /* max-width: 400px; */
   height: 100%;
   width: 100%;
+}
+
+#chat-container-inner {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  background: white;
 }
 
 /***************************
 Code Editor - Flexbox
 ***************************/
+
 .editor-wrapper {
   flex: 1;
   display: flex;
@@ -82,10 +90,9 @@ Code Editor - Flexbox
   margin-right: 10px;
 }
 
-
 #solution {
   color: black;
-  background-color:white;
+  background-color: white;
   border-top: 1px solid black;
   padding: 10px;
   flex: 1 0;
@@ -95,44 +102,48 @@ Code Editor - Flexbox
 }
 
 .sidenav {
-    /* border: 1px solid black; */
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1000;
-    top: 0;
-    left: 0;
-    background-color: white;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
-    margin-top: 70px;
+  /* border: 1px solid black; */
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  background-color: white;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  margin-top: 70px;
 }
 
 .sidenav a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
 }
 
 .sidenav a:hover {
-    color: #f1f1f1;
+  color: #f1f1f1;
 }
 
 .sidenav .closebtn {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 24px;
-    margin-left: 50px;
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 24px;
+  margin-left: 50px;
 }
 
 @media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
+  .sidenav {
+    padding-top: 15px;
+  }
+  .sidenav a {
+    font-size: 18px;
+  }
 }
 
 .editor-options {
@@ -141,7 +152,7 @@ Code Editor - Flexbox
 }
 
 label.editor-options {
-  display:block;
+  display: block;
   margin-bottom: 5px;
   color: #39464e;
 }
@@ -173,8 +184,8 @@ select.editor-options {
 }
 
 button {
-border-radius: 5px !important;
-font-size: 12px !important;
+  border-radius: 5px !important;
+  font-size: 12px !important;
 }
 
 /***************************
@@ -186,7 +197,6 @@ CHATAPP LOGIN
   display: flex;
   justify-content: center;
   align-items: center;
-  /* width: 100% */
   margin: auto;
 }
 
@@ -230,6 +240,70 @@ CHATAPP LOGIN
 /***************************
 CHATAPP SIDEBAR
 ***************************/
+
+.dropbtn {
+  border: none;
+  /* background: url('./../components/ChatApp/assets/dropup_button.svg'); */
+  background-repeat: no-repeat;
+  padding: 20px;
+  border: none;
+}
+
+.dropbtn::after {
+  border: none;
+  /* background: url('./../components/ChatApp/assets/dropup_button.svg'); */
+  background-repeat: no-repeat;
+  padding: 20px;
+  border: none;
+}
+
+.dropup {
+  position: relative;
+  display: -block;
+  padding-left: 18px;
+}
+
+.dropup-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  bottom: 50px;
+  z-index: 1;
+}
+
+.dropup-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropup-content a:hover {
+  background-color: #ccc;
+}
+
+.dropup:hover .dropup-content {
+  display: block;
+}
+
+.dropup:hover .dropbtn {
+  background-color: #3e8e41;
+}
+
+/* .dropup-img {
+  background: url('./../components/ChatApp/assets/dropup_button.png');
+  background-position: -9px -7px;
+  background-repeat: no-repeat;
+  background-size: 39px 43px;
+  $enable-caret: false !default;
+}
+.dropup {
+  background: url('./../components/ChatApp/assets/dropup_button.png');
+  background-position: -9px -7px;
+  background-repeat: no-repeat;
+  background-size: 39px 43px;
+} */
 
 #side-bar {
   font-size: 0.8em;
@@ -411,6 +485,27 @@ CHATAPP SIDEBAR
   font-size: 14px;
 }
 
+#side-bar .side-bar-select {
+  width: 100%;
+}
+
+.side-bar-select__option {
+  background: #5b8cf7;
+  width: 50%;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  color: white;
+}
+
+.side-bar-select__option.active {
+  background: #5483ea;
+  width: 50%;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+}
+
 /***************************
 CHATAPP HEADER
 ***************************/
@@ -423,7 +518,6 @@ CHATAPP HEADER
   align-items: center;
   height: 12vh;
   max-height: 65px;
-  /* max-width: 260px; */
   padding: 18px 16px;
   border-top-right-radius: 5px;
   border: 0.5px solid #e8e8e8;
@@ -463,7 +557,7 @@ CHATAPP HEADER
 
 .chat-room-container {
   height: 100%;
-  width: 76.25%;
+  width: 100%;
 }
 
 /* @media screen and (max-width: 510px) {
@@ -484,7 +578,7 @@ CHATAPP ROOM
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%;
+  height: 93%;
   width: 100%;
 }
 
@@ -499,7 +593,6 @@ CHATAPP THREAD
 ***************************/
 
 .thread-container {
-  /* max-width: 260px; */
   flex-grow: 1;
   overflow-y: scroll;
   position: relative;
@@ -507,7 +600,6 @@ CHATAPP THREAD
 
 .thread-container .thread {
   position: relative;
-  /* max-width: 260px; */
   min-height: 800px;
   display: flex;
   flex-direction: column;
@@ -615,6 +707,7 @@ CHATAPP MESSAGE
   box-sizing: border-box;
   height: 10vh;
   max-height: 65px;
+  padding: 20px;
 }
 
 .message-input .message-form {
@@ -622,7 +715,6 @@ CHATAPP MESSAGE
   width: 100%;
   display: flex;
   justify-content: space-between;
-  /* max-width: 260px; */
 }
 
 .message-input .message-form .form-control {
@@ -640,9 +732,7 @@ CHATAPP MESSAGE
   color: black;
 }
 
-.message-input {
-  /* max-width: 260px; */
-}
+.message-input {}
 
 .message-input .message-form .form-control:focus {
   box-shadow: none;
