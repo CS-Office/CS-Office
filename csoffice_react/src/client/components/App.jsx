@@ -20,7 +20,21 @@ class App extends React.Component {
     this.logout = this.logout.bind(this);
   }
 
-  authenticate() {
+  authenticate(data) {
+    console.log('This is the returned info from Google: ', data.profileObj);
+    fetch('/login/gooAuth', {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'content-type': 'application/json',
+      },
+      credentials: 'same-origin', // include, same-origin, *omit
+      body: JSON.stringify(data), // must match 'Content-Type' header
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    })
+    .then(
+
+    )
     this.setState({ ...this.state, isAuth: true });
   }
 

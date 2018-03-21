@@ -20,6 +20,7 @@ class Office extends Component {
     };
     this.initSocket = this.initSocket.bind(this);
     this.openEditorOption = this.openEditorOption.bind(this);
+    this.closeEditorOption = this.closeEditorOption.bind(this);
   }
 
   componentWillMount() {
@@ -32,8 +33,14 @@ class Office extends Component {
     this.setState({ socket });
   }
 
-  openEditorOption() {
+  openEditorOption(e) {
+    e.preventDefault();
     document.getElementById('mySidenav').style.width = '300px';
+  }
+
+  closeEditorOption(e) {
+    e.preventDefault();
+    document.getElementById('mySidenav').style.width = '0';
   }
 
   render() {
@@ -47,7 +54,7 @@ class Office extends Component {
             </span>
             <div className="editor-container ">
               <Editor socket={socket} />
-              <EditorOptions />
+              <EditorOptions clickHandler={this.closeEditorOption} />
             </div>
           </Col>
           <Col id="chat" md={4} xs={4}>
