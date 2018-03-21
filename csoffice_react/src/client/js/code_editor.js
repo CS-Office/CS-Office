@@ -1,5 +1,5 @@
 const CodeEditor = function(socket) {
-  let worker; 
+  let worker;
   // socket.io - Enables real-time bidirectional event-based communication
   //   socket = io.connect('http://localhost:3000');
   //   var socket = new WebSocket({ url: 'ws://' + window.location.host });
@@ -145,6 +145,8 @@ const CodeEditor = function(socket) {
 
     worker.postMessage(`${con}${code}`);
   });
+
+  return editor;
 };
 
 export default CodeEditor;
