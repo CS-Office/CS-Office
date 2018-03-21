@@ -15,7 +15,7 @@
     "start": "./node_modules/.bin/webpack -w & nodemon src/server/server.js",
     "server": "nodemon src/server/server.js",
     "webpack": "./node_modules/.bin/webpack -w",
-    "test": "(dropdb --if-exists test-cs_office_db && createdb test-cs_office_db) && NODE_ENV=test mocha"
+    "test": "(dropdb --if-exists test_cs_office_19 && createdb test_cs_office_19) && NODE_ENV=test mocha"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +23,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "bcrypt": "^1.0.3",
+    "codemirror": "^5.35.0",
     "cookie-parser": "^1.4.3",
     "debug": "^3.1.0",
     "emoji-js": "^3.4.0",
@@ -41,6 +42,7 @@
     "prop-types": "^15.6.1",
     "react": "^16.2.0",
     "react-bootstrap": "^0.32.1",
+    "react-codemirror2": "^4.2.1",
     "react-dom": "^16.2.0",
     "react-google-login": "^3.0.10",
     "react-router": "^2.0.1",

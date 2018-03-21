@@ -106,6 +106,12 @@ module.exports = function(socket) {
       }
     }
   });
+
+  // Code Editor
+
+  socket.on('send code change', (data) => {
+    io.emit('send code change', data);
+  });
 };
 /*
 * Returns a function that will take a chat id and a boolean isTyping

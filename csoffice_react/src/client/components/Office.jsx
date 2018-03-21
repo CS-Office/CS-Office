@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 import Video from './Video';
 import { ChatApp } from './ChatApp/index';
 import Editor from './Editor';
+import EditorOptions from './../components/EditorOptions';
 import { Grid, Row, Col } from 'react-bootstrap';
 import './../css/office.css';
 
@@ -18,47 +19,39 @@ class Office extends Component {
       adminName: 'Admin',
     };
     this.initSocket = this.initSocket.bind(this);
+    this.openEditorOption = this.openEditorOption.bind(this);
   }
 
   componentWillMount() {
     this.initSocket();
   }
 
-  /*
-	*	Connect to and initializes the socket.
-	*/
   initSocket() {
     const socket = io(socketUrl);
-    socket.on('connect', () => {
-      console.log('Connected Socket in Client');
-    });
+    socket.on('connect', () => {});
     this.setState({ socket });
+  }
+
+  openEditorOption() {
+    document.getElementById('mySidenav').style.width = '300px';
   }
 
   render() {
     const { socket, isAdmin, adminName } = this.state;
     return (
-      // <div className="Office-container show-grid">
-      //   {/* <Video socket={socket} isAdmin={isAdmin} adminName={adminName} /> */}
-
-      //   <div className="Editor-container xs={12} md={8}">
-      //     <Editor />
-      //   </div>
-
-      // <div className="code-chat-container xs={6} md={4}">
-      //   <ChatApp socket={socket} />
-      // </div>
-      // </div>
-
       <Grid id="office-container">
-        <Row id="office-grid" className="show-grid">
-          <Col md={8} xs={6}>
+        <Row className="show-grid">
+          <Col md={8} xs={5}>
+            <span id="editor-option-btn" title="Settings" onClick={this.openEditorOption}>&#9776;</span>
             <div className="editor-container ">
-              <Editor />
+              <Editor socket={socket} />
+              <EditorOptions />
             </div>
           </Col>
-          <Col id="chat-master-container" md={4} xs={5}>
-            <ChatApp socket={socket} />
+          <Col md={4} xs={5}>
+            <div className="chat-container ">
+              <ChatApp socket={socket} />
+            </div>
           </Col>
         </Row>
       </Grid>

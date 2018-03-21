@@ -15,7 +15,12 @@ OFFICE CONTAINERS
 }
 
 .editor-container {
-  border: 1px solid black;
+  height: 95%;
+  margin-bottom: 10px;  
+  border: 1px solid #39464e;
+  display: flex;
+  flex-direction: column;
+
 }
 
 .Video-container {
@@ -42,6 +47,142 @@ OFFICE CONTAINERS
   margin: 0;
   display: flex;
   background: white;
+}
+
+/***************************
+Code Editor - Flexbox
+***************************/
+.editor-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+#editor {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+#editor-option-btn {
+  font-size: 25px;
+  cursor: pointer;
+}
+
+#editor-option-btn:hover {
+  font-weight: 800;
+}
+
+.CodeMirror {
+  flex: 1 1 auto;
+}
+
+.btn-toolbar {
+  margin: 10px 0 10px 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.btn-sm {
+  font-size: 16px;
+  width: 100px;
+  margin-right: 10px;
+}
+
+
+#solution {
+  color: black;
+  background-color:white;
+  border-top: 1px solid black;
+  padding: 10px;
+  flex: 1 0;
+  margin-bottom: 0;
+  list-style-type: none;
+  overflow: auto;
+}
+
+.sidenav {
+    /* border: 1px solid black; */
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    background-color: white;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    margin-top: 70px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 24px;
+    margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+.editor-options {
+  display: block;
+  font-size: 12px;
+}
+
+label.editor-options {
+  display:block;
+  margin-bottom: 5px;
+  color: #39464e;
+}
+
+select.editor-options {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  /* appearance: none; */
+  box-shadow: 0;
+  border: 1px solid gray;
+  background-color: white;
+  border-radius: 3px;
+  height: 35px;
+  width: 250px;
+  margin-bottom: 35px;
+  padding-left: 15px;
+}
+
+#mySidenav {
+  display: flex;
+  flex-direction: column;
+}
+
+#options-container {
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+button {
+border-radius: 5px !important;
+font-size: 12px !important;
 }
 
 /***************************
