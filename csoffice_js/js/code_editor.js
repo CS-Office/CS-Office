@@ -84,7 +84,7 @@ const CodeEditor = function() {
   editor.on('change', cMirror => {
     const code = cMirror.getValue();
     console.log(code);
-    // // socket.emit('send code change', code);
+    socket.emit('send code change', code);
     console.log('changed changed changed');
   });
 
@@ -92,7 +92,7 @@ const CodeEditor = function() {
   //     console.log('WE RECEIVED A MESSAGE === ', msg);
   //   };
 
-//   socket.on('send code change', updateEditor);
+  socket.on('send code change', updateEditor);
 
   function updateEditor(data) {
     console.log('HERE HERE HERE');

@@ -7,7 +7,8 @@ class Editor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      socket: this.props,
+      socket: this.props.socket,
+
     };
   }
 

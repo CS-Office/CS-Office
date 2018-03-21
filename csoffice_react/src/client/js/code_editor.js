@@ -1,16 +1,12 @@
-// import Socket from './main';
-// let socket;
-// var Socket = require('simple-websocket');
-
-
-const CodeEditor = function() {
+const CodeEditor = function(socket) {
+  let worker; 
   // socket.io - Enables real-time bidirectional event-based communication
   //   socket = io.connect('http://localhost:3000');
   //   var socket = new WebSocket({ url: 'ws://' + window.location.host });
   //   var socket = new WebSocket('ws://' + window.location.host);
 
   // console.log('========= IM INSIDE CODE_EDITOR.JS ===========', socket);
-  // // helper function for xmlHttpRequest();
+  // helper function for xmlHttpRequest();
   function getURL(url, c) {
     const xhr = new XMLHttpRequest();
     xhr.open('get', url, true);
@@ -24,7 +20,7 @@ const CodeEditor = function() {
     };
   }
 
-  // // tern - addon that brings autocomplete functionality
+  // tern - addon that brings autocomplete functionality
   getURL('http://ternjs.net/defs/ecmascript.json', (err, code) => {
     if (err) throw new Error(`Request for ecmascript.json: ${err}`);
     const server = new CodeMirror.TernServer({ defs: [JSON.parse(code)] });
@@ -60,7 +56,7 @@ const CodeEditor = function() {
   });
 
   // CodeMirror
-  const editor = CodeMirror(document.querySelector('#editor'), {
+  let editor = CodeMirror(document.querySelector('#editor'), {
     value: '// Type JavaScript here and click "Run Code" \n \nconsole.log("Hello, world!");',
     mode: 'javascript',
     lineNumbers: true,
@@ -79,14 +75,14 @@ const CodeEditor = function() {
   // Event Handler for editor changes
   editor.on('change', (cMirror) => {
     const code = cMirror.getValue();
-    console.log(code);
+    socket.emit('send code change', code);
   });
 
   //   socket.onmessage = function(msg) {
   //     console.log('WE RECEIVED A MESSAGE === ', msg);
   //   };
 
-  //   socket.on('send code change', updateEditor);
+  socket.on('send code change', updateEditor);
 
   function updateEditor(data) {
     const code = editor.getValue();
@@ -97,7 +93,9 @@ const CodeEditor = function() {
 
   // Event Handler for "Run Code"
   document.querySelector('#run-code').addEventListener('click', (e) => {
-    const con = 'const console = { log: function (callback) { if (typeof callback === \'function\') callback = callback.toString(); return postMessage(callback);}};';
+    document.querySelector('#solution').innerHTML = '';
+    const con =
+      "const console = { log: function (callback) { if (typeof callback === 'function') callback = callback.toString(); return postMessage(callback);}};";
     const code = editor.getValue();
 
     const s = `onmessage = (e) => {
@@ -126,7 +124,8 @@ const CodeEditor = function() {
 
     const newBlob = new Blob([s], { type: 'text/javascript' });
     const blobURL = URL.createObjectURL(newBlob);
-    const worker = new Worker(blobURL);
+    if (worker) worker.terminate();
+    worker = new Worker(blobURL);
 
     worker.onmessage = function(e) {
       const li = document.createElement('li');
@@ -141,17 +140,11 @@ const CodeEditor = function() {
       } else {
         li.textContent = `${e.data}`;
       }
-      document.querySelector('#solution').appendChild(li);
-      this.terminate();
+      document.querySelector('#solution').appendChild(li)
     };
 
     worker.postMessage(`${con}${code}`);
   });
 };
-
-// window.onbeforeunload = function() {
-//   socket.onclose = function() {};
-//   socket.close();
-// };
 
 export default CodeEditor;
