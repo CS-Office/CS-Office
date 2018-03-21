@@ -31,7 +31,7 @@ module.exports = {
     connection: {
       host: HOST,
       port: '5432',
-      database: DB,
+      database: TESTDB,
       user: USER,
       password: PASS,
     },

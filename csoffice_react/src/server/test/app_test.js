@@ -8,15 +8,18 @@ const app = require('../server.js');
 const fixtures = require('./fixtures.js');
 
 describe('CRUD Users', () => {
-  // before((done) => {
-  //   // run migrations
-  //   knex.migrate
-  //     .latest()
-  //     .then(() =>
-  //       // run seeds
-  //       knex.seed.run())
-  //     .then(() => done());
-  // });
+  before((done) => {
+    // run migrations
+    knex.migrate.latest()
+      .then(() => {
+        // run seeds before every test
+        return knex.seed.run();
+      }).then(() => done());
+  });
+
+  it('Works...', () => {
+    console.log('Its working');
+  });
 
   // it('Lists all Records', (done) => {
   //   request(app)
