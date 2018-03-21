@@ -74,6 +74,8 @@ John's CSS for Editor - Flexbox
 
 
 #solution {
+  color: black;
+  background-color:white;
   border-top: 1px solid black;
   padding: 10px;
   flex: 1 0;
