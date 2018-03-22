@@ -119,6 +119,11 @@ const CodeEditor = function(socket) {
       } else {
         li.textContent = `${e.data}`;
       }
+      const text = li.textContent;
+      const regExp = /Error/;
+      if (text.match(regExp)) {
+        li.classList.add('error');
+      }
       document.querySelector('#solution').appendChild(li);
     };
 
