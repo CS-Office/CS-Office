@@ -11,6 +11,12 @@ module.exports = {
   getOneByEmail(email) {
     return knex('users').where('email', email).first();
   },
+  // checkIfValidUser(email, password) {
+  //   .where({email: email} )
+  //   .select('password')
+
+  //   return knex('users').where('email', email).where('password', password).first();
+  
   create(user) {
     return knex('users').insert(user, '*');
   },

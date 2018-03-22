@@ -14,6 +14,7 @@ import ChatHeading from './ChatHeading.jsx';
 import Messages from './../messages/Messages.jsx';
 import MessageInput from './../messages/MessageInput.jsx';
 import { values, difference, differenceBy } from 'lodash';
+import { ButtonToolbar, SplitButton } from 'react-bootstrap';
 
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
@@ -214,37 +215,10 @@ export default class ChatContainer extends Component {
             </div>
           )}
 
-          {/* <div class="dropup">
-            <button class="dropbtn" onClick={dropButton} />
-            <div class="dropup-content">
-              <SideBar
-                logout={logout}
-                chats={chats}
-                user={user}
-                users={users}
-                activeChat={activeChat}
-                setActiveChat={this.setActiveChat}
-                onSendPrivateMessage={this.sendOpenPrivateMessage}
-              />
-            </div>
-          </div> */}
-
-          {/* <DropdownButton dropup className="dropup-img dropbtn">
-            <SideBar
-              logout={logout}
-              chats={chats}
-              user={user}
-              users={users}
-              activeChat={activeChat}
-              setActiveChat={this.setActiveChat}
-              onSendPrivateMessage={this.sendOpenPrivateMessage}
-            />
-          </DropdownButton> */}
-
           <IconMenu
             iconButtonElement={
-              <IconButton>
-                <MoreVertIcon />
+              <IconButton id="iconbutton">
+                <MoreVertIcon id="moreverticon" />
               </IconButton>
             }
             anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
@@ -260,6 +234,20 @@ export default class ChatContainer extends Component {
               onSendPrivateMessage={this.sendOpenPrivateMessage}
             />
           </IconMenu>
+
+          {/* <ButtonToolbar>
+            <SplitButton dropup id="split-button-dropup">
+              <SideBar
+                logout={logout}
+                chats={chats}
+                user={user}
+                users={users}
+                activeChat={activeChat}
+                setActiveChat={this.setActiveChat}
+                onSendPrivateMessage={this.sendOpenPrivateMessage}
+              />
+            </SplitButton>
+          </ButtonToolbar> */}
         </div>
       </div>
     );
