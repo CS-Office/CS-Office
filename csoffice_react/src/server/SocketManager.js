@@ -122,8 +122,8 @@ module.exports = function(socket) {
   });
 
   // Code Editor
-
   socket.on('send code change', (data) => {
+    console.log('server side');
     io.emit('send code change', data);
   });
 };

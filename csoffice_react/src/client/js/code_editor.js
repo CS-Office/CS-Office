@@ -21,11 +21,20 @@ const CodeEditor = function(socket) {
 
   // Event Handler for editor changes
   this.editor.on('change', (cMirror) => {
+    console.log('this is changing');
     const code = cMirror.getValue();
-    socket.emit('send code change', code);
+    this.socket.emit('send code change', code);
   });
 
-
+  this.socket.on('send code change', updateEditor);
+  
+  function updateEditor(data) {
+    console.log('this is the editor', this.editor);
+    const code = this.editor.getValue();
+    if (code !== data) {
+      this.editor.getDoc().setValue(data);
+    }
+  };
 
   getURL('http://ternjs.net/defs/ecmascript.json', (err, code) => {
     if (err) throw new Error(`Request for ecmascript.json: ${err}`);
@@ -60,8 +69,6 @@ const CodeEditor = function(socket) {
       server.updateArgHints(cm);
     });
   });
-
-  socket.on('send code change', this.updateEditor);
 
   // Event Handler for "Run Code"
   document.querySelector('#run-code').addEventListener('click', (e) => {
@@ -117,35 +124,22 @@ const CodeEditor = function(socket) {
 
     worker.postMessage(`${con}${code}`);
   });
-
-  // return this.editor;
 };
 
-CodeEditor.prototype.updateEditor = (data) => {
-  const code = this.editor.getValue();
-  if (code !== data) {
-    editor.getDoc().setValue(data);
-  }
-};
-
-CodeEditor.prototype.changeTheme = function (theme) {
+CodeEditor.prototype.changeTheme = function(theme) {
   this.editor.setOption('theme', theme);
 };
 
-CodeEditor.prototype.changeFont = function (size) {
-  console.log('Inside the change font');
-  console.log(size);
+CodeEditor.prototype.changeFont = function(size) {
   document.querySelector('.CodeMirror').style.fontSize = size;
 };
 
-
-
-//helper function
+// helper function
 function getURL(url, c) {
   const xhr = new XMLHttpRequest();
   xhr.open('get', url, true);
   xhr.send();
-  xhr.onreadystatechange = function () {
+  xhr.onreadystatechange = function() {
     if (xhr.readyState != 4) return;
     if (xhr.status < 400) return c(null, xhr.responseText);
     const e = new Error(xhr.responseText || 'No response');
