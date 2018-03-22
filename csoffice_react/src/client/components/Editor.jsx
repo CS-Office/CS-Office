@@ -41,7 +41,7 @@ class Editor extends Component {
       <div className="editor-wrapper">
         <EditorOptions closeEditorOption={this.closeEditorOption} changeTheme={this.changeTheme} />
         <div id="editor" />
-        <ButtonToolbar>
+        <ButtonToolbar id="editor-button-container">
           <span id="editor-option-btn" title="Settings" onClick={this.openEditorOption}>
             &#9776;
             </span>

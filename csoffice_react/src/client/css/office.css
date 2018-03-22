@@ -95,7 +95,7 @@ Code Editor - Flexbox
   flex: 1 1 auto;
 }
 
-.btn-toolbar {
+#editor-button-container {
   margin: 10px 0 10px 5px;
   display: flex;
   flex-direction: row;
