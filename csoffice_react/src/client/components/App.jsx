@@ -17,11 +17,13 @@ class App extends React.Component {
       user: {},
     };
     this.authenticate = this.authenticate.bind(this);
+    this.emailLogIn = this.emailLogIn.bind(this);
     this.logout = this.logout.bind(this);
     this.emailLogIn = this.emailLogIn.bind(this);
   }
 
   authenticate(data) {
+
     console.log('This is the returned info from Google: ', data.profileObj);
     fetch('auth/login/google', {
       method: 'POST',
@@ -76,6 +78,7 @@ class App extends React.Component {
   }
 
   render() {
+
     const { isAuth } = this.state;
     const PrivateRoute = ({ component: Component, ...rest }) => (
       <Route {...rest} render={() => (isAuth ? <Component /> : <Redirect to="/login" />)} />

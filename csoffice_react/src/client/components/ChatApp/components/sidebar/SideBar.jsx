@@ -37,21 +37,12 @@ export default class SideBar extends Component {
     const { reciever, activeSideBar } = this.state;
     return (
       <div id="side-bar">
-        <div className="heading">
-          <div className="chatApp-logo">
-            <img src="./../public/images/codesmith-logo-md.png" alt="Codesmith Logo" />
-          </div>
-        </div>
-        <form onSubmit={this.handleSubmit} className="search">
-          <input
-            placeholder="Search"
-            type="text"
-            value={reciever}
-            onChange={e => {
-              this.setState({ reciever: e.target.value });
-            }}
-          />
-        </form>
+        {/* <div className="heading"> */}
+        {/* <div className="chatApp-logo"> */}
+        {/* <img src="./../public/images/codesmith-logo-md.png" alt="Codesmith Logo" /> */}
+        {/* </div> */}
+        {/* </div> */}
+
         <div className="side-bar-select">
           <div
             onClick={() => {
@@ -74,6 +65,16 @@ export default class SideBar extends Component {
             <span>Users</span>
           </div>
         </div>
+        <form onSubmit={this.handleSubmit} className="search">
+          <input
+            placeholder="Search room..."
+            type="text"
+            value={reciever}
+            onChange={e => {
+              this.setState({ reciever: e.target.value });
+            }}
+          />
+        </form>
         <div
           className="users"
           ref="users"
@@ -109,9 +110,9 @@ export default class SideBar extends Component {
                 );
               })}
         </div>
-        <div className="logged-in-as">Logged in as:</div>
+        {/* <div className="logged-in-as">Logged in as:</div> */}
         <div className="current-user">
-          <span>{user.name}</span>
+          <span>Logged in as: {user.name}</span>
           {/* <div
             onClick={() => {
               logout();
