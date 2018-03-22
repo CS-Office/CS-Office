@@ -4,8 +4,9 @@ exports.up = (knex, Promise) => {
     table.increments();
     table.string('firstName');
     table.string('lastName');
-    table.string('email').notNullable().unique();
-    table.string('password').notNullable();
+    // table.string('email').notNullable().unique();
+    table.string('email').notNullable();
+    table.string('password');
     table.boolean('admin').notNullable().defaultTo(false);
     // table.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'));
   });
