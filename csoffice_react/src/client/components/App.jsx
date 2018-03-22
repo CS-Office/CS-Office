@@ -20,10 +20,10 @@ class App extends React.Component {
     this.emailLogIn = this.emailLogIn.bind(this);
     this.logout = this.logout.bind(this);
     this.emailLogIn = this.emailLogIn.bind(this);
+    this.signup = this.signup.bind(this);
   }
 
   authenticate(data) {
-
     console.log('This is the returned info from Google: ', data.profileObj);
     fetch('auth/login/google', {
       method: 'POST',
@@ -31,19 +31,50 @@ class App extends React.Component {
       headers: new Headers({
         'Content-Type': 'application/json',
       }),
-      // credentials: 'same-origin', // include, same-origin, *omit
-      body: JSON.stringify(data), // must match 'Content-Type' header
-      // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      body: JSON.stringify(data),
     })
       .then(res => res.json())
-      .then(data => {
+      .then((data) => {
         console.log(data);
         this.setState({ ...this.state, isAuth: true });
       })
       .catch((err) => {
         console.log(err);
       });
-    // this.setState({ ...this.state, isAuth: true });
+  }
+
+  signup(e) {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const firstName = form.firstName.value;
+    const lastName = form.lastName.value;
+    const password = form.password.value;
+    const user = {
+      firstName,
+      lastName,
+      email,
+      password,
+    };
+    console.log("This is the user", user);
+    fetch('/auth/signup', {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+      }),
+      body: JSON.stringify(user), // must match ‘Content-Type’ header
+    })
+      .then((result) => {
+        return result.json();
+      })
+      .then((data) => {
+        // Grab user state from data object
+        console.log('This is the return value from signup', data);
+        if (data.firstName && data.email) {
+          this.setState({ ...this.state, user: data, isAuth: true });
+        }
+      })
+      .catch(err => console.log(err));
   }
 
   emailLogIn(e) {
@@ -52,9 +83,6 @@ class App extends React.Component {
     const email = form.email.value;
     const password = form.password.value;
     const user = { email, password };
-    console.log('This is the user info', user);
-    
-    this.setState({ ...this.state, user });
     fetch('/auth/login/email', {
       method: 'POST',
       headers: new Headers({
@@ -63,7 +91,7 @@ class App extends React.Component {
       body: JSON.stringify(user), // must match ‘Content-Type’ header
     })
       .then((result) => {
-        console.log("result: ", result);
+        console.log('result: ', result);
         return result.json();
       })
       .then((data) => {
@@ -80,10 +108,13 @@ class App extends React.Component {
   }
 
   render() {
-
     const { isAuth } = this.state;
+    console.log('This is the render user', this.state.user);
     const PrivateRoute = ({ component: Component, ...rest }) => (
-      <Route {...rest} render={(props) => (isAuth ? <Component user={props.user} /> : <Redirect to="/login" />)} />
+      <Route
+        {...rest}
+        render={props => (isAuth ? <Component user={props.user} /> : <Redirect to="/login" />)}
+      />
     );
 
     return (
@@ -92,11 +123,15 @@ class App extends React.Component {
         <main>
           <Switch>
             <Route exact path="/" render={() => <Redirect to="/login" />} />
-            <Route path="/sign-up" component={Signup} />
+            <Route path="/sign-up" render={() => (isAuth ? <Redirect to="/office" /> : <Signup signup={this.signup} />)} />
             <Route
               path="/login"
               render={() =>
-                (isAuth ? <Redirect to="/office" /> : <Login oAuthSuccess={this.authenticate} submitHandler={this.emailLogIn} />)
+                (isAuth ? (
+                  <Redirect to="/office" />
+                ) : (
+                  <Login oAuthSuccess={this.authenticate} submitHandler={this.emailLogIn} />
+                ))
               }
             />
             <PrivateRoute path="/office" component={Office} user={this.state.user} />

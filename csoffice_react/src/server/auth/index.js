@@ -22,11 +22,11 @@ function isValidId(req, res, next) {
 // ValidateUser Function
 const validateUser = (user) => {
   const validEmail = typeof user.email === 'string' && user.email.trim() !== '';
-  const validPassowrd =
+  const validPassword =
     typeof user.password === 'string' &&
     user.password.trim() !== '' &&
     user.password.trim().length >= 6;
-  return validEmail && validPassowrd;
+  return validEmail && validPassword;
 };
 
 // find the user by e,ail address
@@ -63,7 +63,8 @@ router.post('/login/email', (req, res, next) => {
 });
 
 router.post('/signup', (req, res, next) => {
-  if (validateUser(req.body)) {
+  console.log("This is inside the server");
+  // if (validateUser(req.body)) {
     // check if there is a user in db
     User.getOneByEmail(req.body.email).then((user) => {
       // if user not found
@@ -81,24 +82,20 @@ router.post('/signup', (req, res, next) => {
               password: hash,
             };
             // Insert the user into the db from queries.js methods
-            User.create(user).then((id) => {
+            User.create(user).then((newUser) => {
+              const userInfo = newUser;
+              delete userInfo[0]["password"];
               // return id when success
-              res.json({
-                id,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                email: user.email,
-                admin: user.admin,
-              });
+              res.json(userInfo[0]);
             });
           });
       } else {
         next(new Error('Email is in Use'));
       }
     });
-  } else {
-    next(new Error('Invalid'));
-  }
+  // } else {
+  //   next(new Error('Invalid'));
+  // }
 });
 
 router.post('/login/google', (req, res, next) => {
