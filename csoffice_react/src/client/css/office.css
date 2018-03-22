@@ -78,7 +78,12 @@ Code Editor - Flexbox
 }
 
 #editor-option-btn {
-  display: none;
+  /* display: none; */
+
+  position: absolute;
+  height: 32px;
+  top: -3px;
+  left: 25px;
   font-size: 25px;
   cursor: pointer;
 }
@@ -108,7 +113,7 @@ Code Editor - Flexbox
   color: black;
   background-color: white;
   border-top: 1px solid black;
-  padding: 10px;
+  padding: 25px;
   flex: 1 0;
   margin-bottom: 0;
   list-style-type: none;
@@ -149,6 +154,10 @@ Code Editor - Flexbox
   right: 25px;
   font-size: 24px;
   margin-left: 50px;
+}
+
+.CodeMirror-gutter.CodeMirror-linenumbers {
+  margin-left: 10px;
 }
 
 @media screen and (max-height: 450px) {
