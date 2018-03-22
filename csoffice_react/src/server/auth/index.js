@@ -99,7 +99,7 @@ router.post('/signup', (req, res, next) => {
 });
 
 router.post('/login/google', (req, res, next) => {
-  console.log('Hit the server');
+  console.log('Hit the server', req.body.profileObj);
    
   const user = {
     firstName: req.body.profileObj.givenName,

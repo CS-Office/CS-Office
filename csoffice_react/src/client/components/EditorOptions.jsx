@@ -23,7 +23,9 @@ const EditorOptions = props => (
         <option value="20">20</option>
         <option value="22">22</option>
         <option value="24">24</option>
-        <option value="72">72(Go for it!!!!)</option>
+        <option value="28">28</option>
+        <option value="32">32</option>
+        <option value="72">72 (Go for it!!!!)</option>
       </select>
       <label className="editor-options">Key Map</label>
       <select id="keymap-option" className="editor-options">

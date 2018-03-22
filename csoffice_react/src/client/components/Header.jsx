@@ -8,11 +8,12 @@ const Header = (props) => {
   const { isAuth } = props;
   const UserBtn = () => {
     if (isAuth) {
-      // const { user } = props;
-      // const fullName = `${user.firstName} ${user.lastName}`;
+      const { user } = props;
+      const userName = `${user.firstName} ${user.lastName}`;
+      
       return (
         <Nav pullRight>
-          <NavDropdown eventKey={3} title="User Name" id="basic-nav-dropdown">
+          <NavDropdown eventKey={3} title={userName} id="basic-nav-dropdown">
             <MenuItem eventKey={3.1} className="csx-signout" onClick={props.logout}>
               Sign out
             </MenuItem>
