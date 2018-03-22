@@ -4,14 +4,15 @@ import { NavLink } from 'react-router-dom';
 import { Navbar, Nav, NavDropdown, NavItem, MenuItem, Button } from 'react-bootstrap';
 
 const Header = (props) => {
-  const { user } = props;
-  const fullName = `${user.firstName} ${user.lastName}`;
+ 
   const { isAuth } = props;
   const UserBtn = () => {
     if (isAuth) {
+      // const { user } = props;
+      // const fullName = `${user.firstName} ${user.lastName}`;
       return (
         <Nav pullRight>
-          <NavDropdown eventKey={3} title={fullName} id="basic-nav-dropdown">
+          <NavDropdown eventKey={3} title="User Name" id="basic-nav-dropdown">
             <MenuItem eventKey={3.1} className="csx-signout" onClick={props.logout}>
               Sign out
             </MenuItem>

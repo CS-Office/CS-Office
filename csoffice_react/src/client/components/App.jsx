@@ -68,7 +68,9 @@ class App extends React.Component {
       })
       .then((data) => {
         // Grab user state from data object
-        console.log('Data :', data);
+        if (data.firstName && data.email) {
+          this.setState({ ...this.state, user: data, isAuth: true });
+        }
       })
       .catch(err => console.log(err));
   }
