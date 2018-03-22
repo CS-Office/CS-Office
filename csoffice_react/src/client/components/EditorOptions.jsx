@@ -1,17 +1,17 @@
 import React from 'react';
 
-const EditorOption = props => (
+const EditorOptions = props => (
   <div id="mySidenav" className="sidenav">
     <a href="#" className="closebtn" title="Close Editor Options" onClick={props.closeEditorOption}>
       &times;
     </a>
     <div id="options-container">
       <label className="editor-options">Themes</label>
-      <select id="theme-option" className="editor-options">
-        <option value="">3024-day</option>
-        <option value="saab">3024-night</option>
-        <option value="mercedes">Mercedes</option>
-        <option value="audi">Audi</option>
+      <select id="theme-option" className="editor-options" onChange={props.changeTheme}>
+        <option value="3024-day">3024-day</option>
+        <option value="3024-night">3024-night</option>
+        <option value="mdn-like">MDN-Like</option>
+        <option value="eclipse">Eclipse</option>
       </select>
       <label className="editor-options">Font Size</label>
       <select id="font-option" className="editor-options">
@@ -31,4 +31,4 @@ const EditorOption = props => (
   </div>
 );
 
-export default EditorOption;
+export default EditorOptions;

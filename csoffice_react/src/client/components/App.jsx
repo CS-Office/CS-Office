@@ -78,7 +78,7 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.user);
+
     const { isAuth } = this.state;
     const PrivateRoute = ({ component: Component, ...rest }) => (
       <Route {...rest} render={() => (isAuth ? <Component /> : <Redirect to="/login" />)} />
