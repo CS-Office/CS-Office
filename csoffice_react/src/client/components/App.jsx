@@ -26,28 +26,28 @@ class App extends React.Component {
   authenticate(google) {
     const profile = google.profileObj;
 
-    // const user = {
-    //   email: profile.email,
-    //   firstName: profile.givenName,
-    //   lastName: profile.familyName,
-    // };
-
-    fetch('auth/login/google', {
-      method: 'POST',
-      headers: new Headers({
-        'Content-Type': 'application/json',
-      }),
-      body: JSON.stringify(profile),
-    })
-      .then(res => res.json())
-      .then((info) => {
-        console.log('Returning data', info);
-        this.setState({ ...this.state, user: info, isAuth: true });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    this.setState({ ...this.state, isAuth: true });
+    const user = {
+      email: profile.email,
+      firstName: profile.givenName,
+      lastName: profile.familyName,
+    };
+    
+    // fetch('auth/login/google', {
+    //   method: 'POST',
+    //   headers: new Headers({
+    //     'Content-Type': 'application/json',
+    //   }),
+    //   body: JSON.stringify(profile),
+    // })
+    //   .then(res => res.json())
+    //   .then((info) => {
+    //     console.log('Returning data', info);
+    //     this.setState({ ...this.state, user: info, isAuth: true });
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+    this.setState({ ...this.state, user, isAuth: true });
   }
 
   signup(e) {
@@ -95,6 +95,7 @@ class App extends React.Component {
       .then(result => result.json())
       .then((data) => {
         // Grab user state from data object
+
         if (data.firstName && data.email) {
           this.setState({ ...this.state, user: data, isAuth: true });
         }

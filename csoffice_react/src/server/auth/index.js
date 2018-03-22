@@ -109,16 +109,14 @@ router.post('/login/google', (req, res, next) => {
     email: req.body.email,
     password: req.body.password,
   };
+
   console.log("Request Body: ", req.body);
   console.log("Server USer Object: :", user);
   
   if (!user) {
     User.create(user).then((id) => {
       // return id when success
-      res.json({
-        id,
-        message: 'signed up',
-      });
+      res.json(id);
     });
   }
 });
