@@ -39,8 +39,8 @@ class Office extends Component {
     return (
       <div className="Office-container">
         <div className="Video-container">
-          <Video socket={socket} isAdmin={isAdmin} adminName={adminName}/>
-        </div>
+          <Video socket={socket} isAdmin={isAdmin} adminName={adminName}/> 
+         </div> 
         <div className="code-chat-container">
           <Editor />
           <ChatApp socket={socket} />
