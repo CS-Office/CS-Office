@@ -40,7 +40,7 @@ class App extends React.Component {
       })
       .catch((err) => {
         console.log(err);
-      })
+      });
     // this.setState({ ...this.state, isAuth: true });
   }
 
@@ -52,7 +52,7 @@ class App extends React.Component {
     const user = { email, password };
     console.log('This is the user info', user);
     
-    this.setState({...this.state, user});
+    this.setState({ ...this.state, user });
     fetch('/auth/login/email', {
       method: 'POST',
       headers: new Headers({

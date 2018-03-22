@@ -62,7 +62,7 @@ router.post('/login/email', (req, res, next) => {
   }
 });
 
-router.post('/sign-up', (req, res, next) => {
+router.post('/signup', (req, res, next) => {
   if (validateUser(req.body)) {
     // check if there is a user in db
     User.getOneByEmail(req.body.email).then((user) => {
@@ -85,7 +85,10 @@ router.post('/sign-up', (req, res, next) => {
               // return id when success
               res.json({
                 id,
-                message: 'signed up',
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                admin: user.admin,
               });
             });
           });
