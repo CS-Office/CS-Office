@@ -129,9 +129,14 @@ CodeEditor.prototype.updateEditor = (data) => {
 };
 
 CodeEditor.prototype.changeTheme = function (theme) {
-
-  return this.editor.setOption('theme', theme);
+  this.editor.setOption('theme', theme);
 };
+
+CodeEditor.prototype.changeFont = function (size) {
+  // document.querySelector('.CodeMirror').setAttribute
+};
+
+
 
 //helper function
 function getURL(url, c) {

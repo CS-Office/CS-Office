@@ -93,9 +93,10 @@ Code Editor - Flexbox
 
 .CodeMirror {
   flex: 1 1 auto;
+  /* font-size: 36px; */
 }
 
-.btn-toolbar {
+#editor-button-container {
   margin: 10px 0 10px 5px;
   display: flex;
   flex-direction: row;
