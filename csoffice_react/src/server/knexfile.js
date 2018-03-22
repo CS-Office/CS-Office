@@ -3,10 +3,13 @@ const USER = credentialsDB.user;
 const PASS = credentialsDB.password;
 const HOST = credentialsDB.host;
 const DB = credentialsDB.table;
-const TESTDB = credentialsDB.testTable;
+const TESTDB = credentialsDB.testdb.table;
+const TESTUSER = credentialsDB.testdb.user;
+const TESTPASS = credentialsDB.testdb.password;
+const TESTHOST = credentialsDB.testdb.host;
 const localDbUser = require('./credentials').localDbUser;
 
-console.log('DBTable:', DB, 'USERNAME:', USER, 'PASS:', PASS, 'HOST:', HOST, 'localDBUSER:', localDbUser);
+console.log('DBTable:', DB, 'USERNAME:', USER, 'PASS:', PASS, 'HOST:', HOST, 'localDBUSER:', localDbUser, 'TestHost: ', TESTHOST);
 
 // Update with your config settings.
 
@@ -29,11 +32,11 @@ module.exports = {
   test: {
     client: 'pg',
     connection: {
-      host: HOST,
+      host: TESTHOST,
       port: '5432',
       database: TESTDB,
-      user: USER,
-      password: PASS,
+      user: TESTUSER,
+      password: TESTPASS,
     },
 
     migrations: {
