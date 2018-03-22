@@ -24,7 +24,6 @@ class App extends React.Component {
   }
 
   authenticate(data) {
-    console.log('This is the returned info from Google: ', data.profileObj);
     fetch('auth/login/google', {
       method: 'POST',
       // mode: 'cors',
@@ -34,8 +33,7 @@ class App extends React.Component {
       body: JSON.stringify(data),
     })
       .then(res => res.json())
-      .then((data) => {
-        console.log(data);
+      .then(() => {
         this.setState({ ...this.state, isAuth: true });
       })
       .catch((err) => {
@@ -56,7 +54,6 @@ class App extends React.Component {
       email,
       password,
     };
-    console.log("This is the user", user);
     fetch('/auth/signup', {
       method: 'POST',
       headers: new Headers({
@@ -64,12 +61,8 @@ class App extends React.Component {
       }),
       body: JSON.stringify(user), // must match ‘Content-Type’ header
     })
-      .then((result) => {
-        return result.json();
-      })
+      .then(result => result.json())
       .then((data) => {
-        // Grab user state from data object
-        console.log('This is the return value from signup', data);
         if (data.firstName && data.email) {
           this.setState({ ...this.state, user: data, isAuth: true });
         }
@@ -90,10 +83,7 @@ class App extends React.Component {
       }),
       body: JSON.stringify(user), // must match ‘Content-Type’ header
     })
-      .then((result) => {
-        console.log('result: ', result);
-        return result.json();
-      })
+      .then(result => result.json())
       .then((data) => {
         // Grab user state from data object
         if (data.firstName && data.email) {
@@ -109,7 +99,6 @@ class App extends React.Component {
 
   render() {
     const { isAuth } = this.state;
-    console.log('This is the render user', this.state.user);
     const PrivateRoute = ({ component: Component, ...rest }) => (
       <Route
         {...rest}
@@ -123,7 +112,10 @@ class App extends React.Component {
         <main>
           <Switch>
             <Route exact path="/" render={() => <Redirect to="/login" />} />
-            <Route path="/sign-up" render={() => (isAuth ? <Redirect to="/office" /> : <Signup signup={this.signup} />)} />
+            <Route
+              path="/sign-up"
+              render={() => (isAuth ? <Redirect to="/office" /> : <Signup signup={this.signup} />)}
+            />
             <Route
               path="/login"
               render={() =>
