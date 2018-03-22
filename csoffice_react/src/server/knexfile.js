@@ -3,10 +3,11 @@ const USER = credentialsDB.user;
 const PASS = credentialsDB.password;
 const HOST = credentialsDB.host;
 const DB = credentialsDB.table;
-const TESTDB = credentialsDB.testdb.table;
-const TESTUSER = credentialsDB.testdb.user;
-const TESTPASS = credentialsDB.testdb.password;
-const TESTHOST = credentialsDB.testdb.host;
+const credentialsDBTest = require('./credentials').testdb;
+const TESTDB = credentialsDBTest.table;
+const TESTUSER = credentialsDBTest.user;
+const TESTPASS = credentialsDBTest.password;
+const TESTHOST = credentialsDBTest.host;
 const localDbUser = require('./credentials').localDbUser;
 
 console.log('DBTable:', DB, 'USERNAME:', USER, 'PASS:', PASS, 'HOST:', HOST, 'localDBUSER:', localDbUser, 'TestHost: ', TESTHOST);
