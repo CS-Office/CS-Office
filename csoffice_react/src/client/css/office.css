@@ -691,7 +691,9 @@ CHATAPP MESSAGE
 }
 
 .message-container .time {
-  /* display: none; */
+  font-size: 10px;
+  padding-top: 18px;
+  margin-right: 5px;
 }
 
 .message-container .data {
@@ -713,7 +715,7 @@ CHATAPP MESSAGE
   color: black;
   padding: 7px 15px;
   position: relative;
-  font-size: 0.62em;
+  font-size: 12px;
 }
 
 @keyframes show {
@@ -731,7 +733,9 @@ CHATAPP MESSAGE
 }
 
 .message-container.right .time {
-  /* display: none; */
+  font-size: 10px;
+  padding-top: 18px;
+  margin-right: 5px;
 }
 
 .message-container.right .data {
@@ -849,40 +853,44 @@ VIDEO CHAT
   position: absolute;
   z-index: 500;
 }
-	/* flip the pane when hovered */
-	.video-container:hover .flipper, .video-container.hover .flipper {
-		transform: rotateY(180deg);
-	}
+/* flip the pane when hovered */
+.video-container:hover .flipper,
+.video-container.hover .flipper {
+  transform: rotateY(180deg);
+}
 
-.video-container, .front, .back {
-	width: 250px;
+.video-container,
+.front,
+.back {
+  width: 250px;
   height: 200px;
   background-color: white;
 }
 
 /* flip speed goes here */
 .flipper {
-	transition: 0.6s;
+  transition: 0.6s;
   transform-style: preserve-3d;
-	position: relative;
+  position: relative;
 }
 
 /* hide back of pane during swap */
-.front, .back {
-	backface-visibility: hidden;
-	position: absolute;
-	top: 0;
-	left: 0;
+.front,
+.back {
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 /* front pane, placed above back */
 .front {
-	z-index: 2;
-	/* for firefox 31 */
-	transform: rotateY(0deg);
+  z-index: 2;
+  /* for firefox 31 */
+  transform: rotateY(0deg);
 }
 
 /* back, initially hidden pane */
 .back {
-	transform: rotateY(180deg);
+  transform: rotateY(180deg);
 }
