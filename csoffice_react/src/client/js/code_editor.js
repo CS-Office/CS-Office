@@ -1,30 +1,36 @@
 const CodeEditor = function(socket) {
   let worker;
-  // socket.io - Enables real-time bidirectional event-based communication
-  //   socket = io.connect('http://localhost:3000');
-  //   var socket = new WebSocket({ url: 'ws://' + window.location.host });
-  //   var socket = new WebSocket('ws://' + window.location.host);
+  this.socket = socket;
 
-  // console.log('========= IM INSIDE CODE_EDITOR.JS ===========', socket);
-  // helper function for xmlHttpRequest();
-  function getURL(url, c) {
-    const xhr = new XMLHttpRequest();
-    xhr.open('get', url, true);
-    xhr.send();
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState != 4) return;
-      if (xhr.status < 400) return c(null, xhr.responseText);
-      const e = new Error(xhr.responseText || 'No response');
-      e.status = xhr.status;
-      c(e);
-    };
-  }
+  // CodeMirror
+  this.editor = CodeMirror(document.querySelector('#editor'), {
+    value: '// Type JavaScript here and click "Run Code" \n \nconsole.log("Hello, world!");',
+    mode: 'javascript',
+    lineNumbers: true,
+    indentWithTabs: true,
+    indentUnit: 4,
+    matchBrackets: true,
+    autoCloseBrackets: true,
+    foldGutter: true,
+    gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter', 'CodeMirror-lint-markers'],
+    lint: {
+      esversion: 6,
+    },
+    styleActiveLine: true,
+  });
 
-  // tern - addon that brings autocomplete functionality
+  // Event Handler for editor changes
+  this.editor.on('change', (cMirror) => {
+    const code = cMirror.getValue();
+    socket.emit('send code change', code);
+  });
+
+
+
   getURL('http://ternjs.net/defs/ecmascript.json', (err, code) => {
     if (err) throw new Error(`Request for ecmascript.json: ${err}`);
     const server = new CodeMirror.TernServer({ defs: [JSON.parse(code)] });
-    editor.setOption('extraKeys', {
+    this.editor.setOption('extraKeys', {
       'Ctrl-Space': function(cm) {
         server.complete(cm);
       },
@@ -50,53 +56,19 @@ const CodeEditor = function(socket) {
         server.selectName(cm);
       },
     });
-    editor.on('cursorActivity', (cm) => {
+    this.editor.on('cursorActivity', (cm) => {
       server.updateArgHints(cm);
     });
   });
 
-  // CodeMirror
-  let editor = CodeMirror(document.querySelector('#editor'), {
-    value: '// Type JavaScript here and click "Run Code" \n \nconsole.log("Hello, world!");',
-    mode: 'javascript',
-    lineNumbers: true,
-    indentWithTabs: true,
-    indentUnit: 4,
-    matchBrackets: true,
-    autoCloseBrackets: true,
-    foldGutter: true,
-    gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter', 'CodeMirror-lint-markers'],
-    lint: {
-      esversion: 6,
-    },
-    styleActiveLine: true,
-  });
-
-  // Event Handler for editor changes
-  editor.on('change', (cMirror) => {
-    const code = cMirror.getValue();
-    socket.emit('send code change', code);
-  });
-
-  //   socket.onmessage = function(msg) {
-  //     console.log('WE RECEIVED A MESSAGE === ', msg);
-  //   };
-
-  socket.on('send code change', updateEditor);
-
-  function updateEditor(data) {
-    const code = editor.getValue();
-    if (code !== data) {
-      editor.getDoc().setValue(data);
-    }
-  }
+  socket.on('send code change', this.updateEditor);
 
   // Event Handler for "Run Code"
   document.querySelector('#run-code').addEventListener('click', (e) => {
     document.querySelector('#solution').innerHTML = '';
     const con =
       "const console = { log: function (callback) { if (typeof callback === 'function') callback = callback.toString(); return postMessage(callback);}};";
-    const code = editor.getValue();
+    const code = this.editor.getValue();
 
     const s = `onmessage = (e) => {
             try {
@@ -140,13 +112,39 @@ const CodeEditor = function(socket) {
       } else {
         li.textContent = `${e.data}`;
       }
-      document.querySelector('#solution').appendChild(li)
+      document.querySelector('#solution').appendChild(li);
     };
 
     worker.postMessage(`${con}${code}`);
   });
 
-  return editor;
+  // return this.editor;
 };
+
+CodeEditor.prototype.updateEditor = (data) => {
+  const code = this.editor.getValue();
+  if (code !== data) {
+    editor.getDoc().setValue(data);
+  }
+};
+
+CodeEditor.prototype.changeTheme = function (theme) {
+
+  return this.editor.setOption('theme', theme);
+};
+
+//helper function
+function getURL(url, c) {
+  const xhr = new XMLHttpRequest();
+  xhr.open('get', url, true);
+  xhr.send();
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState != 4) return;
+    if (xhr.status < 400) return c(null, xhr.responseText);
+    const e = new Error(xhr.responseText || 'No response');
+    e.status = xhr.status;
+    c(e);
+  };
+}
 
 export default CodeEditor;
