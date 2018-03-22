@@ -4,9 +4,12 @@ import { NavLink } from 'react-router-dom';
 import { Navbar, Nav, NavDropdown, NavItem, MenuItem, Button } from 'react-bootstrap';
 
 const Header = (props) => {
+ 
   const { isAuth } = props;
   const UserBtn = () => {
     if (isAuth) {
+      // const { user } = props;
+      // const fullName = `${user.firstName} ${user.lastName}`;
       return (
         <Nav pullRight>
           <NavDropdown eventKey={3} title="User Name" id="basic-nav-dropdown">

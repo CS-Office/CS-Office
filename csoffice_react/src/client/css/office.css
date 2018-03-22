@@ -93,6 +93,7 @@ Code Editor - Flexbox
 
 .CodeMirror {
   flex: 1 1 auto;
+  /* font-size: 36px; */
 }
 
 #editor-button-container {

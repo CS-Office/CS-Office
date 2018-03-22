@@ -68,7 +68,9 @@ class App extends React.Component {
       })
       .then((data) => {
         // Grab user state from data object
-        console.log('Data :', data);
+        if (data.firstName && data.email) {
+          this.setState({ ...this.state, user: data, isAuth: true });
+        }
       })
       .catch(err => console.log(err));
   }
@@ -81,7 +83,7 @@ class App extends React.Component {
 
     const { isAuth } = this.state;
     const PrivateRoute = ({ component: Component, ...rest }) => (
-      <Route {...rest} render={() => (isAuth ? <Component /> : <Redirect to="/login" />)} />
+      <Route {...rest} render={(props) => (isAuth ? <Component user={props.user} /> : <Redirect to="/login" />)} />
     );
 
     return (
@@ -97,7 +99,7 @@ class App extends React.Component {
                 (isAuth ? <Redirect to="/office" /> : <Login oAuthSuccess={this.authenticate} submitHandler={this.emailLogIn} />)
               }
             />
-            <PrivateRoute path="/office" component={Office} />
+            <PrivateRoute path="/office" component={Office} user={this.state.user} />
           </Switch>
         </main>
       </div>
