@@ -801,9 +801,6 @@ CHATAPP MESSAGE
   color: black;
 }
 
-.message-input {
-}
-
 .message-input .message-form .form-control:focus {
   box-shadow: none;
   background-color: white;
@@ -840,4 +837,52 @@ CHATAPP MESSAGE
 
 .message-input .message-form .send:disabled {
   display: none;
+}
+
+/***************************
+VIDEO CHAT
+***************************/
+
+/* entire container, keeps perspective */
+.video-container {
+  perspective: 1000px;
+  position: absolute;
+  z-index: 500;
+}
+	/* flip the pane when hovered */
+	.video-container:hover .flipper, .video-container.hover .flipper {
+		transform: rotateY(180deg);
+	}
+
+.video-container, .front, .back {
+	width: 250px;
+  height: 200px;
+  background-color: white;
+}
+
+/* flip speed goes here */
+.flipper {
+	transition: 0.6s;
+  transform-style: preserve-3d;
+	position: relative;
+}
+
+/* hide back of pane during swap */
+.front, .back {
+	backface-visibility: hidden;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+/* front pane, placed above back */
+.front {
+	z-index: 2;
+	/* for firefox 31 */
+	transform: rotateY(0deg);
+}
+
+/* back, initially hidden pane */
+.back {
+	transform: rotateY(180deg);
 }
