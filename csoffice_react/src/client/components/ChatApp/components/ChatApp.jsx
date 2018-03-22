@@ -12,7 +12,7 @@ export default class Layout extends Component {
       user: null,
     };
 
-    this.setUser = this.setUser.bind(this);
+    // this.setUser = this.setUser.bind(this);
     this.logout = this.logout.bind(this);
   }
 
@@ -20,11 +20,11 @@ export default class Layout extends Component {
 	* 	Sets the user property in state
 	*	@param user {id:number, name:string}
 	*/
-  setUser(user) {
+  setUser = user => {
     const { socket } = this.state;
     socket.emit(USER_CONNECTED, user);
     this.setState({ user });
-  }
+  };
 
   /*
 	*	Sets the user property in state to null.
@@ -36,7 +36,6 @@ export default class Layout extends Component {
   }
 
   render() {
-    const { title } = this.props;
     const { socket, user } = this.state;
 
     return (

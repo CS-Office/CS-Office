@@ -1,71 +1,58 @@
 //  REQUIRED
+const express = require('express');
+const mongoose = require('mongoose');
 const path = require('path');
 const hat = require('hat');
 const ws = require('ws');
-const express = require('express');
-const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-
-const app = express();
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
 
 //  FILES
-const keys = require('../config/keys');
-// require('./models/user');
-// require('./passport');
-// require('./routes/auth_routes')(app); //require returns functions from routes file and then immediately invokes the function with the app object
+const users = require('./api/users');
+const auth = require('./auth/index');
+
+//  EXPRESS
+const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 //  MONGOOSE
-mongoose.connect(keys.mongoURI);
 mongoose.connection.once('open', () => {
   console.log('===CONNECTED TO DATABASE===');
 });
 
-//  EXPRESS
+// LOGGER
+app.use(logger('dev'));
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
-//  PASSPORT
-// const passport = require('passport');
-// // initialize passport library to use it (create an instance?) in our app
-// app.use(passport.initialize());
-// // authenticate session for passport that we have created (cookieSession in our case)
-// app.use(passport.session());
-
-//  MIDDLEWARE
-
-// COOKIE SESSION // ENCRYPTS COOKIE - SET NAME, AGE (24 HOURS), AND KEY
-const cookieSession = require('cookie-session');
-
-app.use(cookieSession({
-  name: 'hi im a cookie',
-  maxAge: 30 * 24 * 60 * 60 * 1000,
-  keys: [keys.cookieKey],
-}));
+// COOKIES
+app.use(cookieParser('process.env.COOKIE_SECRET'));
+app.use('/auth', auth);
+app.use('/api/users', users);
 
 //  PATH FOR STATIC FILES
 app.use(express.static(`${__dirname}./../../`));
 app.use('/css', express.static(path.join(__dirname, './../client/css')));
 app.use('/public', express.static(path.join(__dirname, './../client/public')));
 
-
-app.options('*', function(req, res) {
-
-  res.header('Access-Control-Allow-Origin', 'Accept, Accept-CH, Accept-Charset, Accept-Datetime, Accept-Encoding, Accept-Ext, Accept-Features, Accept-Language, Accept-Params, Accept-Ranges, Access-Control-Allow-Credentials, Access-Control-Allow-Headers, Access-Control-Allow-Methods, Access-Control-Allow-Origin, Access-Control-Expose-Headers, Access-Control-Max-Age, Access-Control-Request-Headers, Access-Control-Request-Method, Age, Allow, Alternates, Authentication-Info, Authorization, C-Ext, C-Man, C-Opt, C-PEP, C-PEP-Info, CONNECT, Cache-Control, Compliance, Connection, Content-Base, Content-Disposition, Content-Encoding, Content-ID, Content-Language, Content-Length, Content-Location, Content-MD5, Content-Range, Content-Script-Type, Content-Security-Policy, Content-Style-Type, Content-Transfer-Encoding, Content-Type, Content-Version, Cookie, Cost, DAV, DELETE, DNT, DPR, Date, Default-Style, Delta-Base, Depth, Derived-From, Destination, Differential-ID, Digest, ETag, Expect, Expires, Ext, From, GET, GetProfile, HEAD, HTTP-date, Host, IM, If, If-Match, If-Modified-Since, If-None-Match, If-Range, If-Unmodified-Since, Keep-Alive, Label, Last-Event-ID, Last-Modified, Link, Location, Lock-Token, MIME-Version, Man, Max-Forwards, Media-Range, Message-ID, Meter, Negotiate, Non-Compliance, OPTION, OPTIONS, OWS, Opt, Optional, Ordering-Type, Origin, Overwrite, P3P, PEP, PICS-Label, POST, PUT, Pep-Info, Permanent, Position, Pragma, ProfileObject, Protocol, Protocol-Query, Protocol-Request, Proxy-Authenticate, Proxy-Authentication-Info, Proxy-Authorization, Proxy-Features, Proxy-Instruction, Public, RWS, Range, Referer, Refresh, Resolution-Hint, Resolver-Location, Retry-After, Safe, Sec-Websocket-Extensions, Sec-Websocket-Key, Sec-Websocket-Origin, Sec-Websocket-Protocol, Sec-Websocket-Version, Security-Scheme, Server, Set-Cookie, Set-Cookie2, SetProfile, SoapAction, Status, Status-URI, Strict-Transport-Security, SubOK, Subst, Surrogate-Capability, Surrogate-Control, TCN, TE, TRACE, Timeout, Title, Trailer, Transfer-Encoding, UA-Color, UA-Media, UA-Pixels, UA-Resolution, UA-Windowpixels, URI, Upgrade, User-Agent, Variant-Vary, Vary, Version, Via, Viewport-Width, WWW-Authenticate, Want-Digest, Warning, Width, X-Content-Duration, X-Content-Security-Policy, X-Content-Type-Options, X-CustomHeader, X-DNSPrefetch-Control, X-Forwarded-For, X-Forwarded-Port, X-Forwarded-Proto, X-Frame-Options, X-Modified, X-OTHER, X-PING, X-PINGOTHER, X-Powered-By, X-Requested-With');
-  res.header('Access-Control-Allow-Credentials', true); 
-  res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-
-  });
-
-// app.use(function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   next();
-// });;
-
 app.get('*', (request, response) => {
   response.sendFile(path.resolve(__dirname, './../../index.html'));
+});
+
+// ERROR HANDLERS
+// catch 404 and forward to error handler
+app.use((req, res, next) => {
+  const err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+app.use((err, req, res, next) => {
+  res.status(err.status || 500);
+  // render the error page if in production hide the stack trace
+  res.json({
+    message: err.message,
+    error: req.app.get('env') === 'development' ? err : {},
+  });
 });
 
 const PORT = process.env.PORT || 3000;
@@ -75,9 +62,6 @@ const server = require('http').Server(app);
 const io = (module.exports.io = require('socket.io')(server));
 
 const SocketManager = require('./SocketManager');
-
-// const io = require('socket.io')(server);
-// const socket = io(server);
 
 io.on('connection', SocketManager);
 

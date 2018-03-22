@@ -10,6 +10,7 @@ const {
   MESSAGE_SENT,
   TYPING,
   PRIVATE_MESSAGE,
+  NEW_CHAT_USER,
 } = require('./../client/components/ChatApp/Events');
 
 const {
@@ -20,7 +21,7 @@ const {
 
 let connectedUsers = {};
 
-const communityChat = createChat();
+const communityChat = createChat({ isCommunity: true });
 
 module.exports = function(socket) {
   // console.log('\x1bc'); //clears console
@@ -96,16 +97,36 @@ module.exports = function(socket) {
     sendTypingFromUser(chatId, isTyping);
   });
 
-  socket.on(PRIVATE_MESSAGE, ({ reciever, sender }) => {
+  socket.on(PRIVATE_MESSAGE, ({ reciever, sender, activeChat }) => {
     if (reciever in connectedUsers) {
-      const newChat = createChat({ name: `${reciever} & ${sender}`, users: [reciever, sender] });
       const recieverSocket = connectedUsers[reciever].socketId;
-      socket.to(recieverSocket).emit(PRIVATE_MESSAGE, newChat);
-      socket.emit(PRIVATE_MESSAGE, newChat);
+      if (activeChat === null || activeChat.id === communityChat.id) {
+        const newChat = createChat({ name: `${reciever}&${sender}`, users: [reciever, sender] });
+        socket.to(recieverSocket).emit(PRIVATE_MESSAGE, newChat);
+        socket.emit(PRIVATE_MESSAGE, newChat);
+      } else {
+        if (!(reciever in activeChat.users)) {
+          activeChat.users
+            .filter(user => user in connectedUsers)
+            .map(user => connectedUsers[user])
+            .map((user) => {
+              socket
+                .to(user.socketId)
+                .emit(NEW_CHAT_USER, { chatId: activeChat.id, newUser: reciever });
+            });
+          socket.emit(NEW_CHAT_USER, { chatId: activeChat.id, newUser: reciever });
+        }
+        socket.to(recieverSocket).emit(PRIVATE_MESSAGE, activeChat);
+      }
     }
   });
-};
 
+  // Code Editor
+
+  socket.on('send code change', (data) => {
+    io.emit('send code change', data);
+  });
+};
 /*
 * Returns a function that will take a chat id and a boolean isTyping
 * and then emit a broadcast to the chat id that the sender is typing
