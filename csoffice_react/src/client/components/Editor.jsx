@@ -15,11 +15,12 @@ class Editor extends Component {
     this.openEditorOption = this.openEditorOption.bind(this);
     this.closeEditorOption = this.closeEditorOption.bind(this);
     this.changeTheme = this.changeTheme.bind(this);
+    this.changeFont = this.changeFont.bind(this);
   }
 
-  componentDidMount () {
-  const newEditor = new CodeEditor(this.props.socket);
-  this.setState({ ...this.state, editor: newEditor });
+  componentDidMount() {
+    const newEditor = new CodeEditor(this.props.socket);
+    this.setState({ ...this.state, editor: newEditor });
   }
 
   openEditorOption(e) {
@@ -36,15 +37,20 @@ class Editor extends Component {
     this.state.editor.changeTheme(e.target.value);
   }
 
+  changeFont(e) {
+    console.log('This is the change font !!!!');
+    this.state.editor.changeFont(e.target.value);
+  }
+
   render() {
     return (
       <div className="editor-wrapper">
-        <EditorOptions closeEditorOption={this.closeEditorOption} changeTheme={this.changeTheme} />
+        <EditorOptions closeEditorOption={this.closeEditorOption} changeTheme={this.changeTheme} changeFont={this.changeFont} />
         <div id="editor" />
         <ButtonToolbar id="editor-button-container">
           <span id="editor-option-btn" title="Settings" onClick={this.openEditorOption}>
             &#9776;
-            </span>
+          </span>
           <Button id="run-code" bsSize="small" bsStyle="primary">
             Run Code
           </Button>

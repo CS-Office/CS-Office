@@ -133,7 +133,9 @@ CodeEditor.prototype.changeTheme = function (theme) {
 };
 
 CodeEditor.prototype.changeFont = function (size) {
-  // document.querySelector('.CodeMirror').setAttribute
+  console.log('Inside the change font');
+  console.log(size);
+  document.querySelector('.CodeMirror').style.fontSize = size;
 };
 
 
