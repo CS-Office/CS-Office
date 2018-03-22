@@ -13,7 +13,8 @@ class Video extends Component {
             isAdmin: this.props.isAdmin,
             adminName: this.props.adminName,
             socket: this.props.socket,
-            createdRoom: false
+            createdRoom: false,
+            numberOfViewers: 0
         }
     
     }
@@ -28,6 +29,8 @@ class Video extends Component {
         // broadcast(config)
     }
 
+
+
     render () {
         let isAdmin = this.state.isAdmin;
         console.log('isAdmin: ', isAdmin);
@@ -35,10 +38,12 @@ class Video extends Component {
         // let disableBtn = createdRoom === true;
         // let name = this.state.adminName;
         let loginMsg;
-        let button;
+        let btnStart;
+        let btnEnd;
         if (isAdmin && createdRoom === false) { //YOU ARE ADMIN AND HAVE NOT STARTED OFFICE HOURS
             loginMsg = 'You have not started office hours.'
-            button = (<button id="setup-new-broadcast" className="setup">Start office hours</button>);
+            btnStart = (<button id="setup-new-broadcast" className="setup">Start Call</button>);
+            btnEnd = (<button id="end-broadcast" className="setup">End Call</button>);
 
         }
         if (isAdmin && createdRoom) { //YOU ARE ADMIN AND HAVE STARTED OFFICE HOURS
@@ -57,10 +62,12 @@ class Video extends Component {
         return (
 
         <div>
-
             <h1>CS Office Hours</h1>
+            <div id='vidWelcomeHeader'>
             <h4>{loginMsg}</h4>
-
+            </div>
+            <div id='vidHeader'>
+            </div>
         <section className="experiment">
             <section>
             <select id="broadcasting-option">
@@ -68,8 +75,10 @@ class Video extends Component {
             <option>Audio Only</option>
             <option>Screen</option>
         </select>
-            <input type="text" id="broadcast-name" />
-            <button id="setup-new-broadcast" className="setup">Start office hours</button>;
+            {/* <input type="text" id="broadcast-name" /> */}
+            {btnStart}
+            {btnEnd}
+            {/* <button id="setup-new-broadcast" className="setup">Start office hours</button>; */}
         </section>
 
         <table id="rooms-list"></table>

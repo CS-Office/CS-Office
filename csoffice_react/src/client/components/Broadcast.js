@@ -19,6 +19,7 @@
                 var socketio = io.connect('http://localhost:3000/');
 
                 socketio.on('message', function(data) {
+                    console.log('socketio in on msg: ', socketio)
                     if(data.sender == currentUserUUID) return;
 
                     if (onMessageCallbacks[data.channel]) {
@@ -75,12 +76,29 @@
                         };
                     },
                     onNewParticipant: function(numberOfViewers) {
-                        document.title = 'Viewers: ' + numberOfViewers;
+                        props.numberOfViewers = numberOfViewers;
+                        let div = document.getElementById('vidHeader');
+                        if (numberOfViewers === 1) {
+                            div.innerHTML = 'There is currently <strong> 1 </strong> viewer.'
+                        } else {
+                        div.innerHTML = 'There are currently <strong>' + numberOfViewers + '</strong> viewers.'
+                        }
+                        // document.title = 'Viewers: ' + numberOfViewers;
                     }
                 };
+                // function changeBtnTextHandler() {
+                //     let startBtn = document.getElementById('setup-new-broadcast')
+                //     startBtn.value = 'Office hours in session';
+                //     startBtn.disabled = true;
+                // }
                 function setupNewBroadcastButtonClickHandler() {
-                    document.getElementById('broadcast-name').disabled = true;
                     document.getElementById('setup-new-broadcast').disabled = true;
+                    document.getElementById('vidWelcomeHeader').innerHTML = 'Office hours in session';
+                    // document.getElementById('broadcast-name').disabled = true;
+                    // let startBtn = document.getElementById('setup-new-broadcast')
+                    // startBtn.value = 'Office hours in session';
+                    // startBtn.disabled = true;
+
                     DetectRTC.load(function() {
                         captureUserMedia(function() {
                             var shared = 'video';
@@ -91,12 +109,16 @@
                                 shared = 'screen';
                             }
                             broadcastUI.createRoom({
-                                roomName: (document.getElementById('broadcast-name') || { }).value || 'Anonymous',
+                                roomName: props.adminName || 'Codesmith Fellow',
                                 isAudio: shared === 'audio'
                             });
                         });
                         hideUnnecessaryStuff();
                     });
+                }
+                function endBroadcastClickHandler() {
+                    console.log('this is socketio: ', socketio)
+                    socketio.disconnect();
                 }
                 function captureUserMedia(callback) {
                     var constraints = null;
@@ -132,19 +154,17 @@
                     htmlElement = document.createElement(option === 'Only Audio' ? 'audio' : 'video');
                     htmlElement.setAttribute('autoplay', true);
                     htmlElement.setAttribute('controls', true);
-                    console.log (htmlElement, 'this was hte htmlElem')
+                    console.log (htmlElement, 'this was the htmlElem')
                     videosContainer.insertBefore(htmlElement, videosContainer.firstChild);
                     var mediaConfig = {
                         video: htmlElement,
                         onsuccess: function(stream) {
                             console.log('onsuccess for media')
-                      
                             config.attachStream = stream;
                             callback && callback();
                             htmlElement.setAttribute('muted', true);
                             rotateInCircle(htmlElement);
-                           
-                         
+
                         },
                         onerror: function() {
                             if (option === 'Only Audio') alert('unable to get access to your microphone');
@@ -164,7 +184,10 @@
                 var setupNewBroadcast = document.getElementById('setup-new-broadcast');
                 var roomsList = document.getElementById('rooms-list');
                 var broadcastingOption = document.getElementById('broadcasting-option');
+                var endBroadcast = document.getElementById('end-broadcast');
+          
                 if (setupNewBroadcast) setupNewBroadcast.onclick = setupNewBroadcastButtonClickHandler;
+                if (endBroadcast) endBroadcast.onclick = endBroadcastClickHandler;
                 function hideUnnecessaryStuff() {
                     var visibleElements = document.getElementsByClassName('visible'),
                         length = visibleElements.length;
@@ -178,7 +201,6 @@
                         video.style[navigator.mozGetUserMedia ? 'transform' : '-webkit-transform'] = 'rotate(360deg)';
                     }, 1000);
                 }
-               
             };
 
             export default Broadcast;
