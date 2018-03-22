@@ -68,6 +68,7 @@ class Editor extends Component {
           </Button>
           <Button
             id="open-video-chat"
+            title="Open video"
             bsSize="small"
             bsStyle="info"
             onClick={this.toggleVideoWindow}

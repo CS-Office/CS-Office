@@ -26,15 +26,15 @@ const CodeEditor = function(socket) {
     this.socket.emit('send code change', code);
   });
 
-  this.socket.on('send code change', updateEditor);
-  
-  function updateEditor(data) {
+
+  this.socket.on('send code change', (data) => {
     console.log('this is the editor', this.editor);
     const code = this.editor.getValue();
     if (code !== data) {
       this.editor.getDoc().setValue(data);
     }
-  };
+  });
+
 
   getURL('http://ternjs.net/defs/ecmascript.json', (err, code) => {
     if (err) throw new Error(`Request for ecmascript.json: ${err}`);
