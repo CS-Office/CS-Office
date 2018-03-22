@@ -691,7 +691,7 @@ CHATAPP MESSAGE
 }
 
 .message-container .time {
-  display: none;
+  /* display: none; */
 }
 
 .message-container .data {
@@ -731,7 +731,7 @@ CHATAPP MESSAGE
 }
 
 .message-container.right .time {
-  display: none;
+  /* display: none; */
 }
 
 .message-container.right .data {
