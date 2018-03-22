@@ -1,3 +1,11 @@
+.hidden {
+  display: none;
+}
+
+.float-right {
+  float: right;
+}
+
 /***************************
 OFFICE CONTAINERS
 ***************************/
@@ -22,10 +30,16 @@ OFFICE CONTAINERS
   height: 100%;
 }
 
-/* .office-column-left {
-  margin-left: 10px;
-  padding-right: 0;
-} */
+.icon-button {
+  background-color: transparent;
+  border: 0px;
+}
+
+.icon-button:hover,
+.icon-button:focus {
+  background-color: transparent !important;
+  /* border: 0px !important; */
+}
 
 .editor-container {
   height: 95%;
@@ -33,10 +47,6 @@ OFFICE CONTAINERS
   border: 1px solid #39464e;
   display: flex;
   flex-direction: column;
-}
-
-.Video-container {
-  border: 1px solid black;
 }
 
 #chat-master-container {
@@ -78,13 +88,11 @@ Code Editor - Flexbox
 }
 
 #editor-option-btn {
-  /* display: none; */
   position: absolute;
-  height: 32px;
-  top: -3px;
-  left: 25px;
-  font-size: 25px;
+  /* top:  3px; */
+  left: 0px;
   cursor: pointer;
+  height: 100%;
 }
 
 #editor-option-btn:hover {
@@ -93,7 +101,6 @@ Code Editor - Flexbox
 
 .CodeMirror {
   flex: 1 1 auto;
-  /* font-size: 36px; */
 }
 
 #editor-button-container {
@@ -846,25 +853,116 @@ CHATAPP MESSAGE
 /***************************
 VIDEO CHAT
 ***************************/
-
-/* entire container, keeps perspective */
 .video-container {
-  perspective: 1000px;
+  overflow: auto;
+  background-color: white;
+  height: 305px;
+  max-height: 305px;
+  width: 325px;
+  overflow: scroll;
   position: absolute;
-  z-index: 500;
+  z-index: 9;
+  border: 1px solid #d3d3d3;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+/* draggable */
+#video-draggable {
+  padding: 0 10px 10px 10px;
+  cursor: move;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+}
+
+#video-header {
+  margin: 15px 0 35px;
+  text-align: center;
+  /* color: black; */
+}
+
+.experiment section {
+  text-align: center;
+  padding-left: 5px;
+  margin-bottom: 25px;
+}
+
+#broadcasting-option {
+  font-size: 16px;
+  width: 200px;
+  margin-bottom: 15px;
+}
+
+#broadcast-name {
+  width: 200px;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.room-divider {
+  margin-bottom: 10px;
+}
+
+h6 {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+#rooms-list {
+  font-size: 14px;
+  width: 100%;
+  padding: 0;
+}
+
+tr.room-row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  overflow: hidden;
+  padding: 0;
+}
+
+.join-button-td {
+  float: right;
+  margin-right: 10px;
+}
+
+button.join:hover {
+  text-decoration: underline;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+#videos-container {
+  left: 10px;
+}
+
+video {
+  /* position: relative; */
+  height: 270px;
+  width: 300px;
+  /* left: 10px; */
+}
+
+/* ======== Flip Animation ===== */
+
+.flip-container {
+  perspective: 1000px;
 }
 /* flip the pane when hovered */
-.video-container:hover .flipper,
-.video-container.hover .flipper {
+.flip-container.hover .flipper {
   transform: rotateY(180deg);
 }
 
-.video-container,
+.flip-container,
 .front,
 .back {
-  width: 250px;
-  height: 200px;
-  background-color: white;
+  display: flex;
+  flex-direction: column;
 }
 
 /* flip speed goes here */
@@ -872,6 +970,8 @@ VIDEO CHAT
   transition: 0.6s;
   transform-style: preserve-3d;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 /* hide back of pane during swap */

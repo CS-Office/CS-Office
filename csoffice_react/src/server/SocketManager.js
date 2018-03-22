@@ -31,6 +31,10 @@ module.exports = function(socket) {
 
   let sendTypingFromUser;
 
+  // socket.emit('new-channel', { //VIDEO
+  //   channel: config.channel,
+  //   sender: sender
+  // });
   // Verify Username
   socket.on(VERIFY_USER, (nickname, callback) => {
     if (isUser(connectedUsers, nickname)) {
@@ -39,6 +43,16 @@ module.exports = function(socket) {
       callback({ isUser: false, user: createUser({ name: nickname, socketId: socket.id }) });
     }
   });
+
+  socket.on('message', function (data) {
+    socket.broadcast.emit('message', data);
+    console.log('this worked i think')
+});
+  // socket.on('new-channel', function() {
+  //   console.log('this worked')
+  // });
+  // Verify sockets
+
 
   // User Connects with username
   socket.on(USER_CONNECTED, (user) => {
@@ -108,8 +122,8 @@ module.exports = function(socket) {
   });
 
   // Code Editor
-
   socket.on('send code change', (data) => {
+    console.log('server side');
     io.emit('send code change', data);
   });
 };
