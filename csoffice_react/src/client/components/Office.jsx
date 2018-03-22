@@ -38,10 +38,14 @@ class Office extends Component {
       <Video isAdmin={isAdmin} adminName={adminName}/>
         <Row className="show-grid">
           <Col id="editor1" md={9} xs={5}>
-            <span id="editor-option-btn" title="Settings" onClick={this.openEditorOption}>
-              &#9776;
-            </span>
+
             <div className="editor-container ">
+              <div className="video-container" ontouchstart="this.classList.toggle('hover');">
+                <div className="flipper">
+                  <div className="front">Hello !!!!</div>
+                  <div className="back">Its the back yo</div>
+                </div>
+            </div>
               <Editor socket={socket} />
             </div>
           </Col>

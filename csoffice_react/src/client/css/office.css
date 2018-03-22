@@ -11,8 +11,8 @@ OFFICE CONTAINERS
 }
 
 #office-container {
-  margin: 0;
-  padding: 0;
+  /* margin: 0;
+  padding: 0; */
   width: 100%;
   height: 100%;
   font-family: 'Roboto', sans-serif !important;
@@ -50,7 +50,7 @@ OFFICE CONTAINERS
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  height: 100%;
+  /* height: 100%; */
   width: 100%;
 }
 
@@ -223,6 +223,11 @@ CHATAPP LOGIN
   margin: auto;
 }
 
+.login .chat-greeting {
+  font-size: 25px;
+  font-weight: 300;
+}
+
 .login-form {
   display: flex;
   justify-content: center;
@@ -230,18 +235,20 @@ CHATAPP LOGIN
 }
 
 .login-form input {
+  outline-width: 0;
   max-width: 100%;
   border: none;
   height: 40px;
   line-height: 20px;
   font-size: 18px;
+  font-weight: 300;
   transition: all 0.23s ease-in;
   color: black;
-  box-shadow: 0px -5px 20px 0px rgba(150, 165, 190, 0.2);
+  /* box-shadow: 0px -5px 20px 0px rgba(150, 165, 190, 0.2); */
 }
 
 .login-form input:focus {
-  /* box-shadow: 0px 0px 5px 0px rgba(150, 165, 190, 0.2); */
+  box-shadow: 0px 0px 10px 4px rgba(150, 165, 190, 0.2);
   animation: 1.5s ease-out 0s show;
 }
 
@@ -339,8 +346,8 @@ CHATAPP SIDEBAR
 #side-bar {
   font-size: 0.8em;
   box-sizing: border-box;
-  min-height: 863px;
-  min-width: 448px;
+  min-height: 700px;
+  min-width: 300px;
   display: flex;
   justify-content: space-around;
   flex-direction: column;
@@ -589,6 +596,8 @@ CHATAPP HEADER
   margin-right: 10px;
   color: #333333;
   font-size: 15px;
+  font-weight: 400;
+  padding-left: 10px;
 }
 
 .chat-header .user-info .status {
@@ -765,7 +774,7 @@ CHATAPP MESSAGE
   box-sizing: border-box;
   height: 10vh;
   max-height: 65px;
-  padding: 20px;
+  padding: 25px;
 }
 
 .message-input .message-form {
@@ -786,17 +795,16 @@ CHATAPP MESSAGE
   align-self: center;
   border: none;
   border-top: 0.5px solid #e8e8e8;
+  border-bottom: 0.5px solid #e8e8e8;
   border-right: 0.5px solid #e8e8e8;
+  border-left: 0.5px solid #e8e8e8;
   color: black;
-}
-
-.message-input {
 }
 
 .message-input .message-form .form-control:focus {
   box-shadow: none;
   background-color: white;
-  box-shadow: 0px -5px 20px 0px rgba(150, 165, 190, 0.2);
+  box-shadow: 0px -5px 20px 5px #96a5be33;
   animation: 1.5s ease-out 0s show;
   z-index: 100;
 }
@@ -824,9 +832,57 @@ CHATAPP MESSAGE
 }
 
 .message-form input {
-  font-size: 0.62em;
+  font-size: 12px;
 }
 
 .message-input .message-form .send:disabled {
   display: none;
+}
+
+/***************************
+VIDEO CHAT
+***************************/
+
+/* entire container, keeps perspective */
+.video-container {
+  perspective: 1000px;
+  position: absolute;
+  z-index: 500;
+}
+	/* flip the pane when hovered */
+	.video-container:hover .flipper, .video-container.hover .flipper {
+		transform: rotateY(180deg);
+	}
+
+.video-container, .front, .back {
+	width: 250px;
+  height: 200px;
+  background-color: white;
+}
+
+/* flip speed goes here */
+.flipper {
+	transition: 0.6s;
+  transform-style: preserve-3d;
+	position: relative;
+}
+
+/* hide back of pane during swap */
+.front, .back {
+	backface-visibility: hidden;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+/* front pane, placed above back */
+.front {
+	z-index: 2;
+	/* for firefox 31 */
+	transform: rotateY(0deg);
+}
+
+/* back, initially hidden pane */
+.back {
+	transform: rotateY(180deg);
 }

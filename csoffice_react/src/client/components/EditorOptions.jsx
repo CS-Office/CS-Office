@@ -14,12 +14,16 @@ const EditorOptions = props => (
         <option value="eclipse">Eclipse</option>
       </select>
       <label className="editor-options">Font Size</label>
-      <select id="font-option" className="editor-options">
-        <option value="">10</option>
-        <option value="">12</option>
-        <option value="saab">14</option>
-        <option value="mercedes">16</option>
-        <option value="audi">18</option>
+      <select id="font-option" className="editor-options" onChange={props.changeFont}>
+        <option value="10">10</option>
+        <option value="12">12</option>
+        <option value="14">14</option>
+        <option value="16">16</option>
+        <option value="18">18</option>
+        <option value="20">20</option>
+        <option value="22">22</option>
+        <option value="24">24</option>
+        <option value="72">72(Go for it!!!!)</option>
       </select>
       <label className="editor-options">Key Map</label>
       <select id="keymap-option" className="editor-options">
