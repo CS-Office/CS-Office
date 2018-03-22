@@ -35,6 +35,7 @@ class Office extends Component {
     const { socket, isAdmin, adminName } = this.state;
     return (
       <Grid id="office-container">
+      <Video isAdmin={isAdmin} adminName={adminName}/>
         <Row className="show-grid">
           <Col id="editor1" md={9} xs={5}>
 

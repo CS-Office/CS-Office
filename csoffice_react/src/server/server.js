@@ -34,6 +34,7 @@ app.use('/api/users', users);
 app.use(express.static(`${__dirname}./../../`));
 app.use('/css', express.static(path.join(__dirname, './../client/css')));
 app.use('/public', express.static(path.join(__dirname, './../client/public')));
+
 app.get('*', (request, response) => {
   response.sendFile(path.resolve(__dirname, './../../index.html'));
 });
@@ -63,6 +64,11 @@ const io = (module.exports.io = require('socket.io')(server));
 const SocketManager = require('./SocketManager');
 
 io.on('connection', SocketManager);
+
+// var socket = io.listen(server);
+// socket.on('connection', function(client) {
+//   console.log('connection established on server')
+// })
 
 server.listen(PORT, () => console.log('===SERVER LISTENING ON PORT 3000==='));
 // module.exports = io;
