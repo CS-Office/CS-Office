@@ -35,17 +35,10 @@ class Office extends Component {
     const { socket, isAdmin, adminName } = this.state;
     return (
       <Grid id="office-container">
-      <Video isAdmin={isAdmin} adminName={adminName}/>
         <Row className="show-grid">
           <Col id="editor1" md={9} xs={5}>
-
+            <Video isAdmin={isAdmin} adminName={adminName} />
             <div className="editor-container ">
-              <div className="video-container" ontouchstart="this.classList.toggle('hover');">
-                <div className="flipper">
-                  <div className="front">Hello !!!!</div>
-                  <div className="back">Its the back yo</div>
-                </div>
-            </div>
               <Editor socket={socket} />
             </div>
           </Col>
