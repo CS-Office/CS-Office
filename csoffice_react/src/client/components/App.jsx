@@ -31,7 +31,7 @@ class App extends React.Component {
       firstName: profile.givenName,
       lastName: profile.familyName,
     };
-    
+
     // fetch('auth/login/google', {
     //   method: 'POST',
     //   headers: new Headers({

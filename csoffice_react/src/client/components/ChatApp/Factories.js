@@ -25,9 +25,17 @@ const createUser = ({ name = '', socketId = null } = {}) => ({
 *		message {string}
 *		sender {string}
 */
+const date = new Date();
+let hours = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
+const am_pm = date.getHours() >= 12 ? 'PM' : 'AM';
+hours = hours < 10 ? `0${hours}` : hours;
+const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+const seconds = date.getSeconds() < 10 ? `0${date.getSeconds()}` : date.getSeconds();
+const time = `${hours}:${minutes}` + ` ${am_pm}`;
+
 const createMessage = ({ message = '', sender = '' } = {}) => ({
   id: uuidv4(),
-  time: getTime(new Date(Date.now())),
+  time,
   message,
   sender,
 });
@@ -67,13 +75,14 @@ const createChat = ({
 * @param excludedUser {string} user to exclude from list of names
 * @return {string} users names concatenated by a '&' or "Empty Chat" if no users
 */
-const createChatNameFromUsers = (users, excludedUser = '') => users.filter(u => u !== excludedUser).join(' & ') || 'Empty Chat';
+const createChatNameFromUsers = (users, excludedUser = '') =>
+  users.filter(u => u !== excludedUser).join(' & ') || 'Empty Chat';
 
 /*
 *	@param date {Date}
 *	@return a string represented in 24hr time i.e. '11:30', '19:30'
 */
-const getTime = date => `${date.getHours()}:${(`0${date.getMinutes()}`).slice(-2)}`;
+const getTime = date => `${date.getHours()}:${`0${date.getMinutes()}`.slice(-2)}`;
 
 module.exports = {
   createMessage,
