@@ -23,12 +23,15 @@ class App extends React.Component {
     this.signup = this.signup.bind(this);
   }
 
-  authenticate(data) {
-    console.log('google data', data);
-    const profile = data.profileObj;
+  authenticate(google) {
+    const profile = google.profileObj;
 
-    console.log('Sending data', profile);
-
+    const user = {
+      email: profile.email,
+      firstName: profile.givenName,
+      lastName: profile.familyName,
+    };
+    
     // fetch('auth/login/google', {
     //   method: 'POST',
     //   headers: new Headers({
@@ -44,7 +47,7 @@ class App extends React.Component {
     //   .catch((err) => {
     //     console.log(err);
     //   });
-    this.setState({ ...this.state, isAuth: true });
+    this.setState({ ...this.state, user, isAuth: true });
   }
 
   signup(e) {
