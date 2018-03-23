@@ -862,7 +862,7 @@ VIDEO CHAT
   width: 325px;
   overflow: scroll;
   position: absolute;
-  z-index: 9;
+  z-index: 2000;
   border: 1px solid #d3d3d3;
   text-align: center;
   display: flex;
