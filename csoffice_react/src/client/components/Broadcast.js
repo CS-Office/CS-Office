@@ -14,19 +14,29 @@ const Broadcast = function(props) {
   const onMessageCallbacks = {};
   const currentUserUUID = Math.round(Math.random() * 60535) + 5000;
   const socketio = io.connect('http://localhost:3000/');
+  let localStream;
 
   socketio.on('message', (data) => {
-    if (data.sender == currentUserUUID) return;
-
-    if (onMessageCallbacks[data.channel]) {
+    if (data.sender == currentUserUUID) { 
+        console.log('hosts socket: ', socketio)//HOST
+    return;
+    } else  {
+    if (onMessageCallbacks[data.channel]) { //REMOTE USER
       onMessageCallbacks[data.channel](data.message);
+      console.log('remotes socket: ', socketio)
+      console.log('data ===', data)
+        }
     }
-  });
+});
+
+
 
   const config = {
     openSocket(config) {
       const channel = config.channel || 'main-channel';
       onMessageCallbacks[channel] = config.onmessage;
+      console.log('sender id: ', currentUserUUID)
+      console.log('what is config:  ', config)
       if (config.onopen) setTimeout(config.onopen, 200);
       return {
         send(message) {
@@ -49,6 +59,17 @@ const Broadcast = function(props) {
       rotateInCircle(htmlElement);
     },
     onRoomFound(room) {
+    // document.getElementById('setup-new-broadcast').disabled = true; //NEED TO GET RID OF START BUTTON
+    // function removeElement(el) {
+    //     if(document.getElementById(el)){
+    //         var theElem = document.getElementById(el);
+    //         var parent = theElem.parentNode;
+    //         parent.removeChild(theElem);
+    //     }
+    // }
+    removeElement("setup-new-broadcast");
+    removeElement("broadcasting-option");
+    removeElement("roomMsg");
       console.log('in on RoomFound');
       const alreadyExist = document.querySelector(`button[data-broadcaster="${room.broadcaster}"]`);
       if (alreadyExist) return;
@@ -56,14 +77,18 @@ const Broadcast = function(props) {
       const tr = document.createElement('tr');
       tr.className = 'room-row';
       tr.innerHTML =
-        `<td><strong>${room.roomName}</strong> has started a room</td>` +
-        '<td class="join-button-td"><button class="join">Join</button></td>';
+        `<td><strong>${props.adminName}</strong>  has started a session.   </td>` +
+        '<td class="join-button-td"><button class="join" id="join">Join</button></td>';
+        // '<td class="end-broadcast"><button class="end">End Call</button></td>'
+        // let btn = document.createElement('button');
+        // btn.appendChild
       roomsList.insertBefore(tr, roomsList.firstChild);
       const joinRoomButton = tr.querySelector('.join');
       joinRoomButton.setAttribute('data-broadcaster', room.broadcaster);
       joinRoomButton.setAttribute('data-roomToken', room.broadcaster);
       joinRoomButton.onclick = function() {
-        this.disabled = true;
+        // this.disabled = true;
+        removeElement('join')
         const video = document.querySelector('#video-draggable');
         video.classList.toggle('hover');
         const broadcaster = this.getAttribute('data-broadcaster');
@@ -73,15 +98,21 @@ const Broadcast = function(props) {
           joinUser: broadcaster,
         });
         hideUnnecessaryStuff();
+        // tr.innerHTML+= '<td class="end-broadcast"><button class="end" id="end-broadcast">End</button></td>';
       };
+   
     },
     onNewParticipant(numberOfViewers) {
-      document.title = `Viewers: ${numberOfViewers}`;
+        let div = document.getElementById('viewerCount');
+        div.innerHTML = 'Number of viewers: ' + numberOfViewers;
+    //   document.title = `Viewers: ${numberOfViewers}`;
     },
   };
   function setupNewBroadcastButtonClickHandler() {
-    document.getElementById('broadcast-name').disabled = true;
+    // document.getElementById('broadcast-name').disabled = true;
     document.getElementById('setup-new-broadcast').disabled = true;
+    let msg = document.getElementById('roomMsg');
+    msg.innerHTML = 'Office hours have started.'
     DetectRTC.load(() => {
       captureUserMedia(() => {
         let shared = 'video';
@@ -92,7 +123,7 @@ const Broadcast = function(props) {
           shared = 'screen';
         }
         broadcastUI.createRoom({
-          roomName: (document.getElementById('broadcast-name') || {}).value || 'Anonymous',
+          roomName: props.adminName ||'Codesmith Fellow',
           isAudio: shared === 'audio',
         });
       });
@@ -141,6 +172,7 @@ const Broadcast = function(props) {
         console.log('onsuccess for media');
 
         config.attachStream = stream;
+        localStream = stream;
         callback && callback();
         htmlElement.setAttribute('muted', true);
         rotateInCircle(htmlElement);
@@ -162,9 +194,27 @@ const Broadcast = function(props) {
   /* UI specific */
   var videosContainer = document.getElementById('videos-container') || document.body;
   const setupNewBroadcast = document.getElementById('setup-new-broadcast');
+  const endBtn = document.getElementById('end-broadcast');
   var roomsList = document.getElementById('rooms-list');
   var broadcastingOption = document.getElementById('broadcasting-option');
   if (setupNewBroadcast) setupNewBroadcast.onclick = setupNewBroadcastButtonClickHandler;
+  if (endBtn) endBtn.onclick = endCallHandler;
+    function removeElement(el) {
+        if(document.getElementById(el)){
+            var theElem = document.getElementById(el);
+            var parent = theElem.parentNode;
+            parent.removeChild(theElem);
+        }
+    }
+  function endCallHandler() {
+    socketio.disconnect();
+    if (localStream) {
+        localStream.getTracks().forEach(function (track) { track.stop(); });
+   }
+   localStream = null;
+    // config.attachStream = null;
+    removeElement('videos-container');
+  }
   function hideUnnecessaryStuff() {
     let visibleElements = document.getElementsByClassName('visible'),
       length = visibleElements.length;

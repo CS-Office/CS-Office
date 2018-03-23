@@ -78,6 +78,7 @@ class Video extends Component {
     const createdRoom = this.state.createdRoom;
     let loginMsg;
     let button;
+    let initialRoomStatus = <div id="roomMsg">Office hours have <strong>not</strong> yet started.</div>;
     if (isAdmin && createdRoom === false) {
       // YOU ARE ADMIN AND HAVE NOT STARTED OFFICE HOURS
       loginMsg = 'Video Chat';
@@ -98,7 +99,7 @@ class Video extends Component {
     }
     if (!isAdmin && !createdRoom) {
       // YOU ARE STUDENT AND OFFICE HOURS HAVE NOT STARTED
-      loginMsg = 'Please wait. Office hours have not yet started.';
+      loginMsg = 'Please wait. Office hours have not yet started.'
       button = null;
     }
     if (!isAdmin && createdRoom) {
@@ -131,7 +132,8 @@ class Video extends Component {
                     <option>Audio Only</option>
                     <option>Screen</option>
                   </select>
-                  <input type="text" id="broadcast-name" placeholder="Enter name..." />
+                  {/* <div id="viewerCount"></div> */}
+                  {/* <input type="text" id="broadcast-name" placeholder="Enter name..." /> */}
                   <Button
                     id="setup-new-broadcast"
                     className="setup"
@@ -144,9 +146,13 @@ class Video extends Component {
                   >
                     Start
                   </Button>
+                  <div id="joinBtn"></div>
+                  <button className="end" id="end-broadcast">End</button>
                 </section>
                 <hr className="room-divider" />
-                <h6>Rooms</h6>
+                <h6>Room Status</h6>
+                {initialRoomStatus}
+                <div id="viewerCount"></div>
                 <table id="rooms-list" />
               </section>
             </div>

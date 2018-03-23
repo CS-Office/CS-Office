@@ -65,58 +65,60 @@ router.post('/login/email', (req, res, next) => {
 router.post('/signup', (req, res, next) => {
   console.log("This is inside the server");
   // if (validateUser(req.body)) {
-    // check if there is a user in db
-    User.getOneByEmail(req.body.email).then((user) => {
-      // if user not found
-      if (!user) {
-        // this is a unique email
-        bcrypt
-          .hash(req.body.password, 10)
-          // then hashed the password
-          .then((hash) => {
-            // create user based off that hash password
-            const user = {
-              firstName: req.body.email,
-              lastName: req.body.lastName,
-              email: req.body.email,
-              password: hash,
-            };
+  // check if there is a user in db
+  User.getOneByEmail(req.body.email).then((user) => {
+    // if user not found
+    if (!user) {
+      // this is a unique email
+      bcrypt
+        .hash(req.body.password, 10)
+      // then hashed the password
+        .then((hash) => {
+          // create user based off that hash password
+          const user = {
+            firstName: req.body.email,
+            lastName: req.body.lastName,
+            email: req.body.email,
+            password: hash,
+          };
             // Insert the user into the db from queries.js methods
-            User.create(user).then((newUser) => {
-              const userInfo = newUser;
-              delete userInfo[0]["password"];
-              // return id when success
-              res.json(userInfo[0]);
-            });
+          User.create(user).then((newUser) => {
+            const userInfo = newUser;
+            delete userInfo[0]["password"];
+            // return id when success
+            res.json(userInfo[0]);
           });
-      } else {
-        next(new Error('Email is in Use'));
-      }
-    });
+        });
+    } else {
+      next(new Error('Email is in Use'));
+    }
+  });
   // } else {
   //   next(new Error('Invalid'));
   // }
 });
 
+// GOOGLE LOGIN
+
 router.post('/login/google', (req, res, next) => {
-  console.log('Hit the server', req.body.profileObj);
+  console.log('Hit the server', req.body);
    
   const user = {
-    firstName: req.body.profileObj.givenName,
-    lastName: req.body.profileObj.familyName,
-    email: req.body.profileObj.email,
-    password: req.body.profileObj.password,
+    firstName: req.body.givenName,
+    lastName: req.body.familyName,
+    email: req.body.email,
+    password: req.body.password,
   };
+
   console.log("Request Body: ", req.body);
   console.log("Server USer Object: :", user);
   
-  User.create(user).then((id) => {
-    // return id when success
-    res.json({
-      id,
-      message: 'signed up',
+  if (!user) {
+    User.create(user).then((id) => {
+      // return id when success
+      res.json(id);
     });
-  });
+  }
 });
 
  

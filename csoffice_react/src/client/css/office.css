@@ -6,6 +6,10 @@
   float: right;
 }
 
+.error {
+  color: rgb(139, 0, 0);
+}
+
 /***************************
 OFFICE CONTAINERS
 ***************************/
@@ -938,7 +942,7 @@ button.join:hover {
 }
 
 #videos-container {
-  left: 10px;
+  left: 5px;
 }
 
 video {
