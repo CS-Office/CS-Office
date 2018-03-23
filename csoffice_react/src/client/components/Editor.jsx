@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ButtonToolbar, Button } from 'react-bootstrap';
+import { ButtonToolbar, Button, Glyphicon } from 'react-bootstrap';
 import CodeEditor from './../js/code_editor';
 import EditorOptions from './../components/EditorOptions';
 
@@ -16,6 +16,7 @@ class Editor extends Component {
     this.closeEditorOption = this.closeEditorOption.bind(this);
     this.changeTheme = this.changeTheme.bind(this);
     this.changeFont = this.changeFont.bind(this);
+    this.toggleVideoWindow = this.toggleVideoWindow.bind(this);
   }
 
   componentDidMount() {
@@ -42,15 +43,37 @@ class Editor extends Component {
     this.state.editor.changeFont(e.target.value);
   }
 
+  toggleVideoWindow(e) {
+    document.querySelector('.video-container').classList.toggle('hidden');
+  }
+
   render() {
     return (
       <div className="editor-wrapper">
-        <EditorOptions closeEditorOption={this.closeEditorOption} changeTheme={this.changeTheme} changeFont={this.changeFont} />
+        <EditorOptions
+          closeEditorOption={this.closeEditorOption}
+          changeTheme={this.changeTheme}
+          changeFont={this.changeFont}
+        />
         <div id="editor" />
         <ButtonToolbar id="editor-button-container">
-          <span id="editor-option-btn" title="Settings" onClick={this.openEditorOption}>
-            &#9776;
-          </span>
+          <Button
+            id="editor-option-btn"
+            className="icon-button"
+            title="Settings"
+            bsSize="large"
+            onClick={this.openEditorOption}
+          >
+            <Glyphicon glyph="cog" />
+          </Button>
+          <Button
+            id="open-video-chat"
+            bsSize="small"
+            bsStyle="info"
+            onClick={this.toggleVideoWindow}
+          >
+            <Glyphicon glyph="facetime-video" bsStyle="success" />
+          </Button>
           <Button id="run-code" bsSize="small" bsStyle="primary">
             Run Code
           </Button>

@@ -11,7 +11,7 @@ class App extends React.Component {
     super(props);
     // MAKE SURE TO CHANGE BACK TO FALSE!!!!!!!!!!!!!
     this.state = {
-      isAuth: true,
+      isAuth: false,
       isAdmin: true,
       adminName: 'Admin',
       user: {},
@@ -24,21 +24,27 @@ class App extends React.Component {
   }
 
   authenticate(data) {
-    fetch('auth/login/google', {
-      method: 'POST',
-      // mode: 'cors',
-      headers: new Headers({
-        'Content-Type': 'application/json',
-      }),
-      body: JSON.stringify(data),
-    })
-      .then(res => res.json())
-      .then(() => {
-        this.setState({ ...this.state, isAuth: true });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    console.log('google data', data);
+    const profile = data.profileObj;
+
+    console.log('Sending data', profile);
+
+    // fetch('auth/login/google', {
+    //   method: 'POST',
+    //   headers: new Headers({
+    //     'Content-Type': 'application/json',
+    //   }),
+    //   body: JSON.stringify(profile),
+    // })
+    //   .then(res => res.json())
+    //   .then((info) => {
+    //     console.log('Returning data', info);
+    //     this.setState({ ...this.state, user: info, isAuth: true });
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+    this.setState({ ...this.state, isAuth: true });
   }
 
   signup(e) {
@@ -86,6 +92,7 @@ class App extends React.Component {
       .then(result => result.json())
       .then((data) => {
         // Grab user state from data object
+
         if (data.firstName && data.email) {
           this.setState({ ...this.state, user: data, isAuth: true });
         }
@@ -98,17 +105,18 @@ class App extends React.Component {
   }
 
   render() {
-    const { isAuth } = this.state;
+    const { isAuth, user } = this.state;
+    console.log(isAuth);
     const PrivateRoute = ({ component: Component, ...rest }) => (
       <Route
         {...rest}
-        render={props => (isAuth ? <Component user={props.user} /> : <Redirect to="/login" />)}
+        render={props => (isAuth ? <Component {...props} /> : <Redirect to="/login" />)}
       />
     );
 
     return (
       <div className="wrapper">
-        <Header isAuth={isAuth} logout={this.logout} />
+        <Header isAuth={isAuth} user={user} logout={this.logout} />
         <main>
           <Switch>
             <Route exact path="/" render={() => <Redirect to="/login" />} />
@@ -126,7 +134,7 @@ class App extends React.Component {
                 ))
               }
             />
-            <PrivateRoute path="/office" component={Office} user={this.state.user} />
+            <PrivateRoute path="/office" component={Office} />
           </Switch>
         </main>
       </div>
