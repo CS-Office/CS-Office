@@ -891,6 +891,7 @@ VIDEO CHAT
   text-align: center;
   padding-left: 5px;
   margin-bottom: 25px;
+  width: 295px;
 }
 
 #broadcasting-option {
@@ -945,11 +946,16 @@ button.join:hover {
   left: 5px;
 }
 
+
 video {
   /* position: relative; */
   height: 270px;
   width: 300px;
   /* left: 10px; */
+}
+
+#setup-new-broadcast {
+  margin-bottom: 10px;
 }
 
 /* ======== Flip Animation ===== */

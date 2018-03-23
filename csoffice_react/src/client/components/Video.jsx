@@ -68,7 +68,7 @@ class Video extends Component {
     }
     const div = document.querySelector('#editor1').getBoundingClientRect();
     const video = document.querySelector('.video-container');
-    video.style.left = (div.width - 325);
+    video.style.left = div.width - 325;
     dragElement(document.querySelector('.video-container'));
   }
 
@@ -78,7 +78,11 @@ class Video extends Component {
     const createdRoom = this.state.createdRoom;
     let loginMsg;
     let button;
-    let initialRoomStatus = <div id="roomMsg">Office hours have <strong>not</strong> yet started.</div>;
+    const initialRoomStatus = (
+      <div id="roomMsg">
+        Office hours have <strong>not</strong> yet started.
+      </div>
+    );
     if (isAdmin && createdRoom === false) {
       // YOU ARE ADMIN AND HAVE NOT STARTED OFFICE HOURS
       loginMsg = 'Video Chat';
@@ -99,7 +103,7 @@ class Video extends Component {
     }
     if (!isAdmin && !createdRoom) {
       // YOU ARE STUDENT AND OFFICE HOURS HAVE NOT STARTED
-      loginMsg = 'Please wait. Office hours have not yet started.'
+      loginMsg = 'Please wait. Office hours have not yet started.';
       button = null;
     }
     if (!isAdmin && createdRoom) {
@@ -146,13 +150,18 @@ class Video extends Component {
                   >
                     Start
                   </Button>
-                  <div id="joinBtn"></div>
-                  <button className="end" id="end-broadcast">End</button>
+                  <div id="joinBtn" />
+                  <Button className="end" id="end-broadcast" bsSize="small" bsStyle="danger">
+                    End
+                  </Button>
+                  {/* <button className="end" id="end-broadcast">
+                    End
+                  </button> */}
                 </section>
                 <hr className="room-divider" />
                 <h6>Room Status</h6>
                 {initialRoomStatus}
-                <div id="viewerCount"></div>
+                <div id="viewerCount" />
                 <table id="rooms-list" />
               </section>
             </div>
